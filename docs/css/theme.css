@@ -184,3 +184,55 @@ body.on-dark #report-link:hover { background: rgba(255, 255, 255, .18); }
 .reveal table td { border-bottom: 1px solid #edf1f6; }
 .reveal table tr:last-child td { border-bottom: 0; }
 .reveal .slide-number, .reveal .slide-number a { text-decoration: none; }
+
+/* ===================== nav cluster + theme toggle ===================== */
+#deck-nav { position: fixed; top: 12px; right: 20px; z-index: 30; display: flex; align-items: center; gap: 8px; }
+#deck-nav a, #deck-nav button { position: static; }
+#theme-toggle { display: flex; align-items: center; gap: 8px; padding: 6px 10px 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, .88); color: var(--blue-700); font: 600 12px/1 "Inter", "Segoe UI", system-ui, sans-serif; letter-spacing: .02em; cursor: pointer; transition: border-color .2s, background .2s; }
+#theme-toggle:hover, #theme-toggle:focus-visible { border-color: var(--blue-500); background: #fff; outline: none; }
+#theme-toggle kbd { font: 600 10.5px/1 "JetBrains Mono", ui-monospace, monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 5px; padding: 3px 5px; background: var(--blue-50); }
+body.on-dark #theme-toggle { background: rgba(255, 255, 255, .10); border-color: rgba(255, 255, 255, .30); color: #fff; }
+body.on-dark #theme-toggle:hover { background: rgba(255, 255, 255, .18); }
+body.on-dark #theme-toggle kbd { color: #d8e5f3; border-color: rgba(255, 255, 255, .3); background: transparent; }
+@media print { #deck-nav { display: none !important; } }
+
+/* ============================ dark theme ============================ */
+html[data-theme="dark"] {
+  --navy-950: #ffffff; --navy-900: #f1f6fc; --navy-800: #d7e4f3;
+  --blue-700: #8cc4f7; --blue-600: #5aa7ee; --blue-500: #6bb2f2; --blue-100: rgba(90, 167, 238, .16); --blue-50: rgba(90, 167, 238, .08);
+  --green-700: #6fd9ad; --green-600: #38bd88; --green-100: rgba(56, 189, 136, .16);
+  --amber-700: #f2b469; --amber-600: #e79b3d; --amber-100: rgba(231, 155, 61, .17);
+  --red-700: #f59288; --red-600: #e0584b; --red-100: rgba(224, 88, 75, .18);
+  --ink: #e4ecf6; --ink-2: #bccbdc; --muted: #8ea3bb; --line: #233851; --card: #101d2f; --bg: #0a1320;
+  color-scheme: dark;
+}
+html[data-theme="dark"] body { background: var(--bg); }
+html[data-theme="dark"] .reveal-viewport {
+  background:
+    radial-gradient(1100px 560px at 104% -12%, rgba(53, 133, 212, .20), transparent 62%),
+    radial-gradient(900px 520px at -8% 112%, rgba(27, 154, 104, .14), transparent 58%),
+    var(--bg);
+}
+html[data-theme="dark"] .reveal code { border-color: rgba(90, 167, 238, .28); }
+html[data-theme="dark"] .reveal .chip { border-color: rgba(90, 167, 238, .30); }
+html[data-theme="dark"] .reveal .card.accent .chip, html[data-theme="dark"] .reveal .chip.green { border-color: rgba(56, 189, 136, .38); }
+html[data-theme="dark"] .reveal .card.amber .chip, html[data-theme="dark"] .reveal .chip.amber { border-color: rgba(231, 155, 61, .40); }
+html[data-theme="dark"] .reveal .card.red .chip, html[data-theme="dark"] .reveal .chip.red { border-color: rgba(224, 88, 75, .40); }
+html[data-theme="dark"] .reveal .step::after { background: linear-gradient(90deg, #28425f, #1b2f47); }
+html[data-theme="dark"] .reveal .step.opt::before { border-color: #1c2d44; }
+html[data-theme="dark"] .reveal table { background: var(--card); }
+html[data-theme="dark"] .reveal table td { border-bottom-color: #1b2d45; }
+html[data-theme="dark"] .reveal blockquote { background: var(--card); }
+html[data-theme="dark"] .reveal pre code { background: #08111d; border-color: #1d3250; }
+html[data-theme="dark"] .reveal .diagram img { filter: invert(.9) hue-rotate(180deg); border-color: var(--line); }
+html[data-theme="dark"] .reveal ul.check li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236fd9ad' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E"); }
+html[data-theme="dark"] .reveal ul.cross li::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59288' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E"); }
+html[data-theme="dark"] body:not(.on-dark) #home-link,
+html[data-theme="dark"] body:not(.on-dark) #report-link,
+html[data-theme="dark"] body:not(.on-dark) #theme-toggle { background: rgba(16, 29, 47, .92); border-color: var(--line); color: var(--blue-700); }
+html[data-theme="dark"] body:not(.on-dark) #home-link:hover,
+html[data-theme="dark"] body:not(.on-dark) #report-link:hover,
+html[data-theme="dark"] body:not(.on-dark) #theme-toggle:hover { background: #172a42; border-color: var(--blue-500); }
+html[data-theme="dark"] body:not(.on-dark) #home-link kbd,
+html[data-theme="dark"] body:not(.on-dark) #theme-toggle kbd { background: rgba(90, 167, 238, .10); border-color: var(--line); color: var(--muted); }
+html[data-theme="dark"] .reveal .controls button { opacity: .85; }

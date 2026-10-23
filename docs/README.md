@@ -18,13 +18,13 @@ Double-click `index.html` (or any deck) in Chrome, Edge, Firefox or Safari.
 
 ## Keys
 
-`→` `←` next/previous · `↓` `↑` details inside a chapter · `Esc` overview map · `S` speaker notes (second window) · `F` full screen · `I` back to the presentations list · `?` all shortcuts · click a diagram to enlarge (click again or `Esc` to close) · `Alt`+click zoom.
+`→` `←` next/previous · `↓` `↑` details inside a chapter · `Esc` overview map · `S` speaker notes (second window) · `F` full screen · `D` switch light and dark theme (follows your system, remembered) · `I` back to the presentations list · `?` all shortcuts · click a diagram to enlarge (click again or `Esc` to close) · `Alt`+click zoom.
 
 `product.html`, `engineering.html` and `technologies.html` use vertical stacks: chapters run left to right, details run top to bottom.
 
 ## Look
 
-Flat design, no drop shadows. Inter and JetBrains Mono are bundled in `vendor/fonts/`. Icons are Lucide line icons inlined as an SVG sprite. Dark slides use generated background art in `assets/bg/`.
+Flat design, no drop shadows. Light and dark themes: the toggle button (or `D`) switches, the choice is remembered, and the first visit follows the system setting. PDF handouts are always light. Inter and JetBrains Mono are bundled in `vendor/fonts/`. Icons are Lucide line icons inlined as an SVG sprite. Dark slides use generated background art in `assets/bg/`.
 
 ## Maintain
 

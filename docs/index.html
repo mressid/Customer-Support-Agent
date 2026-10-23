@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>try{var t=localStorage.getItem("deck-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <title>Presentations - AI Customer Support Platform</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -41,12 +42,29 @@
   .report .chip { background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.25); box-shadow:none; width:46px; height:46px; }
   .report .rtext { display:flex; flex-direction:column; flex:1; gap:3px; font-size:14px; color:#cfe0f2; } .report .rtext strong { color:#fff; font-size:17px; }
   .report .go { font-weight:700; font-size:13px; padding:6px 14px; border-radius:999px; background:#fff; color:#0a2540; }
+  #theme-toggle { position:absolute; top:22px; right:28px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1); color:#fff; font:600 13px/1 "Inter","Segoe UI",system-ui,sans-serif; cursor:pointer; transition:background .2s, border-color .2s; }
+  #theme-toggle:hover, #theme-toggle:focus-visible { background:rgba(255,255,255,.2); border-color:rgba(255,255,255,.55); outline:none; }
+  #theme-toggle kbd { box-shadow:none; background:transparent; color:#d8e5f3; border:1px solid rgba(255,255,255,.3); font-size:11px; padding:2px 6px; }
+  html[data-theme="dark"] .card { background:#0f1c2e; border-color:#243a56; }
+  html[data-theme="dark"] .card h2 { color:#f1f6fc; }
+  html[data-theme="dark"] .card p { color:#b4c4d8; }
+  html[data-theme="dark"] .tag, html[data-theme="dark"] .meta { color:#8ea3bb; }
+  html[data-theme="dark"] .meta { border-top-color:#243a56; }
+  html[data-theme="dark"] .meta a { background:rgba(90,167,238,.16); color:#8cc4f7; }
+  html[data-theme="dark"] .meta a:hover { background:rgba(90,167,238,.26); }
+  html[data-theme="dark"] .chip { background:rgba(90,167,238,.16); color:#8cc4f7; border:1px solid rgba(90,167,238,.3); }
+  html[data-theme="dark"] .card.green .chip { background:rgba(56,189,136,.16); color:#6fd9ad; border-color:rgba(56,189,136,.35); }
+  html[data-theme="dark"] .card.amber .chip { background:rgba(231,155,61,.17); color:#f2b469; border-color:rgba(231,155,61,.38); }
+  html[data-theme="dark"] .card.teal .chip { background:rgba(70,190,210,.16); color:#7fd6e6; border-color:rgba(70,190,210,.35); }
+  html[data-theme="dark"] body { background: radial-gradient(900px 500px at 90% -10%, rgba(53,133,212,.35), transparent 60%), radial-gradient(800px 500px at 0% 110%, rgba(27,154,104,.22), transparent 60%), linear-gradient(135deg,#050f1b 0%,#09213d 62%,#0a3342 100%); }
   .keys { margin-top:44px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:18px 24px; color:#dce8f5; font-size:14.5px; line-height:2; backdrop-filter: blur(6px); }
   kbd { background:#fff; color:#0a2540; border-radius:6px; padding:2px 8px; font:600 12.5px ui-monospace,Menlo,Consolas,monospace; }
 </style>
 </head>
 <body>
 <main>
+  <button id="theme-toggle" type="button"></button>
+
   <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></svg></span>AI Customer Support Platform</div>
   <h1>Presentations</h1>
   <p class="lead">Four focused decks for different audiences, plus the full report. They open in any modern browser and work offline.</p>
@@ -67,5 +85,20 @@
   <a class="report" href="assets/rapport.pdf" target="_blank" rel="noopener"><span class="chip"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></svg></span><span class="rtext"><strong>Full report (PDF)</strong><span>293 pages: Scrum artifacts, backlog, architecture, technology report and UML models</span></span><span class="go">Open</span></a>
   <div class="keys"><kbd>→</kbd> <kbd>←</kbd> move &nbsp; <kbd>↓</kbd> <kbd>↑</kbd> details inside a chapter &nbsp; <kbd>Esc</kbd> overview map &nbsp; <kbd>S</kbd> speaker notes &nbsp; <kbd>F</kbd> full screen &nbsp; Click a diagram to enlarge &nbsp; <kbd>?</kbd> all shortcuts</div>
 </main>
+<script>
+(function () {
+  var KEY = 'deck-theme', root = document.documentElement, btn = document.getElementById('theme-toggle');
+  var MOON = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+  var SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+  function stored() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function current() { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+  function render() { var d = current() === 'dark'; btn.title = 'Switch to the ' + (d ? 'light' : 'dark') + ' theme (D)';
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (d ? SUN : MOON) + '</svg><span>' + (d ? 'Light' : 'Dark') + '</span><kbd>D</kbd>'; }
+  function toggle() { var n = current() === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', n); try { localStorage.setItem(KEY, n); } catch (e) {} render(); }
+  btn.addEventListener('click', function () { toggle(); btn.blur(); });
+  document.addEventListener('keydown', function (e) { if ((e.key === 'd' || e.key === 'D') && !e.ctrlKey && !e.metaKey && !e.altKey) toggle(); });
+  render();
+})();
+</script>
 </body>
 </html>
