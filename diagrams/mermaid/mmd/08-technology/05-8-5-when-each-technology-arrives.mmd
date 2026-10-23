@@ -1,0 +1,25 @@
+%% Source: 08-technology.md - 8.5 When each technology arrives
+flowchart LR
+    subgraph R1["Release 1: text MVP"]
+        direction LR
+        r1a["TypeScript, NestJS, Postgres with RLS and pgvector"]
+        r1b["pg-boss, S3 storage, OIDC, JWT sessions"]
+        r1c["React console, Preact widget, WebSocket"]
+        r1d["LLM and embedding adapters, Ajv tools"]
+        r1e["OpenTelemetry, Sentry, CI with eval gate"]
+    end
+    subgraph R2["Release 2: voice"]
+        direction LR
+        r2a["LiveKit and WebRTC"]
+        r2b["STT and TTS adapters or speech-to-speech"]
+        r2c["Voice activity detection"]
+        r2d["Voice metrics and cost dashboard"]
+    end
+    subgraph R3["Release 3: operations"]
+        direction LR
+        r3a["Workflow engine: custom or Temporal"]
+        r3b["Email and messaging adapters"]
+        r3c["Telephony via SIP"]
+        r3d["Analytics store if Postgres is outgrown"]
+    end
+    R1 --> R2 --> R3

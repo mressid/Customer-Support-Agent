@@ -14,11 +14,14 @@ This repository is the initial documentation pack for an AI-native customer supp
 - `08-integrations-and-tools.md` — tool contracts, connector model, external systems
 - `09-security-privacy-reliability.md` — tenant isolation, secrets, audit, retries, retention
 - `10-observability-and-evaluation.md` — operational metrics and AI evaluation
+- `11-technology-stack.md` — proposed technology stack, selection criteria, assumptions
+- `12-technology-by-task.md` — technologies for every epic, user story and Sprint
+- `13-technology-decisions.md` — role and usage rule of each technology, decisions to validate, lock-in risks
 - `scrum/` — Scrum project charter, roles, backlog, sprint plan, ceremonies, and Mermaid diagrams
 - `diagrams/` — editable Mermaid and LaTeX/TikZ diagrams
-- `diagrams/mermaid/` — detailed Mermaid pack (206 diagrams): architecture, flows, AI/voice, data model, UML (use case, class, sequence, activity, component, package, deployment, object), one diagram set per epic/user story and sprint. Standalone sources in `mmd/`, rendered PDF/SVG in `rendered/`, tooling in `tools/` (start at `00-index.md`)
-- `presentations/` — reveal.js decks (Scrum plan, product with integrations chapter, engineering deep dive) with PDF handouts; open `index.html`
-- `latex-scrum/` — Overleaf-ready LaTeX project for the Scrum artifacts report (273 pages); `latex-scrum-overleaf.zip` is the upload bundle
+- `diagrams/mermaid/` — detailed Mermaid pack (211 diagrams): architecture, flows, AI/voice, data model, UML (use case, class, sequence, activity, component, package, deployment, object), one diagram set per epic/user story and sprint. Standalone sources in `mmd/`, rendered PDF/SVG in `rendered/`, tooling in `tools/` (start at `00-index.md`)
+- `docs/` — reveal.js decks (Scrum plan, product, technologies, engineering deep dive) with PDF handouts, published as the project site; `docs/assets/rapport.pdf` is the full report (open `docs/index.html`)
+- `latex-scrum/` — Overleaf-ready LaTeX project for the Scrum artifacts report, the rapport (293 pages); `latex-scrum-overleaf.zip` is the upload bundle
 
 ## Recommended implementation strategy
 

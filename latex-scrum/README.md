@@ -6,7 +6,7 @@
 2. Menu > **Main document**: `main.tex`. **Compiler**: pdfLaTeX (default). No special fonts or shell escape needed.
 3. Edit the title-page placeholders at the top of `main.tex` (`\TeamName`, `\ProductOwner`, `\ScrumMaster`, `\Developers`, `\Institution`, `\DocVersion`).
 
-A local compile pass takes about 6 seconds (273 pages, 205 diagrams). If Overleaf ever shows a timeout on the first compile, use **Recompile from scratch** once.
+A local compile pass takes about 6 seconds (293 pages, 210 diagrams). If Overleaf ever shows a timeout on the first compile, use **Recompile from scratch** once.
 
 ## Layout
 
@@ -18,7 +18,7 @@ figures/            rendered diagram PDFs (same tree as diagrams/mermaid/rendere
 tools/              build_chapters.py (regenerates chapters and copies figures)
 ```
 
-Parts: I Product and Scrum framework, II Epics and user stories, III Release and sprint planning, IV Architecture and design reference, V UML models.
+Parts: I Product and Scrum framework, II Epics and user stories, III Release and sprint planning, IV Architecture and design reference, V Technology report, VI UML models.
 
 ## Regenerate after changing the Markdown or diagrams (local only)
 

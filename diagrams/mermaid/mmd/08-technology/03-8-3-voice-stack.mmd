@@ -1,0 +1,11 @@
+%% Source: 08-technology.md - 8.3 Voice stack
+flowchart LR
+    B["Browser<br/>getUserMedia, WebRTC"] <--> L["LiveKit<br/>media server and agents"]
+    L --> VAD["Voice activity detection<br/>endpointing"]
+    VAD --> STT["STT adapter<br/>streaming"]
+    STT --> TS["Transcript sync<br/>sequence ids, partial vs final"]
+    TS --> ENG["Conversation engine<br/>same tools and authorization"]
+    ENG --> TTS["TTS adapter<br/>streaming, cancellable"]
+    TTS --> L
+    L -.-> S2S["Option B: speech-to-speech model<br/>behind the same adapter"]
+    S2S -.-> ENG

@@ -62,3 +62,14 @@
   };
   if (window.Reveal && Reveal.isReady && Reveal.isReady()) register(); else Reveal.on('ready', register);
 })();
+
+// Link to the full report (PDF) on every slide, next to the "All decks" button.
+(function () {
+  var r = document.createElement('a');
+  r.id = 'report-link'; r.href = 'assets/rapport.pdf'; r.target = '_blank'; r.rel = 'noopener';
+  r.title = 'Open the full report (PDF)';
+  r.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>' +
+    '<span>Report</span>';
+  document.body.appendChild(r);
+})();

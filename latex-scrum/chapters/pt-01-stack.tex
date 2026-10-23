@@ -1,0 +1,88 @@
+\chapter{Technology Stack and Choices}
+
+\section{Status and how to read this}
+
+This document proposes the technologies for the AI Customer Support Platform. It is a \textbf{recommendation, not a decision}. Each choice is confirmed or replaced through the architecture decision records (ADRs) listed in the release plan. Where a provider or product is named, it is an example of a category, and the product docs already require that provider-specific details live in adapters, not in the core domain.
+
+Vendor names, versions, prices, licenses and data policies change. Verify them at the time of each ADR.
+
+\section{Selection criteria}
+
+\begin{enumerate}
+\item \textbf{Fit for a small team and a modular monolith.} Few moving parts, one primary language, one primary database.
+\item \textbf{Proven and boring where it matters.} Use mature tools for storage, queues, auth and delivery. Spend novelty budget on the AI behavior.
+\item \textbf{Security and tenant isolation first.} The technology must make cross-tenant access hard, not just unlikely.
+\item \textbf{Portable at the core.} No LLM, speech, channel or cloud vendor type appears in the domain.
+\item \textbf{Observable and testable.} Every important decision, tool call and failure can be traced and replayed in tests.
+\item \textbf{Reasonable cost.} Start on the simplest option that meets the requirement and keep a documented trigger for moving up.
+\end{enumerate}
+\section{Assumptions}
+
+\begin{itemize}
+\item A small team, text MVP first, voice and operations later.
+\item TypeScript is the primary language. If the team prefers Python, the rows marked ``language'' change and the architecture does not.
+\item Cloud-agnostic containers. Managed services are fine, but no design depends on one cloud.
+\item The first release has exactly one read-only business tool and one channel (website chat).
+\end{itemize}
+\section{Stack at a glance}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.138\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.319\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.223\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.319\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Layer} & \textbf{Proposed choice} & \textbf{Alternatives} & \textbf{Why, and ADR} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Language and runtime & TypeScript on Node.js LTS & Python with FastAPI, Kotlin with Spring & One language for API, worker, widget and console. Types and JSON Schema are shared. ADR-001 \\
+Backend framework & NestJS modules & Fastify with hand-made modules, FastAPI & Modules, dependency injection and guards make module boundaries explicit. ADR-001 \\
+API style & REST with OpenAPI 3.1, WebSocket for chat, SSE as fallback & GraphQL, gRPC between services later & Simple, documented, versioned. ADR-001 \\
+Database & PostgreSQL 16 & MySQL, CockroachDB & Transactions, JSONB, row-level security, outbox and queue in one place. ADR-002 \\
+Tenant isolation & Row-level security plus tenant-aware repositories & Schema per tenant, database per tenant & Isolation enforced in the database, not only in code. ADR-002 \\
+Vector and keyword search & pgvector plus Postgres full-text search, fused ranking & Qdrant, OpenSearch, Pinecone & One datastore for the MVP and tenant filters in SQL. ADR-004 \\
+Queue and jobs & Postgres-based queue (pg-boss) with outbox and inbox tables & Redis with BullMQ, RabbitMQ, SQS & Jobs commit in the same transaction as domain changes. ADR-003 \\
+Cache and rate limits & Redis, optional at MVP & In-memory, edge rate limiting & Token buckets and short-lived session data \\
+Object storage & S3-compatible storage (MinIO locally) & GCS, Azure Blob & Private objects, signed URLs, tenant prefixes \\
+Secrets & Cloud secret manager or HashiCorp Vault, SOPS for dev config & Doppler, Kubernetes secrets & Secrets are referenced by id, never stored in config or prompts \\
+Staff authentication & OIDC provider (Keycloak, Auth0 or Cognito) with RBAC in the app & Ory, WorkOS & Do not build password handling. ADR-009 \\
+Customer session & Short-lived signed JWT scoped to tenant, channel and conversation & Opaque server-side tokens & Cheap to verify and scoped by claims. ADR-009 \\
+LLM access & Provider adapter. Default candidate: Anthropic Claude with model routing & OpenAI, Google, self-hosted models & Small model for classification and summaries, mid model for replies, large model for hard cases and judging. ADR-005 \\
+Embeddings & Embedding adapter. Candidates: Voyage AI, OpenAI embeddings, open-source BGE or E5 & Hosted multilingual models & Chosen on retrieval quality in the target languages. ADR-004 and ADR-005 \\
+Reranking & Optional cross-encoder or hosted reranker & None at MVP & Add only if retrieval evaluation shows a gain \\
+Tool contracts & JSON Schema 2020-12 validated with Ajv, Zod in application code & TypeBox, Pydantic & Same schema for the model, the validator and the docs. ADR-010 \\
+Document parsing & pdf, docx and html parsers or Apache Tika or unstructured, ClamAV scan & Managed document AI & Run in the worker, never in the request path \\
+Website widget & Preact or vanilla TypeScript in a Web Component with Shadow DOM & React & Small bundle and style isolation \\
+Agent console and admin & React, Vite, TypeScript, TanStack Query, Radix UI, Tailwind & Vue, Angular & Mature ecosystem for tables, forms and live updates \\
+Voice transport & WebRTC through LiveKit & Daily, Twilio Voice, plain WebSocket audio & Handles media, reconnects and agents. ADR-007 \\
+Speech & Option A: streaming STT and TTS adapters. Option B: speech-to-speech model & Whisper self-hosted, Azure Speech & Decided by a spike on latency, language, cost and privacy. ADR-006 \\
+Telephony & SIP through LiveKit or Twilio & Other SIP providers & Release 3, after browser voice is validated. ADR-007 \\
+Email and messaging & Provider adapters: SES or Postmark for email, WhatsApp Cloud API or Twilio for messaging & Other providers & Release 3, same canonical event contract \\
+Workflows & Deterministic state machine on Postgres, evaluate Temporal & Custom engine, Camunda & Release 3. Do not build a universal builder early \\
+Observability & OpenTelemetry into Grafana (Prometheus, Loki, Tempo) or Datadog, Sentry for errors & Honeycomb, New Relic & Correlation ids across API, worker, model and tools \\
+LLM tracing and evaluation & Langfuse or OpenTelemetry GenAI conventions, promptfoo or a custom harness & LangSmith, DeepEval & Replayable traces and regression suites \\
+Feature flags & OpenFeature with Unleash or GrowthBook & Environment flags & Canary rollout and instant disable \\
+Testing & Vitest, Testcontainers, Playwright, k6, contract tests & Jest, Cypress & Real Postgres in tests, browser tests for widget and console \\
+Security tooling & Semgrep, gitleaks, Trivy, Renovate or Dependabot, OWASP ZAP & Snyk, SonarQube & Cheap checks on every change \\
+CI and CD & GitHub Actions or GitLab CI, Docker images & CircleCI & Trunk-based, small merges, required checks \\
+Infrastructure & Terraform or OpenTofu, managed container platform (for example AWS ECS Fargate) & Fly.io or Render for MVP, Kubernetes later & Kubernetes only when scaling or isolation justifies it \\
+Documentation & Markdown, Mermaid, MADR for ADRs, OpenAPI, AsyncAPI for events, LaTeX for the report, reveal.js for decks & Confluence, Notion & Docs live in the repository \\
+\end{longtable}
+}
+
+\mmdfig{08-technology/01-8-1-technology-stack-map}{Technology stack map}{fig:08-technology-01-8-1-technology-stack-map-167}
+
+
+\section{How a request flows through the stack}
+
+A website message enters through the widget over HTTPS or WebSocket. The API validates it, checks the session token, and writes the message and an outbox row in one Postgres transaction. A worker picks up the turn job, builds context, retrieves knowledge with a tenant filter, and calls the model through the adapter. If the model proposes a tool call, the tool service validates it against its JSON Schema, checks authorization and idempotency, and calls the connector with a timeout and circuit breaker. The reply is persisted with citations and usage, then pushed to the widget. No database transaction is held open while the model or a business system is called.
+
+\mmdfigL{08-technology/02-8-2-a-customer-message-through-the-stack}{A customer message through the stack}{fig:nology-02-8-2-a-customer-message-through-the-stack-168}
+
+
+\section{Voice stack}
+
+Browser audio travels over WebRTC to a media server. Voice activity detection finds the end of speech. Streaming speech-to-text produces partial transcripts, which are captions only, and a final transcript, which becomes a message. The same conversation engine and the same tool authorization answer, and streaming text-to-speech plays the reply. A barge-in cancels the speech stream and the model call. The alternative, a speech-to-speech model, sits behind the same adapter and still routes tool calls through our authorization.
+
+\mmdfigL{08-technology/03-8-3-voice-stack}{Voice stack}{fig:08-technology-03-8-3-voice-stack-169}
+
+

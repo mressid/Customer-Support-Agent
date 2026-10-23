@@ -1,0 +1,228 @@
+\chapter{Technology by Task}
+
+This chapter maps the technology proposal to every epic, user story and Sprint of the backlog. Each row names the main technologies and the approach. Everything is a proposal that follows the design reference chapters and is confirmed through the ADRs.
+
+\section{E01 --- Tenant and access foundation}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.417\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.583\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-001 Create and configure an organization & NestJS organizations module, one PostgreSQL transaction for the organization, default roles, settings and audit row, UUIDv7 identifiers, Zod request validation, OpenAPI contract \\
+US-002 Invite users and assign roles & OIDC provider for login, single-use expiring invitation token signed with jose, email through a provider adapter, permission guards in NestJS, session revocation checked on every request \\
+US-003 Test tenant isolation & Vitest with Testcontainers running a real Postgres with row-level security, two-tenant fixtures, a negative-test matrix over SQL, search, storage, cache and jobs, a required CI check, a Semgrep rule against queries without tenant context \\
+\end{longtable}
+}
+
+\section{E02 --- Conversation and message core}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.355\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.645\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-010 Start a conversation & NestJS REST and WebSocket gateway, conversation service on Postgres, outbox row for the created event \\
+US-011 Send and receive text & Per-conversation sequence number under a row lock, unique client message id, WebSocket with SSE fallback, delivery state table \\
+US-012 Inspect the timeline & Keyset pagination, visibility filter inside the repository, React console with TanStack Query and virtualized lists \\
+US-013 Deduplicate inbound events & Unique constraint on connection and provider event id with insert-on-conflict, inbox table, job singleton keys in pg-boss \\
+\end{longtable}
+}
+
+\section{E03 --- Website chat channel}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.368\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.632\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-020 Configure the website widget & React admin form, allowed origins and public key per channel, embed snippet served from object storage behind a CDN, Web Component widget \\
+US-021 Chat session & Short-lived JWT signed with jose and carrying tenant, channel and conversation claims, origin check, per-IP rate limit with Redis token buckets, optional bot challenge \\
+US-022 Reconnect and resume & WebSocket client with exponential backoff, resume from the last seen sequence over REST, client-side deduplication by message id, pending messages kept in local storage \\
+\end{longtable}
+}
+
+\section{E04 --- Knowledge ingestion and RAG}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.368\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.632\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-030 Register and upload a source & Pre-signed object-storage uploads, content sniffing with libmagic, size limits, ClamAV scan, tenant prefix, React uploader with progress \\
+US-031 Parse, chunk, embed, index & pg-boss job, document parsers or Apache Tika or unstructured, token-aware chunking, embedding adapter in batches, pgvector HNSW index, ingestion state in Postgres, retries with backoff \\
+US-032 Retrieve relevant chunks & Hybrid retrieval with pgvector similarity and Postgres full-text ranking fused by reciprocal rank, mandatory tenant and source filter enforced by row-level security, optional reranker, retrieval run logging \\
+US-033 Grounded answer or fallback & Structured output with answer, citation ids and confidence, evidence threshold in code, citation check against the retrieved set, fallback templates, evaluation cases \\
+\end{longtable}
+}
+
+\section{E05 --- AI orchestration}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.439\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.561\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-040 Process a turn through a versioned agent & Orchestrator as an explicit state machine (XState or a transition table), LLM adapter, immutable AgentVersion rows with prompts versioned in Git, OpenTelemetry span per step, Langfuse trace \\
+US-041 Follow-up using context & Context builder, token counting, rolling summaries produced asynchronously by a small model, provider prompt caching where available, strict per-conversation filters \\
+US-042 Handle model failure & AbortController timeouts, retry with jitter (p-retry or cockatiel), circuit breaker, fallback model configuration, safe message templates, failure counters \\
+US-043 Publish and roll back an agent version & Immutable version table with a deployment pointer, release gate job that runs the evaluation harness, audit events, React admin screens \\
+\end{longtable}
+}
+
+\section{E06 --- Safe business tools}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.368\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.632\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-050 Enable a versioned tool & Tool registry in Postgres, JSON Schema 2020-12 checked with Ajv, per-agent allowlist, schema linting in CI that requires additionalProperties false \\
+US-051 Order status lookup & orders.lookup through a connector adapter, undici HTTP client, Zod for typed responses, customer verification level from the identity module, minimal result, contract tests with recorded fixtures \\
+US-052 Timeout and duplicate safety & Idempotency keys with a unique index, status lookup, timeouts, circuit breaker, UNKNOWN\_OUTCOME state, dead-letter queue in pg-boss \\
+US-053 Audit tool calls & Append-only audit table with UPDATE and DELETE revoked and monthly partitions, pino redaction paths, trace-linked logs, SQL and CSV export, optional object-lock archive \\
+\end{longtable}
+}
+
+\section{E07 --- Human inbox and handoff}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.348\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.652\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-060 View the unassigned queue & Postgres tables, claim with SELECT FOR UPDATE SKIP LOCKED or an optimistic version column, live updates over WebSocket, TanStack Query \\
+US-061 Customer requests a human & Intent detection by rules plus a small model, conversation state machine, handoff event through the outbox, routing worker, status message pushed to the widget \\
+US-062 Handoff summary & Summarization prompt over trusted data with structured output, permission-based redaction function, bundle stored as JSONB, console side panel \\
+US-063 Resolve the conversation & State machine transitions in a transaction, audit event, ticket link, React console action \\
+\end{longtable}
+}
+
+\section{E08 --- Tickets and case tracking}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.412\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.588\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-070 Create a ticket from a conversation & Ticket module on Postgres, link table to conversations, status history written in the same transaction, OpenAPI endpoint \\
+US-071 Filter tickets & Composite indexes, keyset pagination, permission scope applied as a query condition, TanStack Table in the console \\
+\end{longtable}
+}
+
+\section{E09 --- Voice MVP}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.375\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.625\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-080 Start and end a voice session & LiveKit room per conversation, short-lived access tokens issued by the API, getUserMedia with a consent screen, session state and quota in Postgres \\
+US-081 Speak and hear a response & Option A: streaming STT adapter, engine, streaming TTS adapter. Option B: speech-to-speech adapter. LiveKit agent worker. Text fallback when speech fails \\
+US-082 Interrupt the AI & Voice activity detection and endpointing, cancel the TTS stream and the model request with AbortController, store only the delivered part of the reply \\
+US-083 Switch between text and voice & Server-side sequence ids, transcript synchronizer, WebSocket events, system events in the timeline \\
+US-084 Voice handoff & Room transfer or SIP transfer depending on the provider, callback ticket as fallback, handoff bundle shared with the agent \\
+\end{longtable}
+}
+
+\section{E10 --- Workflow, routing and SLA}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.375\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.625\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-090 Define a workflow & Versioned workflow definitions validated by JSON Schema, a state machine and step-run tables on Postgres, evaluate Temporal for durable execution \\
+US-091 Routing rules and SLA targets & Ordered rules stored in Postgres and evaluated in code, business-hours math with Luxon, SLA timers as delayed pg-boss jobs \\
+US-092 Retry a workflow step safely & Idempotency key per step, pg-boss retry with backoff, dead-letter queue, compensation steps \\
+\end{longtable}
+}
+
+\section{E11 --- Integrations and additional channels}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.400\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.600\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-100 Configure an integration securely & Secret manager with references only, scheduled health checks as cron jobs, connector definitions as TypeScript packages implementing one interface, React admin screens \\
+US-101 Normalize a provider webhook & Raw-body capture, HMAC signature check with timing-safe compare, Zod or Ajv schema validation, inbox table, one adapter per provider, contract tests \\
+US-102 Continue on a second channel & Identity linking through a one-time code or signed link, email and messaging provider adapters, conversation reuse policy \\
+\end{longtable}
+}
+
+\section{E12 --- Observability, evaluation and usage}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.381\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.619\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Story} & \textbf{Technologies and approach} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-110 Trace one request & OpenTelemetry SDK with HTTP, Postgres and Redis instrumentation plus manual spans for model, retrieval and tools, trace context carried inside job payloads, pino logs with trace ids, Grafana or Datadog \\
+US-111 Resolution and handoff metrics & prom-client or OpenTelemetry metrics, SQL aggregates for outcomes, Grafana dashboards, a lint rule against sensitive metric labels \\
+US-112 Run AI regression evaluations & Dataset files in Git, promptfoo or a custom runner, deterministic assertions first, model judge second, GitHub Actions job, results stored as evaluation runs, release gate \\
+US-113 Usage by agent and channel & Usage records table, provider usage reconciliation job, quotas in Redis or Postgres, Grafana panels \\
+\end{longtable}
+}
+
+\section{Technology by Sprint}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.078\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.588\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.333\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Sprint} & \textbf{Technologies introduced} & \textbf{Spikes and decisions} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Sprint 0 & Monorepo with pnpm workspaces, Docker Compose with Postgres, Redis and MinIO, repeatable migrations, CI skeleton, Terraform skeleton, secret handling, ADR template & Hosting target, queue choice \\
+Sprint 1 & NestJS modules, Postgres with row-level security, tenant context middleware, audit table, OpenTelemetry bootstrap, Vitest with Testcontainers & ADR-001, ADR-002, ADR-003 \\
+Sprint 2 & Preact widget, WebSocket gateway, JWT sessions, inbox table, Playwright end-to-end tests & Session policy \\
+Sprint 3 & Object storage uploads, ClamAV, parsers, pg-boss ingestion jobs, embedding adapter, pgvector and full-text search & ADR-004 vector technology \\
+Sprint 4 & LLM adapter, prompts in Git, structured outputs, citations, small evaluation harness, usage records & ADR-005 provider and model routing \\
+Sprint 5 & Tool registry with Ajv, connector adapter with circuit breaker, React console inbox, live updates & ADR-010 tool authorization \\
+Sprint 6 & Tickets, dashboards and alerts, k6 load tests, backup and point-in-time recovery drill, feature flags, evaluation release gate in CI & Release 1 gates \\
+Sprint 7 & LiveKit, voice activity detection, STT and TTS adapters or speech-to-speech adapter, voice metrics & ADR-006, ADR-007, ADR-008 \\
+Sprint 8 & Transcript synchronizer, barge-in cancellation, voice handoff, cost and latency dashboard & Provider handoff behavior \\
+\end{longtable}
+}
+
+\mmdfig{08-technology/05-8-5-when-each-technology-arrives}{When each technology arrives}{fig:08-technology-05-8-5-when-each-technology-arrives-170}
+
+

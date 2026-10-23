@@ -6,7 +6,7 @@ Existing diagrams that are not duplicated here: `../module-communication.mmd`, `
 
 ## Standalone `.mmd` files
 
-Every diagram below (206 in total) is also available as its own file under [mmd/](mmd/), already rendered to PDF and SVG under [rendered/](rendered/) (tooling in [tools/](tools/)), one folder per source file (for example `mmd/epics/E06-safe-business-tools/04-us-051-customer-asks-for-order-status.mmd`). Each file starts with a `%% Source:` comment naming the Markdown file and heading it came from. The `.md` files stay the readable version; the `.mmd` files are for `mmdc`, mermaid.live, or embedding. If you edit one, update the other.
+Every diagram below (211 in total) is also available as its own file under [mmd/](mmd/), already rendered to PDF and SVG under [rendered/](rendered/) (tooling in [tools/](tools/)), one folder per source file (for example `mmd/epics/E06-safe-business-tools/04-us-051-customer-asks-for-order-status.mmd`). Each file starts with a `%% Source:` comment naming the Markdown file and heading it came from. The `.md` files stay the readable version; the `.mmd` files are for `mmdc`, mermaid.live, or embedding. If you edit one, update the other.
 
 ## Platform-level
 
@@ -34,6 +34,12 @@ Every diagram below (206 in total) is also available as its own file under [mmd/
 | E10 Workflow, routing, SLA | [epics/E10-workflow-routing-sla.md](epics/E10-workflow-routing-sla.md) | US-090, 091, 092 |
 | E11 Integrations and channels | [epics/E11-integrations-and-channels.md](epics/E11-integrations-and-channels.md) | US-100, 101, 102 |
 | E12 Observability, eval, usage | [epics/E12-observability-evaluation-usage.md](epics/E12-observability-evaluation-usage.md) | US-110 to 113 |
+
+## Technology
+
+| File | Contents |
+|---|---|
+| [08-technology.md](08-technology.md) | Technology stack map, a message through the stack, voice stack, delivery toolchain, when each technology arrives |
 
 ## UML models
 

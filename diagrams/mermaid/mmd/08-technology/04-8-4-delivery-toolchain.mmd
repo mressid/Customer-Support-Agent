@@ -1,0 +1,12 @@
+%% Source: 08-technology.md - 8.4 Delivery toolchain
+flowchart TB
+    subgraph B1["Build and verify"]
+        direction LR
+        A["Commit<br/>trunk-based"] --> B["CI<br/>lint, types, unit"] --> C["Integration<br/>Testcontainers"] --> D["Tenant and authz tests<br/>required"] --> E["Security scans<br/>Semgrep, gitleaks, Trivy"]
+    end
+    subgraph B2["Ship and operate"]
+        direction LR
+        F["AI evaluation<br/>release gate"] --> G["Docker image"] --> H["Deploy<br/>Terraform"] --> I["Canary<br/>feature flag"] --> J["Monitor<br/>OpenTelemetry"]
+    end
+    B1 --> B2
+    J -. unhealthy .-> K["Rollback or disable flag"]

@@ -13,7 +13,7 @@ import re
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 ICONS = ROOT / "assets" / "icons"
 BG = ROOT / "assets" / "bg"
-DECKS = ["scrum.html", "product.html", "engineering.html"]
+DECKS = ["scrum.html", "product.html", "engineering.html", "technologies.html"]
 
 EMOJI_ICON = {"🙋": "user", "🎧": "headset", "📊": "chart-column", "🛠️": "wrench", "🩺": "activity",
               "🎲": "dice-5", "🔌": "plug", "🔒": "lock", "✔": "circle-check", "📚": "book-open-check",
@@ -67,6 +67,21 @@ TITLE_ICON = {
     # tiles: data model
     "Access": "users", "Customer and channel": "radio", "Agent": "bot", "Knowledge": "library", "Tools": "wrench",
     "Handoff and tickets": "ticket", "Workflow and SLA": "workflow", "Audit and usage": "scroll-text",
+    # technology deck
+    "TypeScript and NestJS": "code-xml", "PostgreSQL 16": "database", "Row-level security": "shield-check",
+    "pgvector and full-text": "search", "pg-boss": "list-ordered", "Redis and S3 storage": "server",
+    "LLM adapter": "cpu", "Embedding adapter": "layers", "Hybrid retrieval": "library", "Tool contracts": "file-check",
+    "AI regression evaluation": "clipboard-check", "LLM tracing": "eye",
+    "Small model": "zap", "Mid-size model": "cpu", "Large model": "brain",
+    "Preact widget": "message-square", "React console": "settings", "WebSocket and SSE": "radio",
+    "OIDC provider": "key-round", "JWT sessions": "lock", "Email and messaging adapters": "send",
+    "LiveKit and WebRTC": "mic", "STT and TTS adapters": "audio-lines", "Speech-to-speech": "bot",
+    "Connector adapters": "plug", "Secret manager": "key", "Webhook verification": "shield-check",
+    "Zod and Ajv": "check", "File safety": "shield", "Retries and breakers": "refresh-cw",
+    "Vitest and Testcontainers": "flask-conical", "Playwright and k6": "play", "Security scanners": "shield-check",
+    "OpenTelemetry and Grafana": "activity", "CI/CD and Docker": "git-branch", "Terraform and OpenFeature": "sliders-horizontal",
+    "Fits the team": "users", "Proven where it matters": "shield-check", "Security first": "lock",
+    "Portable core": "repeat", "Reasonable cost": "gauge",
 }
 EPIC_ICON = {"E01": "building-2", "E02": "messages-square", "E03": "globe", "E04": "library", "E05": "brain-circuit",
              "E06": "wrench", "E07": "hand-helping", "E08": "ticket", "E09": "mic", "E10": "git-branch",
@@ -138,7 +153,7 @@ def variant_of(gradient):
 def process(path):
     html = path.read_text()
     # drop previous sprite so it is rebuilt
-    html = re.sub(r"<!--ICON-SPRITE-->.*?<!--/ICON-SPRITE-->", "", html, flags=re.S)
+    html = re.sub(r"<!--ICON-SPRITE-->.*?<!--/ICON-SPRITE-->\s*", "", html, flags=re.S)
     USED.clear()
 
     # 1. emoji icons in cards
@@ -192,8 +207,9 @@ def process(path):
         html = html.replace('<div class="hero">', '<div class="hero"><div class="brandbar"><span class="logo-mark">%s</span>'
                             '<span>AI Customer Support Platform</span></div>' % ico(LOGO_ICON), 1)
 
-    # 6. sprite right after <body>
-    html = html.replace("<body>", "<body>\n" + sprite(), 1)
+    # 6. sprite right after <body> (include icons already present in the markup, not only new ones)
+    USED.update(re.findall(r'<use href="#i-([\w-]+)"', html))
+    html = html.replace("<body>", "<body>\n" + sprite() + "\n", 1)
     left = re.findall("[\U0001F300-\U0001FAFF☀-➿⭐✅️]", html)
     path.write_text(html)
     print("%s: icons used %d, emoji left %d" % (path.name, len(USED), len(left)))

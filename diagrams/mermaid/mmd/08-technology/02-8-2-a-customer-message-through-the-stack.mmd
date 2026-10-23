@@ -1,0 +1,15 @@
+%% Source: 08-technology.md - 8.2 A customer message through the stack
+flowchart TB
+    subgraph R1["1. Receive and persist"]
+        direction LR
+        A["Widget<br/>WebSocket"] --> B["NestJS<br/>JWT, Zod, rate limit"] --> C["Postgres transaction<br/>message plus outbox"] --> D["pg-boss job<br/>ai.turn.requested"]
+    end
+    subgraph R2["2. Think and act"]
+        direction LR
+        E["Context builder"] --> F["Retrieval<br/>pgvector, full-text"] --> G["LLM adapter<br/>tool calling"] --> H["Tool service<br/>Ajv, authz, idempotency"] --> I["Connector<br/>timeout, breaker"]
+    end
+    subgraph R3["3. Reply"]
+        direction LR
+        J["Persist reply<br/>citations, usage, audit"] --> K["Delivery<br/>WebSocket push, retry"]
+    end
+    R1 --> R2 --> R3

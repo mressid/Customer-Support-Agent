@@ -548,6 +548,16 @@ def build():
     write("p4-08-security.tex", convert(md("09-security-privacy-reliability.md")))
     write("p4-09-observability.tex", convert(md("10-observability-and-evaluation.md")))
 
+    # ===== Technology report (own part)
+    write("pt-01-stack.tex", convert(md("11-technology-stack.md"),
+          inserts={"Stack at a glance": [mm("08-technology", 1, "Technology stack map")],
+                   "How a request flows": [mm("08-technology", 2, "A customer message through the stack")],
+                   "Voice stack": [mm("08-technology", 3, "Voice stack")]}))
+    write("pt-02-by-task.tex", convert(md("12-technology-by-task.md"),
+          inserts={"Technology by Sprint": [mm("08-technology", 5, "When each technology arrives")]}))
+    write("pt-03-decisions.tex", convert(md("13-technology-decisions.md"),
+          inserts={"Cross-cutting technology": [mm("08-technology", 4, "Delivery toolchain")]}))
+
     # ===== Part V UML
     for f in sorted((PACK / "uml").glob("U*.md")):
         write("p5-%s.tex" % f.name.split("-")[0], convert(f, pack=True))

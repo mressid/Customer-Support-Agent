@@ -42,6 +42,9 @@ A = {  # alias: (folder, 1-based index, keyword that must appear in the file nam
     "handoff-ownership": ("epics/E07-human-handoff", 2, "ownership"),
     "conversation-lifecycle": ("epics/E02-conversation-core", 2, "lifecycle"),
     "ingestion-pipeline": ("epics/E04-knowledge-and-rag", 3, "pipeline"),
+    "tech-stack": ("08-technology", 1, "stack-map"), "tech-request": ("08-technology", 2, "message-through"),
+    "tech-voice": ("08-technology", 3, "voice-stack"), "tech-delivery": ("08-technology", 4, "delivery"),
+    "tech-release": ("08-technology", 5, "when-each"),
 }
 OUT.mkdir(exist_ok=True)
 for f in OUT.glob("*.svg"):

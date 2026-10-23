@@ -1,6 +1,6 @@
 # Presentations (reveal.js)
 
-Three decks, a launcher, and PDF handouts. Everything is local: no CDN, no server needed.
+Four decks, a launcher, PDF handouts, and a link to the full report. Everything is local: no CDN, no server needed.
 
 | File | Audience | Size |
 |---|---|---|
@@ -8,6 +8,8 @@ Three decks, a launcher, and PDF handouts. Everything is local: no CDN, no serve
 | `scrum.html` | team and stakeholders | 28 slides |
 | `product.html` | everyone | 12 chapters, 75 slides (includes an Integrations and tools chapter) |
 | `engineering.html` | developers | 6 chapters, 28 slides |
+| `technologies.html` | whole team | 10 chapters, 40 slides: each technology's role, rule and alternative, by task and by Sprint |
+| `assets/rapport.pdf` | everyone | full report (293 pages), linked from every slide (Report button) and from the launcher |
 | `pdf/*.pdf` | handouts | one page per slide, no animation |
 
 ## Open
@@ -18,7 +20,7 @@ Double-click `index.html` (or any deck) in Chrome, Edge, Firefox or Safari.
 
 `→` `←` next/previous · `↓` `↑` details inside a chapter · `Esc` overview map · `S` speaker notes (second window) · `F` full screen · `I` back to the presentations list · `?` all shortcuts · click a diagram to enlarge (click again or `Esc` to close) · `Alt`+click zoom.
 
-`product.html` and `engineering.html` use vertical stacks: chapters run left to right, details run top to bottom.
+`product.html`, `engineering.html` and `technologies.html` use vertical stacks: chapters run left to right, details run top to bottom.
 
 ## Look
 
@@ -28,8 +30,9 @@ Flat design, no drop shadows. Inter and JetBrains Mono are bundled in `vendor/fo
 
 ```bash
 # after re-rendering diagrams (diagrams/mermaid/tools/render_all.sh):
-python3 presentations/tools/copy_assets.py     # refresh assets/*.svg from rendered diagrams
-python3 presentations/tools/apply_icons.py     # icons, chips, backgrounds (safe to re-run)
+python3 docs/tools/copy_assets.py     # refresh assets/*.svg from rendered diagrams
+python3 docs/tools/build_technologies.py   # regenerate technologies.html from its data
+python3 docs/tools/apply_icons.py     # icons, chips, backgrounds (safe to re-run)
 ```
 
 To export PDFs, open a deck with `?print-pdf` appended (for example `scrum.html?print-pdf`) and print to PDF with background graphics on, margins none, paper 1280x720.

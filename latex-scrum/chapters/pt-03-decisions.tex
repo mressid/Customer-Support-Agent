@@ -1,0 +1,128 @@
+\chapter{Technology Roles, Rules and Decisions}
+
+\section{Roles and usage rules}
+
+Every technology has a defined \textbf{role} (what it is for) and a \textbf{rule} (how the team must use it). The rules protect the architecture constraints: tenant isolation, provider portability, durable commits, and untrusted AI output.
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.216\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.336\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.448\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Technology} & \textbf{Role} & \textbf{Rule} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+TypeScript and NestJS & Application code, module boundaries & Modules talk through interfaces only. No module imports another module's internals. \\
+PostgreSQL & System of record, queue, outbox, vector index & Every tenant table has an organization id and a row-level security policy. No transaction stays open during an external call. \\
+Row-level security & Database-enforced tenant isolation & The application sets the tenant context per request. A missing context returns nothing. \\
+pgvector and full-text search & Knowledge retrieval & Every query carries tenant and source filters. Switching to a dedicated engine needs an ADR and a measured trigger. \\
+pg-boss & Durable jobs, retries, delayed jobs & Jobs are enqueued in the same transaction as the change. Consumers are idempotent. \\
+Redis & Rate limits and short-lived data & Nothing durable lives only in Redis. Keys carry the tenant prefix. \\
+S3-compatible storage & Documents and permitted media & Private by default, signed URLs, tenant prefixes, retention policy per data class. \\
+OIDC provider & Staff login & No password handling in our code. Authorization stays in the application. \\
+JWT with jose & Customer widget session & Short lifetime, scoped claims, verified on every call. Never trust a tenant id from a payload. \\
+LLM adapter & Model access & Vendor types never leave the adapter. Model name, version, latency and usage are recorded. \\
+Embedding adapter & Text vectors & Index and query use the same model version. A model change triggers a re-index plan. \\
+Ajv and JSON Schema & Tool and event contracts & Every tool input and output has a schema with additionalProperties false. Validation runs before execution. \\
+Zod & Application-level validation & Validate at the edge and at adapter boundaries. \\
+Connector adapters & Business-system access & One interface, typed errors, timeout and idempotency. The AI never sees credentials. \\
+Secret manager & Credentials & Reference by id. Never in logs, prompts, traces or the repository. \\
+Preact widget & Customer chat UI & Shadow DOM isolation, no secrets in the bundle, works behind strict CSP. \\
+React console & Agent and admin UI & Server enforces permissions. The UI hides, the API denies. \\
+WebSocket and SSE & Live messages & Streaming is not a committed message. Persist first, push second. \\
+LiveKit and WebRTC & Real-time voice & Access tokens are short-lived and scoped to one conversation. Partial transcripts stay ephemeral. \\
+STT and TTS adapters & Speech & Providers stay behind adapters. Cancel on barge-in. No raw audio stored by default. \\
+OpenTelemetry & Traces, metrics, logs & Every request and job carries trace id, correlation id and tenant id. No personal data in metric labels. \\
+Sentry and Langfuse & Errors and LLM traces & Redact before sending. Sample according to policy. \\
+OpenFeature & Feature flags & Every risky feature ships behind a flag with a known off switch. \\
+Vitest and Testcontainers & Unit and integration tests & Use a real Postgres for tenant and authorization tests. \\
+Playwright & End-to-end tests & Cover the widget and the console critical paths. \\
+promptfoo or custom harness & AI regression evaluation & Deterministic assertions gate release. Model judges are one signal only. \\
+k6 & Load tests & Run before each release against agreed latency budgets. \\
+Semgrep, gitleaks, Trivy & Static and dependency security & Required checks on every merge. \\
+GitHub Actions or GitLab CI & Automation & Trunk-based, small merges, no manual production deploys. \\
+Terraform & Infrastructure as code & Environments are reproducible. Secrets never in state in plain text. \\
+Docker & Packaging & One image runs as API and as worker. \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Cross-cutting technology}
+}{08-technology/04-8-4-delivery-toolchain}{Delivery toolchain}{fig:08-technology-04-8-4-delivery-toolchain-171}
+
+
+\subsection{Security}
+
+\begin{itemize}
+\item Row-level security, tenant-aware repositories, and cross-tenant tests in CI.
+\item Input validation with Zod and Ajv, output validation for model results.
+\item Secrets in a manager, scanned with gitleaks, rotated and revocable.
+\item Webhooks verified by HMAC signature and timestamp, deduplicated by event id.
+\item File uploads checked by content type, size and malware scan.
+\item Prompt injection tests in the evaluation suite and in the security checklist.
+\end{itemize}
+\subsection{Observability}
+
+\begin{itemize}
+\item OpenTelemetry traces across API, worker, model, retrieval and tools.
+\item Structured logs with pino, redaction of sensitive fields, trace ids on every line.
+\item Metrics for latency, errors, queue depth, token usage, cost, and voice quality.
+\item Dashboards and alerts per tenant-safe label set.
+\end{itemize}
+\subsection{Testing and quality}
+
+\begin{itemize}
+\item Test pyramid: unit, integration with real Postgres, contract tests for adapters, end-to-end for UI.
+\item AI evaluation set in Git, run on every agent or prompt change.
+\item Resilience tests: duplicate webhooks, tool timeouts with unknown outcome, provider outages.
+\item Load and recovery drills before Release 1.
+\end{itemize}
+\subsection{Delivery}
+
+\begin{itemize}
+\item Docker image built once and promoted through environments.
+\item Terraform for infrastructure, feature flags for rollout, canary tenants first.
+\item Rollback by disabling a flag or reverting the agent version.
+\end{itemize}
+\section{Decisions to validate}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.241\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.313\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.361\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.084\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Decision} & \textbf{Options to compare} & \textbf{Criteria} & \textbf{When} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+LLM provider and model routing (ADR-005) & Two or three providers and model sizes & Correctness and groundedness on the evaluation set, p95 latency, cost per resolved conversation, data policy & Sprint 4 \\
+Vector search (ADR-004) & pgvector against a dedicated engine & Recall on the evaluation set, p95 latency, operational cost, tenant filter support & Sprint 3 \\
+Queue and outbox (ADR-003) & pg-boss against Redis with BullMQ or a managed queue & Transactional enqueue, throughput, operational load & Sprint 0 and 1 \\
+Authentication (ADR-009) & Keycloak, Auth0, Cognito & Cost, hosting, multi-tenant organizations, customer verification support & Sprint 1 \\
+Speech strategy (ADR-006) & Modular STT and TTS against speech-to-speech & End-of-speech to response latency, language coverage, cost per minute, transcript control, privacy & Sprint 7 \\
+Voice transport and telephony (ADR-007) & LiveKit, Twilio, Daily & Reliability, reconnect behavior, SIP support, handoff capability & Sprint 7 \\
+Retention and consent (ADR-008) & Audio and transcript retention models & Legal basis, product need, cost & Sprint 7 \\
+Workflow engine & Custom state machine against Temporal & Complexity of procedures, retry and timer needs, operational cost & Release 3 \\
+Hosting & Managed containers, Fly.io or Render, Kubernetes & Team skills, cost, isolation, regions & Sprint 0 \\
+\end{longtable}
+}
+
+\section{Lock-in and risk assessment}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.191\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.368\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.441\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Technology} & \textbf{Lock-in risk} & \textbf{Mitigation} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+LLM provider & Medium. Prompts and tool formats differ by vendor. & Adapter interface, provider-neutral tool schemas, evaluation suite to compare models. \\
+Embedding model & Medium. Changing the model needs a full re-index. & Store the model version per chunk and keep a re-index job. \\
+Speech and voice providers & High for speech-to-speech, medium for modular. & Start with one strategy, keep adapters thin, measure before committing. \\
+PostgreSQL features & Low. Open and widely hosted. & Standard SQL where possible, extensions documented. \\
+pgvector & Low to medium. & Retrieval behind an interface and a documented switch trigger. \\
+Cloud services & Medium. & Containers, Terraform modules, S3-compatible API, no cloud-only core dependency. \\
+Observability vendor & Low. & OpenTelemetry as the instrumentation layer. \\
+Feature flag service & Low. & OpenFeature as the client API. \\
+\end{longtable}
+}
+

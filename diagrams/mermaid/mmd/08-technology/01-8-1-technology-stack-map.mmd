@@ -1,0 +1,48 @@
+%% Source: 08-technology.md - 8.1 Technology stack map
+flowchart TB
+    subgraph L1["Clients"]
+        direction TB
+        W["Preact widget"]
+        C["React console"]
+        V["WebRTC voice"]
+    end
+    subgraph L2["Edge"]
+        direction TB
+        E["CDN, WAF, TLS, gateway"]
+    end
+    subgraph L3["Modular monolith: TypeScript, Node.js, NestJS"]
+        direction TB
+        API["support-api<br/>REST, WebSocket"]
+        WK["support-worker<br/>pg-boss jobs"]
+    end
+    subgraph L4["Data services"]
+        direction LR
+        PG[("PostgreSQL<br/>RLS, pgvector")]
+        RD[("Redis")]
+        OS[("S3 storage")]
+    end
+    subgraph L5["Providers behind adapters"]
+        direction LR
+        LLM["LLM"]
+        EMB["Embeddings"]
+        SPC["Speech"]
+        CN["Business connectors"]
+    end
+    subgraph L6["Platform services"]
+        direction LR
+        ID["OIDC login"]
+        SM["Secret manager"]
+        FF["Feature flags"]
+    end
+    subgraph L7["Observability"]
+        direction LR
+        OT["OpenTelemetry"]
+        GF["Grafana or Datadog"]
+        SN["Sentry"]
+        LF["Langfuse"]
+    end
+    L1 --> L2 --> L3
+    L3 --> L4
+    L3 --> L5
+    L3 --> L6
+    L3 -.-> L7

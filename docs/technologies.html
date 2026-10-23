@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Technologies - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<!--ICON-SPRITE--><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></symbol><symbol id="i-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3" /> <path d="M6 6v11" /> <path d="M10 3v18" /> <path d="M14 8v7" /> <path d="M18 5v13" /> <path d="M22 10v3" /></symbol><symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8" /> <rect width="16" height="12" x="4" y="8" rx="2" /> <path d="M2 14h2" /> <path d="M20 14h2" /> <path d="M15 13v2" /> <path d="M9 13v2" /></symbol><symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 18V5" /> <path d="M15 13a4.17 4.17 0 01-3-4 4.17 4.17 0 01-3 4" /> <path d="M17.707 6.294A3 3 0 1012 5a3 3 0 10-5.707 1.294" /> <path d="M17.996 5.125a4 4 0 012.526 5.77" /> <path d="M18 18a4 4 0 002-7.465" /> <path d="M19.967 17.482a4 4 0 11-7.967.517 4 4 0 11-7.967-.517" /> <path d="M6 18a4 4 0 01-2-7.465" /> <path d="M6.004 5.125a4 4 0 00-2.526 5.77" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="m9 14 2 2 4-4" /></symbol><symbol id="i-code-xml" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4" /> <path d="m6 8-4 4 4 4" /> <path d="m14.5 4-5 16" /></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2" /> <path d="M12 2v2" /> <path d="M17 20v2" /> <path d="M17 2v2" /> <path d="M2 12h2" /> <path d="M2 17h2" /> <path d="M2 7h2" /> <path d="M20 12h2" /> <path d="M20 17h2" /> <path d="M20 7h2" /> <path d="M7 20v2" /> <path d="M7 2v2" /> <rect x="4" y="4" width="16" height="16" rx="2" /> <rect x="8" y="8" width="8" height="8" rx="1" /></symbol><symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-file-check" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="m9 15 2 2 4-4" /></symbol><symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /> <path d="M6.453 15h11.094" /> <path d="M8.5 2h7" /></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol><symbol id="i-git-branch" viewBox="0 0 24 24"><path d="M15 6a9 9 0 0 0-9 9V3" /> <circle cx="18" cy="6" r="3" /> <circle cx="6" cy="18" r="3" /></symbol><symbol id="i-key" viewBox="0 0 24 24"><path d="m2 21 9.6-9.6" /> <path d="m7.5 15.5 2.3 2.3a1 1 0 0 1 0 1.4l-2.1 2.1a1 1 0 0 1-1.4 0L4 19" /> <circle cx="15.5" cy="7.5" r="5.5" /></symbol><symbol id="i-key-round" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /> <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol><symbol id="i-library" viewBox="0 0 24 24"><path d="m16 6 4 14" /> <path d="M12 6v14" /> <path d="M8 8v12" /> <path d="M4 4v16" /></symbol><symbol id="i-list-ordered" viewBox="0 0 24 24"><path d="M11 5h10" /> <path d="M11 12h10" /> <path d="M11 19h10" /> <path d="M4 4h1v5" /> <path d="M4 9h2" /> <path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol><symbol id="i-message-square" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></symbol><symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5" /> <path d="M15 8V2" /> <path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z" /> <path d="M9 8V2" /></symbol><symbol id="i-radio" viewBox="0 0 24 24"><path d="M16.247 7.761a6 6 0 0 1 0 8.478" /> <path d="M19.075 4.933a10 10 0 0 1 0 14.134" /> <path d="M4.925 19.067a10 10 0 0 1 0-14.134" /> <path d="M7.753 16.239a6 6 0 0 1 0-8.478" /> <circle cx="12" cy="12" r="2" /></symbol><symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /> <path d="M21 3v5h-5" /> <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /> <path d="M8 16H3v5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4" /> <path d="M3 11v-1a4 4 0 0 1 4-4h14" /> <path d="m7 22-4-4 4-4" /> <path d="M21 13v1a4 4 0 0 1-4 4H3" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2" /> <rect width="20" height="8" x="2" y="14" rx="2" ry="2" /> <line x1="6" x2="6.01" y1="6" y2="6" /> <line x1="6" x2="6.01" y1="18" y2="18" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /> <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></symbol><symbol id="i-sliders-horizontal" viewBox="0 0 24 24"><path d="M10 5H3" /> <path d="M12 19H3" /> <path d="M14 3v4" /> <path d="M16 17v4" /> <path d="M21 12h-9" /> <path d="M21 19h-5" /> <path d="M21 5h-7" /> <path d="M8 10v4" /> <path d="M8 12H3" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /></symbol></svg><!--/ICON-SPRITE-->
+
+<div class="reveal"><div class="slides">
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><div class="brandbar"><span class="logo-mark"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></span><span>AI Customer Support Platform</span></div><div class="kicker">Technology overview</div><h1>The technologies behind the platform</h1>
+  <p>What we use, the role each one plays, the rule for using it, and what it could be swapped for.</p></div>
+  <div class="hint">→ next chapter · ↓ details inside a chapter · Esc overview · I all decks · click a diagram to enlarge</div>
+  <aside class="notes">Everything here is a proposal. Each choice is confirmed or replaced by an architecture decision record. The full detail is in the rapport, Part V.</aside>
+</section>
+<section data-chapter="1 · How we choose">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-01.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 1</div><h1>How we choose</h1><p>Criteria first, products second. Every name here is an example of a category.</p></div>
+  </section>
+  <section >
+<div class="kicker">Status</div><h2>A proposal, confirmed by decisions</h2>
+<blockquote>Each technology is a <strong>recommendation</strong>. It becomes a decision only through an <strong>ADR</strong>, with evidence from a spike or an evaluation.</blockquote>
+<ul class="check small"><li class="fragment">Provider-specific parts live in adapters, never in the core domain</li>
+<li class="fragment">Vendor names, prices, licenses and data policies are verified at ADR time</li>
+<li class="fragment">If the team prefers Python, only the language rows change, not the architecture</li></ul>
+
+  </section>
+  <section >
+<div class="kicker">Selection criteria</div><h2>Six tests every choice must pass</h2>
+<div class="grid g3" style="gap:14px">
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></div><div><b>Fits the team</b><span>Few moving parts, one main language and database</span></div></div>
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><div><b>Proven where it matters</b><span>Mature storage, queues, auth and delivery</span></div></div>
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></div><div><b>Security first</b><span>Cross-tenant access is hard by design</span></div></div>
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-repeat"/></svg></div><div><b>Portable core</b><span>No vendor type inside the domain</span></div></div>
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg></div><div><b>Observable and testable</b><span>Every decision and tool call can be traced and replayed</span></div></div>
+<div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></div><div><b>Reasonable cost</b><span>Start simple, keep a trigger for moving up</span></div></div>
+</div>
+
+  </section>
+  <section >
+<div class="kicker">Assumptions</div><h2>What we assume today</h2>
+<ul class="check small"><li class="fragment">A small team, text MVP first, voice and operations later</li>
+<li class="fragment">TypeScript as the primary language</li>
+<li class="fragment">Cloud-agnostic containers, managed services welcome, no design tied to one cloud</li>
+<li class="fragment">One channel (website chat) and exactly one read-only business tool in the first release</li></ul>
+
+  </section>
+</section>
+<section data-chapter="2 · The stack">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-02.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 2</div><h1>The stack at a glance</h1><p>Seven layers, one modular monolith in the middle.</p></div>
+  </section>
+  <section >
+<h2>The stack in one picture</h2>
+<div class="split tight"><ul>
+<li class="fragment"><b>Clients:</b> widget, console, browser voice</li>
+<li class="fragment"><b>App:</b> one TypeScript codebase, API and worker</li>
+<li class="fragment"><b>Data:</b> PostgreSQL does most of the work</li>
+<li class="fragment"><b>Providers:</b> models, speech and business systems behind adapters</li>
+<li class="fragment"><b>Platform:</b> login, secrets, flags</li>
+<li class="fragment"><b>Observability:</b> traces, metrics, errors</li></ul>
+<figure class="diagram "><img src="assets/tech-stack.svg" alt="Technology stack map"></figure></div>
+
+  </section>
+  <section data-transition="fade">
+<h2>One message through the stack</h2><figure class="diagram "><img src="assets/tech-request.svg" alt="A customer message through the stack"><figcaption>No database transaction is held open while the model or a business system is called</figcaption></figure>
+
+  </section>
+</section>
+<section data-chapter="3 · Backend and data">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-03.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 3</div><h1>Backend and data</h1><p>One language, one database, and rules that keep tenants apart.</p></div>
+  </section>
+  <section >
+<div class="kicker">Application and storage</div><h2>Core building blocks</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-code-xml"/></svg></div><h3>TypeScript and NestJS</h3><p><b>Role</b> application code and module boundaries</p><p><b>Rule</b> modules talk only through interfaces, never through internals</p><p class="muted">Instead of: Python with FastAPI</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></div><h3>PostgreSQL 16</h3><p><b>Role</b> system of record, queue, outbox and vector index</p><p><b>Rule</b> no transaction stays open during an external call</p><p class="muted">Instead of: MySQL, CockroachDB</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>Row-level security</h3><p><b>Role</b> tenant isolation enforced by the database</p><p><b>Rule</b> tenant context is set per request, and a missing context returns nothing</p><p class="muted">Instead of: schema per tenant</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Search, jobs and files</div><h2>Retrieval, work queues and objects</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg></div><h3>pgvector and full-text</h3><p><b>Role</b> knowledge retrieval</p><p><b>Rule</b> every query carries tenant and source filters</p><p class="muted">Instead of: Qdrant, OpenSearch</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg></div><h3>pg-boss</h3><p><b>Role</b> durable jobs, retries and delayed jobs</p><p><b>Rule</b> enqueue in the same transaction as the change, and keep consumers idempotent</p><p class="muted">Instead of: BullMQ, RabbitMQ, SQS</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-server"/></svg></div><h3>Redis and S3 storage</h3><p><b>Role</b> rate limits and short-lived data, documents and media</p><p><b>Rule</b> nothing durable lives only in Redis, objects are private with signed URLs</p><p class="muted">Instead of: in-memory, GCS or Azure Blob</p></div></div>
+
+  </section>
+</section>
+<section data-chapter="4 · AI stack">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-04.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 4</div><h1>The AI stack</h1><p>Models, retrieval, contracts and the evidence that they work.</p></div>
+  </section>
+  <section >
+<div class="kicker">Models and retrieval</div><h2>How the AI gets its answers</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-cpu"/></svg></div><h3>LLM adapter</h3><p><b>Role</b> model access with routing</p><p><b>Rule</b> vendor types never leave the adapter, and model, latency and usage are recorded</p><p class="muted">Instead of: OpenAI, Google, self-hosted</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>Embedding adapter</h3><p><b>Role</b> text vectors for retrieval</p><p><b>Rule</b> index and query use the same model version</p><p class="muted">Instead of: Voyage AI, OpenAI, BGE or E5</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-library"/></svg></div><h3>Hybrid retrieval</h3><p><b>Role</b> find the evidence</p><p><b>Rule</b> vector plus keyword, fused and thresholded, with a reranker only if evaluation shows a gain</p><p class="muted">Instead of: a dedicated search engine</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Model routing, decided by ADR-005</div><h2>Right-sized model for each job</h2>
+<div class="grid g3">
+<div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></div><h3>Small model</h3><p>Intent and risk classification, rolling summaries, handoff bundles.</p></div>
+<div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-cpu"/></svg></div><h3>Mid-size model</h3><p>Customer replies, grounded in retrieved evidence and verified tool results.</p></div>
+<div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-brain"/></svg></div><h3>Large model</h3><p>Hard cases that need more reasoning, and judging evaluation runs.</p></div>
+</div><p class="small muted fragment">Chosen on correctness, groundedness, latency and cost per resolved conversation.</p>
+
+  </section>
+  <section >
+<div class="kicker">Contracts and proof</div><h2>Typed tools and measured quality</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-file-check"/></svg></div><h3>Tool contracts</h3><p><b>Role</b> typed, validated tool calls</p><p><b>Rule</b> schema with additionalProperties false, and validation before execution</p><p class="muted">Instead of: TypeBox, Pydantic</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-clipboard-check"/></svg></div><h3>AI regression evaluation</h3><p><b>Role</b> regression suite and release gate</p><p><b>Rule</b> deterministic assertions gate release, and model judges are one signal only</p><p class="muted">Instead of: DeepEval, a custom runner</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg></div><h3>LLM tracing</h3><p><b>Role</b> replayable traces of model calls</p><p><b>Rule</b> redact before sending, and sample by policy</p><p class="muted">Instead of: LangSmith, OpenTelemetry GenAI conventions</p></div></div>
+
+  </section>
+</section>
+<section data-chapter="5 · Clients and identity">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-05.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 5</div><h1>Clients, channels and identity</h1><p>What customers and staff touch, and how we know who they are.</p></div>
+  </section>
+  <section >
+<div class="kicker">Interfaces</div><h2>Widget, console and live transport</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></div><h3>Preact widget</h3><p><b>Role</b> customer chat on the website</p><p><b>Rule</b> Shadow DOM isolation, no secrets in the bundle, works under a strict CSP</p><p class="muted">Instead of: React</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg></div><h3>React console</h3><p><b>Role</b> agent inbox and admin screens</p><p><b>Rule</b> the UI hides, the API denies</p><p class="muted">Instead of: Vue, Angular</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-radio"/></svg></div><h3>WebSocket and SSE</h3><p><b>Role</b> live messages</p><p><b>Rule</b> persist first, push second</p><p class="muted">Instead of: long polling</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Identity and channels</div><h2>Login, sessions and later channels</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-key-round"/></svg></div><h3>OIDC provider</h3><p><b>Role</b> staff login</p><p><b>Rule</b> no password handling in our code, authorization stays in the app</p><p class="muted">Instead of: Ory, WorkOS</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>JWT sessions</h3><p><b>Role</b> widget session for customers</p><p><b>Rule</b> short lifetime, scoped claims, verified on every call</p><p class="muted">Instead of: opaque tokens</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg></div><h3>Email and messaging adapters</h3><p><b>Role</b> later channels</p><p><b>Rule</b> same canonical event contract as website chat</p><p class="muted">Instead of: other providers</p></div></div>
+
+  </section>
+</section>
+<section data-chapter="6 · Voice">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-green-06.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 6</div><h1>Voice</h1><p>Real-time voice on the same engine and the same authorization.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>The voice stack</h2><figure class="diagram "><img src="assets/tech-voice.svg" alt="Voice stack"><figcaption>Partial transcripts stay ephemeral. Only finalized speech becomes a message.</figcaption></figure>
+
+  </section>
+  <section >
+<div class="kicker">Voice components</div><h2>Media, speech and the alternative</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></div><h3>LiveKit and WebRTC</h3><p><b>Role</b> real-time audio</p><p><b>Rule</b> access tokens are short-lived and scoped to one conversation</p><p class="muted">Instead of: Twilio Voice, Daily</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-audio-lines"/></svg></div><h3>STT and TTS adapters</h3><p><b>Role</b> speech in and speech out</p><p><b>Rule</b> cancel on barge-in, and keep no raw audio by default</p><p class="muted">Instead of: Whisper self-hosted</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></div><h3>Speech-to-speech</h3><p><b>Role</b> low-latency voice option</p><p><b>Rule</b> tool calls still pass through our authorization</p><p class="muted">Instead of: the modular pipeline</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Spike in Sprint 7</div><h2>How we will decide</h2>
+<ul class="check small"><li class="fragment">End-of-speech to response latency</li><li class="fragment">Language coverage</li><li class="fragment">Cost per minute</li><li class="fragment">Control over the transcript</li><li class="fragment">Privacy and retention options</li><li class="fragment">Handoff behavior for the chosen provider</li></ul>
+
+  </section>
+</section>
+<section data-chapter="7 · Integrations and security">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-red-07.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 7</div><h1>Integrations and security</h1><p>Reaching business systems without handing over the keys.</p></div>
+  </section>
+  <section >
+<div class="kicker">Reaching out</div><h2>Connectors, secrets and inbound events</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></div><h3>Connector adapters</h3><p><b>Role</b> reach business systems</p><p><b>Rule</b> one interface, typed errors, timeout and idempotency</p><p class="muted">Instead of: vendor SDKs inside adapters</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-key"/></svg></div><h3>Secret manager</h3><p><b>Role</b> credentials</p><p><b>Rule</b> reference by id, never in logs, prompts or the repository</p><p class="muted">Instead of: Vault, Doppler</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>Webhook verification</h3><p><b>Role</b> trust inbound events</p><p><b>Rule</b> HMAC and timestamp check, deduplicate by event id</p><p class="muted">Instead of: provider SDK verifiers</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Defensive layers</div><h2>Validation, files and resilience</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div><h3>Zod and Ajv</h3><p><b>Role</b> validation at the edges</p><p><b>Rule</b> validate requests, adapter boundaries and model output</p><p class="muted">Instead of: TypeBox</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg></div><h3>File safety</h3><p><b>Role</b> uploads you can trust</p><p><b>Rule</b> content sniffing and a malware scan before indexing, private by default</p><p class="muted">Instead of: managed scanning</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-refresh-cw"/></svg></div><h3>Retries and breakers</h3><p><b>Role</b> survive flaky providers</p><p><b>Rule</b> bounded attempts with jitter, and an open breaker fails fast</p><p class="muted">Instead of: a custom implementation</p></div></div>
+
+  </section>
+</section>
+<section data-chapter="8 · Quality and delivery">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-08.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 8</div><h1>Quality and delivery</h1><p>Test with real databases, scan every change, ship behind flags.</p></div>
+  </section>
+  <section >
+<div class="kicker">Testing and scanning</div><h2>What runs on every change</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-flask-conical"/></svg></div><h3>Vitest and Testcontainers</h3><p><b>Role</b> unit and integration tests</p><p><b>Rule</b> use a real Postgres for tenant and authorization tests</p><p class="muted">Instead of: Jest</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></div><h3>Playwright and k6</h3><p><b>Role</b> end-to-end and load tests</p><p><b>Rule</b> cover widget and console critical paths, and run load tests before each release</p><p class="muted">Instead of: Cypress</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>Security scanners</h3><p><b>Role</b> static, secret and dependency scans</p><p><b>Rule</b> Semgrep, gitleaks and Trivy are required checks on every merge</p><p class="muted">Instead of: Snyk, SonarQube</p></div></div>
+
+  </section>
+  <section >
+<div class="kicker">Running it</div><h2>Observe, build, deploy, roll back</h2><div class="grid g3"><div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg></div><h3>OpenTelemetry and Grafana</h3><p><b>Role</b> traces, metrics and logs</p><p><b>Rule</b> trace id on every request and job, no personal data in labels</p><p class="muted">Instead of: Datadog</p></div><div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-git-branch"/></svg></div><h3>CI/CD and Docker</h3><p><b>Role</b> automation and packaging</p><p><b>Rule</b> trunk-based, no manual production deploys, one image runs as API and worker</p><p class="muted">Instead of: GitLab CI</p></div><div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-sliders-horizontal"/></svg></div><h3>Terraform and OpenFeature</h3><p><b>Role</b> infrastructure and flags</p><p><b>Rule</b> environments are reproducible, and every risky feature ships behind a flag</p><p class="muted">Instead of: Pulumi</p></div></div>
+
+  </section>
+  <section data-transition="fade">
+<h2>From commit to production</h2><figure class="diagram short"><img src="assets/tech-delivery.svg" alt="Delivery toolchain"><figcaption>Gates run in order. An unhealthy canary rolls back or disables the flag.</figcaption></figure>
+
+  </section>
+</section>
+<section data-chapter="9 · Technology by task">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-09.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 9</div><h1>Technology by task</h1><p>Which technologies each epic and Sprint relies on.</p></div>
+  </section>
+  <section >
+<div class="kicker">Epics 1 to 6</div><h2>Technology by epic</h2><table><tr><th>Epic</th><th>Key technologies</th></tr><tr class="fragment"><td>E01 Tenant and access</td><td>Postgres RLS, Testcontainers, OIDC, jose tokens</td></tr><tr class="fragment"><td>E02 Conversation core</td><td>NestJS, WebSocket, Postgres sequences, outbox</td></tr><tr class="fragment"><td>E03 Website chat</td><td>Preact Web Component, JWT sessions, Redis rate limits</td></tr><tr class="fragment"><td>E04 Knowledge and RAG</td><td>S3, ClamAV, pg-boss, pgvector with full-text</td></tr><tr class="fragment"><td>E05 AI orchestration</td><td>State machine, LLM adapter, AbortController, Langfuse</td></tr><tr class="fragment"><td>E06 Safe business tools</td><td>Ajv, connector adapters, idempotency keys, audit table</td></tr></table>
+
+  </section>
+  <section >
+<div class="kicker">Epics 7 to 12</div><h2>Technology by epic</h2><table><tr><th>Epic</th><th>Key technologies</th></tr><tr class="fragment"><td>E07 Human handoff</td><td>SKIP LOCKED claims, WebSocket updates, React console</td></tr><tr class="fragment"><td>E08 Tickets</td><td>Postgres, keyset pagination, TanStack Table</td></tr><tr class="fragment"><td>E09 Voice MVP</td><td>LiveKit, STT and TTS adapters, voice activity detection</td></tr><tr class="fragment"><td>E10 Workflow, routing, SLA</td><td>Workflow state machine, pg-boss timers, Temporal evaluated</td></tr><tr class="fragment"><td>E11 Integrations and channels</td><td>Secret manager, HMAC webhooks, email and messaging adapters</td></tr><tr class="fragment"><td>E12 Observability, evaluation, usage</td><td>OpenTelemetry, Grafana, promptfoo, Langfuse</td></tr></table>
+
+  </section>
+  <section >
+<div class="kicker">Arrival order</div><h2>Technology by Sprint</h2><table><tr><th>Sprint</th><th>Introduced</th></tr><tr class="fragment"><td>Sprint 0</td><td>Docker Compose, CI, Terraform skeleton, migrations, secrets</td></tr><tr class="fragment"><td>Sprint 1</td><td>NestJS, row-level security, audit table, OpenTelemetry, Testcontainers</td></tr><tr class="fragment"><td>Sprint 2</td><td>Preact widget, WebSocket gateway, JWT sessions, Playwright</td></tr><tr class="fragment"><td>Sprint 3</td><td>Object storage, ClamAV, parsers, pg-boss ingestion, pgvector</td></tr><tr class="fragment"><td>Sprint 4</td><td>LLM adapter, structured outputs, citations, evaluation harness</td></tr><tr class="fragment"><td>Sprint 5</td><td>Ajv tool registry, connector with breaker, React console inbox</td></tr><tr class="fragment"><td>Sprint 6</td><td>Dashboards, k6, backup drill, feature flags, evaluation gate</td></tr><tr class="fragment"><td>Sprint 7</td><td>LiveKit, voice activity detection, STT and TTS or speech-to-speech</td></tr><tr class="fragment"><td>Sprint 8</td><td>Transcript sync, barge-in cancellation, cost and latency dashboard</td></tr></table>
+
+  </section>
+  <section data-transition="fade">
+<h2>When each technology arrives</h2><figure class="diagram short"><img src="assets/tech-release.svg" alt="When each technology arrives"><figcaption>Release 1 carries the core stack, voice adds real-time pieces, operations adds channels and workflows</figcaption></figure>
+
+  </section>
+  <section >
+<div class="kicker">Per story</div><h2>43 stories, each with its technologies</h2>
+<p>The report lists the technologies and the approach for every user story and every Sprint.</p>
+<p class="small muted">See the rapport, Part V, chapter "Technology by Task".</p>
+
+  </section>
+</section>
+<section data-chapter="10 · Decisions and risks">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-green-10.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 10</div><h1>Decisions and risks</h1><p>What we still have to validate, and how we limit lock-in.</p></div>
+  </section>
+  <section >
+<div class="kicker">Validate with evidence</div><h2>Decisions to make first</h2><table><tr><th>Decision</th><th>Options to compare</th><th>When</th></tr><tr class="fragment"><td>LLM provider and routing</td><td>Two or three providers and model sizes</td><td>Sprint 4</td></tr><tr class="fragment"><td>Vector search</td><td>pgvector against a dedicated engine</td><td>Sprint 3</td></tr><tr class="fragment"><td>Queue and outbox</td><td>pg-boss against Redis with BullMQ</td><td>Sprints 0 and 1</td></tr><tr class="fragment"><td>Authentication</td><td>Keycloak, Auth0, Cognito</td><td>Sprint 1</td></tr><tr class="fragment"><td>Hosting</td><td>Managed containers, Fly.io or Render, Kubernetes</td><td>Sprint 0</td></tr></table>
+
+  </section>
+  <section >
+<div class="kicker">Validate with evidence</div><h2>Decisions to make later</h2><table><tr><th>Decision</th><th>Options to compare</th><th>When</th></tr><tr class="fragment"><td>Speech strategy</td><td>Modular STT and TTS against speech-to-speech</td><td>Sprint 7</td></tr><tr class="fragment"><td>Voice transport and telephony</td><td>LiveKit, Twilio, Daily</td><td>Sprint 7</td></tr><tr class="fragment"><td>Retention and consent</td><td>Audio and transcript retention models</td><td>Sprint 7</td></tr><tr class="fragment"><td>Workflow engine</td><td>Custom state machine against Temporal</td><td>Release 3</td></tr></table>
+
+  </section>
+  <section >
+<div class="kicker">Keeping options open</div><h2>Lock-in and mitigation</h2><table><tr><th>Technology</th><th>Lock-in</th><th>Mitigation</th></tr><tr class="fragment"><td>LLM provider</td><td>Medium</td><td>Adapter, provider-neutral tool schemas, evaluation suite to compare models</td></tr><tr class="fragment"><td>Embedding model</td><td>Medium</td><td>Store the model version per chunk and keep a re-index job</td></tr><tr class="fragment"><td>Speech and voice</td><td>High for speech-to-speech</td><td>One strategy first, thin adapters, measure before committing</td></tr><tr class="fragment"><td>PostgreSQL and pgvector</td><td>Low to medium</td><td>Standard SQL, retrieval behind an interface, documented switch trigger</td></tr><tr class="fragment"><td>Cloud services</td><td>Medium</td><td>Containers, Terraform modules, S3-compatible API</td></tr><tr class="fragment"><td>Observability and flags</td><td>Low</td><td>OpenTelemetry and OpenFeature as the client layers</td></tr></table>
+
+  </section>
+</section>
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><h1>Choose boring where it matters</h1>
+  <p>Spend the novelty on AI behavior, and keep everything else proven, portable and observable.</p>
+  <p class="small">Full detail: <a href="assets/rapport.pdf">rapport.pdf</a>, Part V.</p></div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/zoom/zoom.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>
