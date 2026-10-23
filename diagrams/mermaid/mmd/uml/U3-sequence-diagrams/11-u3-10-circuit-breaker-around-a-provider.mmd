@@ -1,0 +1,18 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.10 Circuit breaker around a provider
+sequenceDiagram
+    participant S as Service
+    participant CB as Circuit breaker
+    participant P as Provider
+
+    S->>CB: call
+    CB->>P: forward (closed)
+    P--xCB: timeout
+    CB->>CB: failures = threshold, state = open
+    S->>CB: call
+    CB-->>S: fail fast (open)
+    Note over CB: after cool-down state = half-open
+    S->>CB: call
+    CB->>P: trial request
+    P-->>CB: ok
+    CB->>CB: state = closed
+    CB-->>S: result

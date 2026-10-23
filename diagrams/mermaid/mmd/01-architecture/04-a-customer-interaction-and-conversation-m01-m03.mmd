@@ -1,0 +1,9 @@
+%% Source: 01-architecture.md - A. Customer interaction and conversation (M01–M03)
+flowchart LR
+    M02["M02 Channel Management<br/>adapters, webhooks, delivery"]
+    M01["M01 Conversation Management<br/>lifecycle, turns, messages"]
+    M03["M03 Customer Identity<br/>profiles, contacts, consent"]
+    M02 -->|canonical inbound event| M01
+    M01 -->|delivery command| M02
+    M01 -->|resolve customer| M03
+    M02 -->|provider identity| M03

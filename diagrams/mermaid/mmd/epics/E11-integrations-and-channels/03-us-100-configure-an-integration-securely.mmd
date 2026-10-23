@@ -1,0 +1,21 @@
+%% Source: epics/E11-integrations-and-channels.md - US-100 — Configure an integration securely
+sequenceDiagram
+    actor Admin
+    participant UI
+    participant API
+    participant SM as Secret manager
+    participant IH as Integration hub
+    participant EXT as External system
+
+    Admin->>UI: choose connector, enter credentials
+    UI->>API: submit
+    API->>SM: store secret, get ref
+    API->>IH: create Integration with secret_ref only
+    Admin->>UI: test connection
+    UI->>API: test
+    API->>IH: run health check
+    IH->>SM: resolve ref in memory
+    IH->>EXT: lightweight authenticated call
+    EXT-->>IH: ok or error
+    IH-->>UI: status healthy or failing with safe message
+    Note over IH: scheduled health checks update status and rate-limit counters

@@ -1,0 +1,7 @@
+%% Source: 04-voice-multimodal.md - Option B — speech-to-speech
+flowchart LR
+    MIC["Customer audio"] <--> T["M07 transport"] <--> S2S["M08 realtime multimodal model"]
+    S2S -->|tool call request| TS["Tool Execution Service<br/>same authorization model"]
+    TS --> S2S
+    S2S -->|transcripts and events| M09["M09 Transcript sync"] --> CONV["M01 Conversation"]
+    CONV -. policy and state .-> S2S

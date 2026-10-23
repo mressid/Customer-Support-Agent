@@ -1,0 +1,25 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.5 Human handoff with context
+sequenceDiagram
+    actor C as Customer
+    participant AI as AI Engine
+    participant HS as Handoff service
+    participant RT as Routing and SLA
+    participant IN as Inbox
+    actor A as Agent
+    participant CV as Conversation
+
+    C->>AI: "I need a human"
+    AI->>HS: request(reason=customer_requested)
+    HS->>CV: set HandoffPending, pause AI
+    HS->>HS: prepare bundle (policy filtered)
+    HS->>RT: choose queue and SLA
+    RT-->>HS: queue Q2, targets
+    HS->>IN: enqueue with bundle
+    HS-->>C: status message
+    A->>IN: claim (optimistic lock)
+    IN->>CV: owner = human
+    IN-->>A: bundle and timeline
+    A->>CV: reply
+    CV-->>C: agent message
+    A->>IN: resolve
+    IN->>CV: Resolved, record ownership change

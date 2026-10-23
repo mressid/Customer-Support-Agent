@@ -1,0 +1,17 @@
+%% Source: 01-architecture.md - 1.2 Logical layers
+flowchart TB
+    L1["1 Edge and channel adapters<br/>widget, webhooks, voice transport, email/messaging"]
+    L2["2 Application API<br/>authN, tenant resolution, validation, rate limiting"]
+    L3["3 Conversation domain<br/>sessions, messages, turns, lifecycle"]
+    L4["4 AI orchestration<br/>model routing, policy, retrieval, tool planning, response"]
+    L5["5 Capability modules<br/>knowledge, tools, workflow, tickets, human inbox"]
+    L6["6 Infrastructure adapters<br/>SQL, object storage, vector index, queue, LLM, speech"]
+    X["7 Cross-cutting<br/>security, audit, observability, evaluation, usage"]
+
+    L1 --> L2 --> L3 --> L4 --> L5 --> L6
+    X -.-> L1
+    X -.-> L2
+    X -.-> L3
+    X -.-> L4
+    X -.-> L5
+    X -.-> L6

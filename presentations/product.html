@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Product - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css">
+<link rel="stylesheet" href="vendor/reveal/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<!--ICON-SPRITE--><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></symbol><symbol id="i-archive" viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1" /> <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" /> <path d="M10 12h4" /></symbol><symbol id="i-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3" /> <path d="M6 6v11" /> <path d="M10 3v18" /> <path d="M14 8v7" /> <path d="M18 5v13" /> <path d="M22 10v3" /></symbol><symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M4.929 4.929 19.07 19.071" /></symbol><symbol id="i-book-open-check" viewBox="0 0 24 24"><path d="M12 5v16" /> <path d="m16 12 2 2 4-4" /> <path d="M22 6V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2h4.001A2 2 0 0022 17v-1.344" /></symbol><symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8" /> <rect width="16" height="12" x="4" y="8" rx="2" /> <path d="M2 14h2" /> <path d="M20 14h2" /> <path d="M15 13v2" /> <path d="M9 13v2" /></symbol><symbol id="i-brain-circuit" viewBox="0 0 24 24"><path d="M12 13h4" /> <path d="M12 18h6a2 2 0 012 2v1" /> <path d="M12 8h8" /> <path d="M12 9a4.17 4.17 0 01-3 4" /> <path d="M16 8V5a2 2 0 012-2" /> <path d="M6 18a4 4 0 01-2-7.465" /> <path d="M6.004 5.125a4 4 0 00-2.526 5.77" /> <path d="M6.294 6.294A3 3 0 1112 5v13a4 4 0 11-7.967-.518" /> <circle cx="16" cy="13" r="0.5" fill="currentColor" /> <circle cx="18" cy="3" r="0.5" fill="currentColor" /> <circle cx="20" cy="21" r="0.5" fill="currentColor" /> <circle cx="20" cy="8" r="0.5" fill="currentColor" /></symbol><symbol id="i-building-2" viewBox="0 0 24 24"><path d="M10 12h4" /> <path d="M10 8h4" /> <path d="M14 21v-3a2 2 0 0 0-4 0v3" /> <path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2" /> <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-chart-column" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m16 9-5.5 5.5L8 12" /></symbol><symbol id="i-circle-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2" /> <path d="M12 2v2" /> <path d="M17 20v2" /> <path d="M17 2v2" /> <path d="M2 12h2" /> <path d="M2 17h2" /> <path d="M2 7h2" /> <path d="M20 12h2" /> <path d="M20 17h2" /> <path d="M20 7h2" /> <path d="M7 20v2" /> <path d="M7 2v2" /> <rect x="4" y="4" width="16" height="16" rx="2" /> <rect x="8" y="8" width="8" height="8" rx="1" /></symbol><symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /></symbol><symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" /> <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></symbol><symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z" /> <path d="M21 16v2a4 4 0 0 1-4 4h-5" /></symbol><symbol id="i-heart-pulse" viewBox="0 0 24 24"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" /> <path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" /></symbol><symbol id="i-inbox" viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /> <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></symbol><symbol id="i-key-round" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /> <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol><symbol id="i-library" viewBox="0 0 24 24"><path d="m16 6 4 14" /> <path d="M12 6v14" /> <path d="M8 8v12" /> <path d="M4 4v16" /></symbol><symbol id="i-life-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m4.93 4.93 4.24 4.24" /> <path d="m14.83 9.17 4.24-4.24" /> <path d="m14.83 14.83 4.24 4.24" /> <path d="m9.17 14.83-4.24 4.24" /> <circle cx="12" cy="12" r="4" /></symbol><symbol id="i-lightbulb" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /> <path d="M9 18h6" /> <path d="M10 22h4" /></symbol><symbol id="i-message-square" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></symbol><symbol id="i-messages-square" viewBox="0 0 24 24"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /> <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" /></symbol><symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /></symbol><symbol id="i-octagon-alert" viewBox="0 0 24 24"><path d="M12 16h.01" /> <path d="M12 8v4" /> <path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5" /> <path d="M15 8V2" /> <path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z" /> <path d="M9 8V2" /></symbol><symbol id="i-radio" viewBox="0 0 24 24"><path d="M16.247 7.761a6 6 0 0 1 0 8.478" /> <path d="M19.075 4.933a10 10 0 0 1 0 14.134" /> <path d="M4.925 19.067a10 10 0 0 1 0-14.134" /> <path d="M7.753 16.239a6 6 0 0 1 0-8.478" /> <circle cx="12" cy="12" r="2" /></symbol><symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /> <path d="M21 3v5h-5" /> <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /> <path d="M8 16H3v5" /></symbol><symbol id="i-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4" /> <path d="M3 11v-1a4 4 0 0 1 4-4h14" /> <path d="m7 22-4-4 4-4" /> <path d="M21 13v1a4 4 0 0 1-4 4H3" /></symbol><symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /> <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /> <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /> <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3" /> <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /> <circle cx="18" cy="5" r="3" /></symbol><symbol id="i-scroll-text" viewBox="0 0 24 24"><path d="M15 12h-5" /> <path d="M15 8h-5" /> <path d="M19 17V5a2 2 0 0 0-2-2H4" /> <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" /></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></symbol><symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z" /> <path d="m21.854 2.147-10.94 10.939" /></symbol><symbol id="i-settings" viewBox="0 0 24 24"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915" /> <circle cx="12" cy="12" r="3" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /> <path d="M13 5v2" /> <path d="M13 17v2" /> <path d="M13 11v2" /></symbol><symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" /> <line x1="12" x2="15" y1="14" y2="11" /> <circle cx="12" cy="14" r="8" /></symbol><symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /> <path d="M12 9v4" /> <path d="M12 17h.01" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></symbol><symbol id="i-user-check" viewBox="0 0 24 24"><path d="m16 11 2 2 4-4" /> <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <circle cx="9" cy="7" r="4" /></symbol><symbol id="i-user-x" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <circle cx="9" cy="7" r="4" /> <line x1="17" x2="22" y1="8" y2="13" /> <line x1="22" x2="17" y1="8" y2="13" /></symbol><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /> <path d="M16 3.128a4 4 0 0 1 0 7.744" /> <path d="M22 21v-2a4 4 0 0 0-3-3.87" /> <circle cx="9" cy="7" r="4" /></symbol><symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></symbol><symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" /></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /></symbol></svg><!--/ICON-SPRITE-->
+<div class="reveal"><div class="slides">
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><div class="brandbar"><span class="logo-mark"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></span><span>AI Customer Support Platform</span></div><div class="kicker">Product overview</div><h1>An AI-native customer support platform</h1>
+  <p>Text and voice conversations, answers grounded in your knowledge, authorized actions, and a human whenever it matters.</p></div>
+  <div class="hint">→ next chapter · ↓ details within a chapter · Esc overview · S speaker notes · I all decks</div>
+  <aside class="notes">Navigation tip: the deck has chapters left to right, and details inside each chapter top to bottom. Press Esc for the overview map.</aside>
+</section>
+<section data-chapter="1 · Vision">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-01.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 1</div><h1>Vision and users</h1><p>What we are building, for whom, and the principles we will not trade away.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Vision</div><h2>Complete conversations, not just chatbot replies</h2>
+  <blockquote>Conduct complete, context-aware customer conversations over <strong>text and voice</strong>, answer from <strong>trusted business knowledge</strong>, perform <strong>explicitly authorized actions</strong>, and <strong>transfer to humans</strong> when appropriate.</blockquote>
+  <div class="grid g3">
+   <div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></div><h3>Faster correct answers</h3><p>Reduce time to a correct answer for repetitive requests.</p></div>
+   <div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></div><h3>Humans stay one step away</h3><p>Resolve routine work without ever removing access to people.</p></div>
+   <div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-scroll-text"/></svg></div><h3>Auditable AI</h3><p>Every action is permission-controlled and recorded.</p></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Users</div><h2>Five kinds of people</h2>
+  <div class="grid g5" style="gap:12px">
+   <div class="card brand fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg></div><h3>Customer</h3><p>Asks questions or requests an action.</p></div>
+   <div class="card accent fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-headset"/></svg></div><h3>Support agent</h3><p>Reviews, takes over, resolves.</p></div>
+   <div class="card amber fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-chart-column"/></svg></div><h3>Support lead</h3><p>Queues, policies, reporting, quality.</p></div>
+   <div class="card brand fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></div><h3>Org admin</h3><p>Channels, knowledge, agents, integrations, access.</p></div>
+   <div class="card accent fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-activity"/></svg></div><h3>Platform operator</h3><p>Reliability, cost, abuse, health.</p></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Principles</div><h2>Eight principles</h2>
+  <div class="grid g4" style="gap:12px">
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></div><div><b>Conversation first</b><span>One durable record; channels only deliver</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-audio-lines"/></svg></div><div><b>Same brain for text and voice</b><span>One orchestration and authorization model</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-book-open-check"/></svg></div><div><b>Grounded answers</b><span>Approved knowledge, honest uncertainty</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><div><b>Safe actions</b><span>Models propose, application code authorizes</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-life-buoy"/></svg></div><div><b>Human escape hatch</b><span>Customer-requested or policy-driven</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-building-2"/></svg></div><div><b>Tenant isolation by default</b><span>Data, search, tools, events, analytics</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg></div><div><b>Observable and testable</b><span>Decisions, tools, handoffs, failures measured</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-repeat"/></svg></div><div><b>Provider portability</b><span>Models, speech, channels behind adapters</span></div></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">How we will know</div><h2>Success measures</h2>
+  <ul class="check small">
+   <li class="fragment">Correct-answer rate on a curated evaluation set, and groundedness</li>
+   <li class="fragment">Task completion rate, human escalation rate segmented by reason</li>
+   <li class="fragment">Median and p95 response latency, tool success rate</li>
+   <li class="fragment">Customer satisfaction and cost per resolved conversation</li>
+   <li class="fragment">Availability and message-delivery success</li></ul>
+
+  </section>
+</section>
+<section data-chapter="2 · Customer experience">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-02.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 2</div><h1>The customer experience</h1><p>One conversation that can switch between text, voice and a person.</p></div>
+  </section>
+  <section >
+  <div class="kicker">A conversation</div><h2>From question to resolution</h2>
+  <div class="steps" style="font-size:.95em">
+   <div class="step fragment" data-n="1"><b>Ask</b>Website chat today, voice and email later</div>
+   <div class="step fragment" data-n="2"><b>Understand</b>Context from the conversation and customer</div>
+   <div class="step fragment" data-n="3"><b>Answer</b>From approved knowledge, with sources</div>
+   <div class="step fragment" data-n="4"><b>Act</b>Authorized lookup or action, confirmed by the tool</div>
+   <div class="step fragment" data-n="5"><b>Escalate</b>A person takes over with full context</div>
+  </div>
+  <p class="small muted fragment" style="margin-top:1.4em">History survives channel changes where identity can be safely linked.</p>
+
+  </section>
+  <section >
+  <div class="kicker">Use cases</div><h2>What each person can do</h2>
+  <div class="grid g4" style="gap:12px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg></div><h3>Customer</h3><ul><li>Ask a question</li><li>Check an order</li><li>Ask for a human</li><li>Talk by voice</li></ul></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-headset"/></svg></div><h3>Support agent</h3><ul><li>See the queue</li><li>Take over with context</li><li>Resolve, create tickets</li></ul></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg></div><h3>Admin</h3><ul><li>Configure agent and channels</li><li>Upload knowledge</li><li>Manage users and tools</li></ul></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-chart-column"/></svg></div><h3>Lead and operator</h3><ul><li>Routing and SLA</li><li>Quality and reports</li><li>Health, cost, abuse</li></ul></div>
+  </div>
+  </section>
+  <section >
+  <div class="kicker">Scope</div><h2>First release and what waits</h2>
+  <div class="grid g2">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-rocket"/></svg></div><h3>In the MVP (text)</h3><ul class="check"><li>Organization and access foundation</li><li>Website text chat</li><li>Knowledge ingestion and retrieval</li><li>AI orchestration with grounded answers</li><li>One read-only business tool</li><li>Human handoff and inbox, basic tickets</li><li>Audit, logs, metrics, traces, usage</li></ul></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></div><h3>Later</h3><ul><li>Real-time browser voice (STT/TTS or speech-to-speech)</li><li>Email and messaging channels</li><li>Workflow builder, routing, SLA</li><li>More connectors and write-capable tools</li><li>Advanced analytics, evaluation, billing, governance</li></ul></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Boundaries</div><h2>Explicit non-goals for the first milestone</h2>
+  <ul class="cross small"><li>Replacing every existing CRM or helpdesk</li><li>Arbitrary autonomous changes to customer accounts</li><li>Unreviewed financial transactions</li><li>Supporting every channel and provider at launch</li><li>Training a foundation model</li><li>Splitting every module into a microservice</li></ul>
+
+  </section>
+</section>
+<section data-chapter="3 · Architecture">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-03.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 3</div><h1>Architecture</h1><p>A modular monolith with strict module boundaries, ready to split only when it pays off.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>The system in context</h2><figure class="diagram short"><img src="assets/system-context.svg" alt="System context"><figcaption>People on the left, providers on the right, one platform in the middle</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Recommended start</div><h2>Modular monolith first</h2>
+  <div class="split tight"><ul>
+   <li class="fragment">One deployment, strict module packages and interfaces</li>
+   <li class="fragment">Relational database for transactional state</li>
+   <li class="fragment">Queue and worker for retryable, slow work</li>
+   <li class="fragment">Vector search and object storage behind adapters</li>
+   <li class="fragment">Extract a service only for independent scaling, fault isolation or deploy cadence. Voice streaming is the likely first candidate.</li></ul>
+   <figure class="diagram "><img src="assets/deployables.svg" alt="MVP deployable components"></figure></div>
+
+  </section>
+  <section >
+  <div class="kicker">20 modules</div><h2>Five domains</h2>
+  <div class="grid g5" style="gap:10px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-messages-square"/></svg></div><h3>Customer interaction</h3><p>M01 Conversation<br>M02 Channels<br>M03 Customer identity</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></div><h3>AI and voice</h3><p>M04 AI engine<br>M05 Knowledge and RAG<br>M06 Tools and actions<br>M07 Voice sessions<br>M08 Speech<br>M09 Transcript sync</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-headset"/></svg></div><h3>Support operations</h3><p>M10 Human inbox<br>M11 Tickets<br>M12 Workflows<br>M13 Routing and SLA<br>M14 Notifications</p></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></div><h3>Integrations and insight</h3><p>M15 Integration hub<br>M16 Analytics<br>M17 AI evaluation</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>Platform</h3><p>M18 Orgs, users, access<br>M19 Agent configuration<br>M20 Security, audit, telemetry, usage</p></div>
+  </div>
+
+  </section>
+  <section data-transition="fade">
+<h2>How modules depend on each other</h2><figure class="diagram short"><img src="assets/module-deps.svg" alt="Module dependencies"><figcaption>Direct calls for short local requests, events and jobs for slow or retryable work</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Rules of the road</div><h2>Architecture constraints</h2>
+  <ul class="check small">
+   <li class="fragment">The core domain never depends on one LLM or messaging vendor</li>
+   <li class="fragment">Every request and job carries a trace id and tenant context</li>
+   <li class="fragment">Durable state is committed before a webhook is acknowledged</li>
+   <li class="fragment">Never hold a database transaction open while waiting for an LLM or provider</li>
+   <li class="fragment">Streaming tokens or audio are not the same as a committed final message</li></ul>
+
+  </section>
+</section>
+<section data-chapter="4 · AI engine">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-04.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 4</div><h1>The AI conversation engine</h1><p>One turn at a time: understand, retrieve, act, answer, and know when to stop.</p></div>
+  </section>
+  <section >
+  <div class="kicker">One customer turn</div><h2>Four phases</h2>
+  <div class="steps" style="font-size:.95em">
+   <div class="step fragment" data-n="1"><b>Prepare</b>Trusted tenant, customer and agent version. Check conversation state. Build minimal context.</div>
+   <div class="step fragment" data-n="2"><b>Understand</b>Classify intent and risk. Retrieve approved knowledge.</div>
+   <div class="step fragment" data-n="3"><b>Act</b>Plan with the allowed tools. Validate, authorize, execute, check results.</div>
+   <div class="step fragment" data-n="4"><b>Respond</b>Write from verified results, apply safety rules, persist, emit events.</div>
+  </div>
+
+  </section>
+  <section data-transition="fade">
+<h2>The turn as a state machine</h2><figure class="diagram tall"><img src="assets/turn-state.svg" alt="Turn state machine"><figcaption>Retrieval and tool results loop back into deciding. Failures go to recovery, then retry or human.</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">The core safety rule</div><h2>AI proposes. Code disposes.</h2>
+  <div class="grid g3">
+   <div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></div><h3>The model may</h3><ul><li>Interpret intent</li><li>Suggest a tool call</li><li>Draft a reply from evidence</li></ul></div>
+   <div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>The application enforces</h3><ul><li>Tool allowlist per agent version</li><li>Argument schemas</li><li>Tenant and customer authorization</li><li>Approval for sensitive actions</li></ul></div>
+   <div class="card red fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-ban"/></svg></div><h3>Never</h3><ul><li>Trust identity claims from the model</li><li>Run model-generated code</li><li>Say an action succeeded before the tool confirms it</li></ul></div>
+  </div>
+
+  </section>
+  <section data-transition="fade">
+<h2>What the model is allowed to trust</h2><figure class="diagram short"><img src="assets/trust-levels.svg" alt="Trust levels"><figcaption>Customer text, retrieved passages and tool results are data, never instructions</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>When we hand over to a person</h2><figure class="diagram short"><img src="assets/escalation.svg" alt="Escalation conditions"><figcaption>Any one condition is enough. The reason is recorded for metrics.</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Agents are versioned and released like software</h2><figure class="diagram short"><img src="assets/agent-lifecycle.svg" alt="Agent version lifecycle"><figcaption>Draft, validate, evaluate, publish as immutable, deploy, roll back</figcaption></figure>
+
+  </section>
+</section>
+<section data-chapter="5 · Knowledge">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-05.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 5</div><h1>Knowledge and retrieval</h1><p>Answers come from organization-approved sources, with citations, scoped to the tenant.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Ingestion, asynchronous and retryable</div><h2>From file to searchable knowledge</h2>
+  <div class="steps" style="font-size:.9em">
+   <div class="step fragment" data-n="1"><b>Upload</b>Size, type and content checks, malware scan</div>
+   <div class="step fragment" data-n="2"><b>Parse</b>By file type</div>
+   <div class="step fragment" data-n="3"><b>Chunk</b>With section metadata</div>
+   <div class="step fragment" data-n="4"><b>Embed</b>Through the model adapter</div>
+   <div class="step fragment" data-n="5"><b>Index</b>With tenant, source and version</div>
+   <div class="step fragment rel" data-n="6"><b>Activate</b>Old version superseded</div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Retrieval</div><h2>Tenant filter is mandatory</h2>
+  <ul class="check small"><li class="fragment">Every search carries tenant and allowed-source filters. There is no unfiltered path.</li><li class="fragment">Results are thresholded, deduplicated and returned with source ids and versions.</li><li class="fragment">Deleting a source removes it from retrieval immediately, then from the index, storage and caches.</li><li class="fragment">A cross-tenant retrieval test runs in CI.</li></ul>
+
+  </section>
+  <section >
+  <div class="kicker">Honest answers</div><h2>Grounded, or clearly not</h2>
+  <div class="grid g2">
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-circle-check"/></svg></div><h3>Evidence is good</h3><ul class="check"><li>Answer from the passages only</li><li>Cite the sources</li><li>Separate policy text from live data</li></ul></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-circle-help"/></svg></div><h3>Evidence is missing or conflicting</h3><ul><li>Say it is not found, never imply a source</li><li>Ask a clarifying question</li><li>Offer a ticket or a human</li></ul></div>
+  </div>
+
+  </section>
+</section>
+<section data-chapter="6 · Integrations and tools">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-green-06.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 6</div><h1>Integrations and business tools</h1><p>How the AI reaches business systems safely: tool contracts, authorization, connectors, webhooks and channels.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>Three layers between the AI and a business system</h2><figure class="diagram short"><img src="assets/three-layer.svg" alt="Three-layer connector architecture"><figcaption>The AI never receives credentials or unrestricted HTTP access</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Layer 1</div><h2>A tool is a contract</h2>
+  <div class="split tight">
+  <pre><code class="language-json" data-trim data-noescape>{
+  "name": "orders.lookup",
+  "version": 1,
+  "risk": "read_only",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "order_reference": { "type": "string",
+        "minLength": 3, "maxLength": 80 }
+    },
+    "required": ["order_reference"],
+    "additionalProperties": false
+  },
+  "output_schema": {
+    "required": ["status", "estimated_delivery"]
+  }
+}</code></pre>
+  <ul>
+   <li>Stable name and version</li><li>Input and output JSON schemas</li><li>Risk level and required permission</li><li>Timeout, retry, idempotency</li><li>Audit and redaction policy</li><li>Allowed agents and tenants</li></ul></div>
+
+  </section>
+  <section >
+  <div class="kicker">Before any tool runs</div><h2>Five gates, enforced in code</h2>
+  <div class="steps" style="font-size:.88em">
+   <div class="step fragment" data-n="1"><b>Allowlisted?</b>The tool belongs to this agent version</div>
+   <div class="step fragment" data-n="2"><b>Valid input?</b>Arguments match the JSON schema</div>
+   <div class="step fragment" data-n="3"><b>Trusted context</b>Tenant, customer and conversation come from the system, never the model</div>
+   <div class="step fragment" data-n="4"><b>Verified and permitted?</b>Customer verified for this data, caller holds the permission</div>
+   <div class="step fragment" data-n="5"><b>Risk check</b>Read-only runs, reversible write asks the customer, sensitive write needs a human</div>
+  </div>
+  <p class="small muted fragment" style="margin-top:1.2em">Any "no" stops the call, writes an audit record and returns a typed denial.</p>
+  </section>
+  <section >
+  <div class="kicker">Risk levels</div><h2>How much care each tool needs</h2>
+  <table><tr><th>Level</th><th>Example</th><th>Control</th></tr>
+  <tr class="fragment"><td><span class="pill green">Read only</span></td><td>Order status lookup</td><td>Schema, allowlist, customer verification, audit</td></tr>
+  <tr class="fragment"><td><span class="pill amber">Reversible write</span></td><td>Cancel a pending subscription</td><td>Customer confirmation, idempotency key, audit</td></tr>
+  <tr class="fragment"><td><span class="pill" style="background:#f6dcd9;color:#b3382c">Sensitive write</span></td><td>Change address or issue refund</td><td>Human approval, idempotency, full audit</td></tr></table>
+  <p class="small muted fragment">First release: exactly one read-only tool.</p>
+
+  </section>
+  <section >
+  <div class="kicker">Execution</div><h2>What the tool service does</h2>
+  <div class="grid g2">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-circle-check"/></svg></div><h3>Happy path</h3><ul class="check"><li>Record the execution with its idempotency key</li><li>Call the connector with a timeout, no open DB transaction</li><li>Validate the output schema and redact</li><li>Store the result and an audit event</li><li>Return a minimal typed result to the AI</li></ul></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-triangle-alert"/></svg></div><h3>When it goes wrong</h3><ul><li><b>Read times out:</b> retry with backoff</li><li><b>Write times out:</b> mark <code>unknown</code>, look up status or send to review</li><li>The AI must not claim success until the tool confirms it</li></ul></div>
+  </div>
+  </section>
+  <section >
+  <div class="kicker">Failure handling</div><h2>Retry only what is safe</h2>
+  <div class="grid g3">
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-refresh-cw"/></svg></div><h3>Retry with backoff</h3><ul><li><code>RATE_LIMITED</code></li><li><code>PROVIDER_UNAVAILABLE</code></li><li><code>TIMEOUT</code> on a read</li></ul><p class="muted">Bounded attempts, jitter, then dead-letter.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-octagon-alert"/></svg></div><h3>Never retry blindly</h3><ul><li><code>TIMEOUT</code> on a write becomes <code>UNKNOWN_OUTCOME</code></li></ul><p class="muted">Look up the status by idempotency key, or send to human review.</p></div>
+   <div class="card red"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-ban"/></svg></div><h3>Not retryable</h3><ul><li><code>AUTHENTICATION_FAILED</code></li><li><code>AUTHORIZATION_DENIED</code></li><li><code>VALIDATION_FAILED</code>, <code>NOT_FOUND</code>, <code>CONFLICT</code></li></ul></div>
+  </div>
+  </section>
+  <section >
+  <div class="kicker">Inbound events</div><h2>Webhooks: accept durably, process later</h2>
+  <div class="steps" style="font-size:.78em">
+   <div class="step fragment" data-n="1"><b>Verify</b>Signature and timestamp</div>
+   <div class="step fragment" data-n="2"><b>Resolve</b>Channel from trusted config</div>
+   <div class="step fragment" data-n="3"><b>Limit</b>Body size and schema</div>
+   <div class="step fragment" data-n="4"><b>Deduplicate</b>Persist the provider event id</div>
+   <div class="step fragment" data-n="5"><b>Acknowledge</b>Only after durable acceptance</div>
+   <div class="step fragment rel" data-n="6"><b>Process</b>Asynchronously, with retries</div>
+  </div>
+  <p class="small muted fragment" style="margin-top:1.2em">A replayed event returns success without creating a second message.</p>
+  </section>
+  <section data-transition="fade">
+<h2>Messages out: delivery you can reason about</h2><figure class="diagram short"><img src="assets/delivery-states.svg" alt="Delivery state machine"><figcaption>"sent" and "delivered" are different. A timeout does not prove a message was not sent.</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Exactly-once effects with at-least-once delivery</h2><figure class="diagram short"><img src="assets/outbox.svg" alt="Transactional outbox and inbox"><figcaption>Domain change and event commit together; consumers deduplicate by event id</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Adapters keep the core clean</h2><figure class="diagram short"><img src="assets/adapter-boundary.svg" alt="Adapter boundary"><figcaption>Provider payloads stop at the adapter and become canonical internal contracts</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Configuring an integration safely</h2><figure class="diagram tall"><img src="assets/integration-config.svg" alt="Integration configuration sequence"><figcaption>Credentials go to a secret manager; only a reference is stored. Health checks keep status current.</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Operations</div><h2>Integration health</h2>
+  <div class="split tight"><figure class="diagram "><img src="assets/integration-health.svg" alt="Integration health states"></figure><ul><li class="fragment">Scheduled health checks and rate-limit counters</li><li class="fragment">Circuit breaker stops calling a failing system</li><li class="fragment">Tools backed by an unhealthy integration are blocked from enabling</li><li class="fragment">Credentials rotate and revoke without redeploys</li></ul></div>
+
+  </section>
+  <section >
+  <div class="kicker">Channels</div><h2>One customer, more than one channel</h2>
+  <div class="grid g3">
+   <div class="card accent fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-user-check"/></svg></div><h3>Known identity</h3><p>Resolve the existing customer and continue the conversation.</p></div>
+   <div class="card brand fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>Verified proof</h3><p>One-time code or signed-in link: link the identity, record consent, reuse the open conversation if policy allows.</p></div>
+   <div class="card amber fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-user-x"/></svg></div><h3>No proof</h3><p>Treat as a separate customer. No access to protected data.</p></div>
+  </div>
+  <p class="small muted fragment">A phone number or email alone is never proof of account ownership.</p>
+  </section>
+  <section >
+  <div class="kicker">Roadmap</div><h2>Integration path</h2>
+  <div class="steps" style="font-size:.9em">
+   <div class="step" data-n="1"><b>Read-only lookup</b>One order or account tool</div>
+   <div class="step" data-n="2"><b>Safe writes</b>Confirmation and approval flows</div>
+   <div class="step v" data-n="3"><b>More channels</b>Email and messaging adapters</div>
+   <div class="step v" data-n="4"><b>Connector library</b>CRM, booking, billing</div>
+   <div class="step rel" data-n="5"><b>Workflow actions</b>Deterministic procedures</div>
+  </div>
+
+  </section>
+</section>
+<section data-chapter="7 · Voice">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-07.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 7</div><h1>Voice and multimodal</h1><p>Real-time browser voice on the same engine and the same authorization model.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Decision to make with evidence</div><h2>Two ways to build voice</h2>
+  <div class="grid g2">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-workflow"/></svg></div><h3>A · Modular pipeline</h3><p><code>audio → STT → engine → TTS → audio</code></p><ul><li>Explicit transcript</li><li>Choose providers per stage</li><li>Easier to inspect</li></ul><p class="muted">Trade-off: more latency and orchestration.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-audio-lines"/></svg></div><h3>B · Speech to speech</h3><p><code>audio ↔ realtime model</code></p><ul><li>More natural, lower latency</li><li>Tools still go through our authorization</li></ul><p class="muted">Trade-off: provider coupling, less control.</p></div>
+  </div><p class="small muted">Start with one. Do not build both fully before validating the product.</p>
+
+  </section>
+  <section data-transition="fade">
+<h2>Option A in motion</h2><figure class="diagram short"><img src="assets/voice-opt-a.svg" alt="Option A modular pipeline"><figcaption>Partial transcripts are captions only. Only finalized speech becomes a message.</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>A voice session</h2><figure class="diagram tall"><img src="assets/voice-lifecycle.svg" alt="Voice session lifecycle"></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Interrupting the assistant</h2><figure class="diagram tall"><img src="assets/voice-barge-in.svg" alt="Barge-in sequence"><figcaption>Obsolete audio is cancelled and a cancelled utterance is never stored as fully delivered</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Text, voice, text again</h2><figure class="diagram short"><img src="assets/voice-modality.svg" alt="Modality switching"><figcaption>The engine consumes normalized text and trusted state. It does not care how the text was produced.</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Privacy</div><h2>Voice is opt-in and visible</h2>
+  <ul class="check small"><li class="fragment">Request the microphone only when voice starts</li><li class="fragment">Always show that voice is active, and whether it is transcribed or kept</li><li class="fragment">Audio and transcript retention are defined separately</li><li class="fragment">No raw audio stored by default</li><li class="fragment">Deletion, access and consent workflows per policy</li></ul>
+
+  </section>
+</section>
+<section data-chapter="8 · Human support">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-08.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 8</div><h1>Humans and operations</h1><p>Handoff with context, tickets for lasting work, and rules that route and measure it.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Handoff bundle</div><h2>The agent never starts cold</h2>
+  <div class="grid g3">
+   <div class="card brand fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-file-text"/></svg></div><h3>What happened</h3><ul><li>Transcript and summary</li><li>Customer intent and unresolved question</li></ul></div>
+   <div class="card accent fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-lightbulb"/></svg></div><h3>What we know</h3><ul><li>Verification level</li><li>Sources already cited</li><li>Tool results, successes and failures</li></ul></div>
+   <div class="card amber fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-eye"/></svg></div><h3>What to watch</h3><ul><li>Ticket and SLA state</li><li>Current modality</li><li>Restricted data masked by agent permission</li></ul></div>
+  </div>
+
+  </section>
+  <section data-transition="fade">
+<h2>Who owns the conversation</h2><figure class="diagram short"><img src="assets/handoff-ownership.svg" alt="Ownership model"><figcaption>Claim uses optimistic locking so two agents cannot take the same item</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Handoff in practice</h2><figure class="diagram tall"><img src="assets/seq-handoff.svg" alt="Handoff sequence"></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Work vs interaction</div><h2>Conversations and tickets are different things</h2>
+  <div class="grid g2"><div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-messages-square"/></svg></div><h3>Conversation</h3><p>A record of an interaction. Text, voice and handoffs live in its timeline.</p></div>
+  <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-ticket"/></svg></div><h3>Ticket</h3><p>A work item to resolve. One ticket can link several conversations and keeps its own status history.</p></div></div>
+
+  </section>
+  <section >
+  <div class="kicker">Release 3</div><h2>Rules that scale operations</h2>
+  <div class="grid g3"><div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-route"/></svg></div><h3>Routing</h3><p>Deterministic rules by priority, with a default queue.</p></div><div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg></div><h3>SLA</h3><p>Response and resolution targets, business hours, escalation.</p></div><div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-workflow"/></svg></div><h3>Workflows</h3><p>Versioned, retry-safe procedures. AI proposes, the workflow enforces.</p></div></div>
+
+  </section>
+</section>
+<section data-chapter="9 · Security and reliability">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-red-09.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 9</div><h1>Trust: security, privacy, reliability</h1><p>Built into the design, tested in CI, and measured in production.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>Tenant isolation, everywhere</h2><figure class="diagram short"><img src="assets/tenant-resolution.svg" alt="Tenant resolution and isolation"><figcaption>Tenant comes from authenticated identity or trusted channel config, never from a customer payload</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>A prompt injection that goes nowhere</h2><figure class="diagram short"><img src="assets/seq-injection.svg" alt="Prompt injection blocked"><figcaption>The tool is not in the allowlist, so it is denied in code. The attempt is logged as a security event.</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Secrets and privacy</div><h2>What is kept, where, for how long</h2>
+  <div class="grid g2">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-key-round"/></svg></div><h3>Secrets</h3><ul><li>Secret manager, referenced by id</li><li>Never in prompts, logs or traces</li><li>Rotation and revocation supported</li></ul></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></div><h3>Data</h3><ul><li>Retention per class: messages, transcripts, audio, files, logs, audit</li><li>Synthetic or redacted data in tests and evaluations</li><li>Access and deletion workflows</li></ul></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Reliability patterns</div><h2>Eight habits</h2>
+  <div class="grid g4" style="gap:12px">
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-inbox"/></svg></div><div><b>Durable inbox</b><span>Persist before acknowledging</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg></div><div><b>Transactional outbox</b><span>Change and event commit together</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-key-round"/></svg></div><div><b>Idempotency keys</b><span>Safe retries of commands</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-refresh-cw"/></svg></div><div><b>Bounded retries</b><span>Backoff with jitter</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-archive"/></svg></div><div><b>Dead-letter queue</b><span>Review path when retries end</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-timer"/></svg></div><div><b>Timeouts and breakers</b><span>Stop calling failing systems</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-heart-pulse"/></svg></div><div><b>Health checks</b><span>Readiness for dependencies</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-triangle-alert"/></svg></div><div><b>Honest degradation</b><span>Ask or hand off, never fake</span></div></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Honest degradation</div><h2>When a dependency is down</h2>
+  <div class="grid g3">
+   <div class="card brand fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-cpu"/></svg></div><h3>AI provider</h3><p>Tell the customer about the temporary problem, or route to a human.</p></div>
+   <div class="card amber fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-search"/></svg></div><h3>Retrieval</h3><p>Never pretend an answer is grounded. Ask a question or hand off.</p></div>
+   <div class="card red fragment"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></div><h3>A business tool</h3><p>Explain the limit and offer a person or a ticket. Circuit breaker stops repeated calls.</p></div>
+  </div>
+  <p class="small muted fragment">Every case emits a failure metric and an audit event.</p>
+  </section>
+</section>
+<section data-chapter="10 · Quality and evaluation">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-10.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 10</div><h1>Quality, observability and evaluation</h1><p>Measure resolution quality, and gate every agent release on evidence.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Signals</div><h2>What we watch</h2>
+  <div class="grid g4" style="gap:12px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>Platform</h3><p>Request rate, errors, latency, queue depth, worker failures</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-messages-square"/></svg></div><h3>Conversation</h3><p>Inbound latency, delivery success, duplicates, handoffs</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-brain-circuit"/></svg></div><h3>AI and RAG</h3><p>Model latency and cost, empty retrieval, tool success</p></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></div><h3>Voice</h3><p>Time to first audio, turn latency, interruptions, drops</p></div>
+  </div><p class="small muted">Correlation ids connect API, worker, model, retrieval and tools. No message text or personal data in metric labels.</p>
+
+  </section>
+  <section >
+  <div class="kicker">Evaluation set</div><h2>Test what actually goes wrong</h2>
+  <div class="grid g3 small">
+   <ul><li>Common FAQs</li><li>Ambiguous or incomplete questions</li><li>Stale or conflicting documents</li><li>Prompt injection attempts</li></ul>
+   <ul><li>Requests for restricted data</li><li>Tool success and tool failure</li><li>Provider timeouts</li><li>Customer asks for a human</li></ul>
+   <ul><li>Language switching</li><li>Interruptions and transcript errors</li><li>Deterministic checks for permissions, schemas, state</li><li>Model judges as one signal only</li></ul>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Release gates</div><h2>A new agent version ships only when</h2>
+  <ul class="check small"><li class="fragment">Critical safety tests pass</li><li class="fragment">Tool authorization tests pass</li><li class="fragment">Regression quality is within thresholds</li><li class="fragment">Latency and cost are measured</li><li class="fragment">The rollback path is known</li><li class="fragment">A versioned release record exists</li></ul>
+
+  </section>
+</section>
+<section data-chapter="11 · Data model">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-11.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 11</div><h1>Data model</h1><p>Ten aggregates around one tenant boundary.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Ten aggregates around one tenant boundary</div><h2>Data model</h2>
+  <div class="grid g5" style="gap:10px">
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-users"/></svg></div><div><b>Access</b><span>Organization, users, roles</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-radio"/></svg></div><div><b>Customer and channel</b><span>Identities, connections, events</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-messages-square"/></svg></div><div><b>Conversation</b><span>Turns, messages, events</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></div><div><b>Agent</b><span>Configuration, versions, executions</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-library"/></svg></div><div><b>Knowledge</b><span>Sources, versions, chunks</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></div><div><b>Tools</b><span>Definitions, executions, approvals</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-ticket"/></svg></div><div><b>Handoff and tickets</b><span>Assignments, comments, history</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></div><div><b>Voice</b><span>Sessions, segments, audio refs</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-workflow"/></svg></div><div><b>Workflow and SLA</b><span>Runs, rules, policies</span></div></div>
+   <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-scroll-text"/></svg></div><div><b>Audit and usage</b><span>Events, quotas, evaluations</span></div></div>
+  </div>
+  </section>
+  <section >
+  <div class="kicker">Rules</div><h2>Data modeling rules</h2>
+  <ul class="check small"><li>Every tenant-owned row reachable through a trusted organization id</li><li>Internal UUIDs. Provider ids kept separately and scoped to the connection</li><li>Immutable version rows for agents, documents, workflows and tools</li><li>Messages, transcripts, audio and attachments kept distinct for different retention</li><li>Store decision metadata and sources, never hidden chain-of-thought</li></ul>
+
+  </section>
+</section>
+<section data-chapter="12 · Roadmap and demo">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-title-12.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 12</div><h1>Roadmap and demo</h1><p>What ships first, and what the first demo shows.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Three releases</div><h2>Roadmap</h2>
+  <div class="grid g3">
+   <div class="card brand fragment fade-up"><span class="pill">Release 1</span><h3>Text support MVP</h3><p>Website chat, grounded answers, one read-only tool, handoff, tickets, audit.</p></div>
+   <div class="card amber fragment fade-up"><span class="pill amber">Release 2</span><h3>Voice MVP</h3><p>Browser voice, speech, transcript sync, interruption, voice handoff.</p></div>
+   <div class="card accent fragment fade-up"><span class="pill green">Release 3</span><h3>Operations</h3><p>Channels, workflows, routing and SLA, connectors, evaluation, usage.</p></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">The first milestone</div><h2>A website assistant that can</h2>
+  <ol class="small"><li class="fragment">Accept a customer text message</li><li class="fragment">Maintain a conversation</li><li class="fragment">Retrieve organization knowledge</li><li class="fragment">Invoke one safe, read-only business tool</li><li class="fragment">Answer with source-grounded information</li><li class="fragment">Escalate to a human, preserving context</li><li class="fragment">Emit audit and observability events</li></ol>
+
+  </section>
+  <section data-transition="fade">
+<h2>Demo, part 1: a message arrives</h2><figure class="diagram short"><img src="assets/seq-intake.svg" alt="Intake"><figcaption>Accepted and persisted before any AI work starts</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Demo, part 2: the AI turn</h2><figure class="diagram tall"><img src="assets/seq-turn.svg" alt="AI turn and reply"><figcaption>Retrieve, optionally call the tool, persist, then deliver</figcaption></figure>
+
+  </section>
+</section>
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><h1>Thank you</h1><p>More: <b>scrum.html</b> for how we will deliver it, <b>engineering.html</b> for how it is built.</p></div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/zoom/zoom.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+%% Source: 02-cross-cutting-flows.md - 2.2 Transactional outbox and inbox
+sequenceDiagram
+    participant S as Domain service
+    participant DB as Postgres
+    participant O as Outbox relay worker
+    participant Q as Queue
+    participant C as Consumer
+    participant I as Consumer inbox table
+
+    S->>DB: BEGIN
+    S->>DB: write domain change
+    S->>DB: insert outbox event
+    S->>DB: COMMIT
+    loop poll or notify
+        O->>DB: read unpublished events
+        O->>Q: publish event
+        O->>DB: mark published
+    end
+    Q->>C: deliver event
+    C->>I: insert event_id if absent
+    alt already processed
+        C-->>Q: ack and skip
+    else first time
+        C->>C: handle event
+        C->>I: mark processed
+        C-->>Q: ack
+    end

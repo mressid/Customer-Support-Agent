@@ -1,0 +1,18 @@
+%% Source: 07-scrum-release-risks.md - 7.3 Definition of Ready check
+flowchart LR
+    A["Backlog item"] --> CL
+    subgraph CL["Ready checklist: all must hold"]
+        direction LR
+        c1["Outcome is clear"]
+        c2["Acceptance criteria are testable"]
+        c3["Dependencies and provider assumptions identified"]
+        c4["UX, API and data understood"]
+        c5["Security and privacy considered"]
+        c6["Fits in one Sprint and is estimated"]
+        c7["Credentials, test data and environments available or planned"]
+    end
+    CL -- "all hold" --> OK["Ready for Sprint Planning"]
+    CL -- "not clear" --> R["Refine"]
+    CL -- "too large" --> S["Split the item"] --> R
+    CL -- "no environment yet" --> P["Plan to obtain, may start as spike"] --> R
+    R --> A

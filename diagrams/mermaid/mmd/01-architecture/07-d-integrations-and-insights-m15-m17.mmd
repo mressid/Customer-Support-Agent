@@ -1,0 +1,8 @@
+%% Source: 01-architecture.md - D. Integrations and insights (M15–M17)
+flowchart LR
+    M06["M06 Tools"] --> M15["M15 Integration Hub"]
+    M15 --> Ext["Business systems"]
+    M01["M01 Conversation"] --> M16["M16 Analytics"]
+    M04["M04 AI Engine"] --> M17["M17 Evaluation"]
+    M17 -->|release gate| M19["M19 Agent Config"]
+    M16 --> M17

@@ -1,0 +1,43 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.5 Object diagram — one live conversation (instance specification)
+classDiagram
+    class org1["org1 : Organization"] {
+        id = 0192-A
+        name = Acme Store
+    }
+    class cust1["cust1 : Customer"] {
+        verificationLevel = verified
+    }
+    class conv1["conv1 : Conversation"] {
+        status = AiHandling
+        owner = AI
+    }
+    class m1["m1 : Message"] {
+        sequence = 1
+        kind = text
+        direction = inbound
+        body = Where is my order?
+    }
+    class m2["m2 : Message"] {
+        sequence = 2
+        direction = outbound
+        body = Your order ORDER-123 ships tomorrow
+    }
+    class exec1["exec1 : AgentExecution"] {
+        outcome = answered
+        latencyMs = 2100
+    }
+    class te1["te1 : ToolExecution"] {
+        tool = orders.lookup v1
+        status = succeeded
+    }
+    class av1["av1 : AgentVersion"] {
+        number = 7
+        immutable = true
+    }
+    org1 --> cust1
+    cust1 --> conv1
+    conv1 --> m1
+    conv1 --> m2
+    m2 --> exec1 : producedBy
+    exec1 --> av1 : runsOn
+    exec1 --> te1 : invoked

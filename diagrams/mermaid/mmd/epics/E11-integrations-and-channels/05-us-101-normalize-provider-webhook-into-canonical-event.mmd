@@ -1,0 +1,12 @@
+%% Source: epics/E11-integrations-and-channels.md - US-101 — Normalize provider webhook into canonical event
+flowchart TD
+    W["Webhook"] --> V["Verify signature and timestamp window"]
+    V -- fail --> R["Reject and SecurityEvent"]
+    V -- ok --> D["Dedupe on provider_event_id"]
+    D -- seen --> S["200, no reprocess"]
+    D -- new --> P["Persist raw minimal payload with retention"]
+    P --> N["Adapter maps to canonical envelope"]
+    N --> VAL{"Valid against schema?"}
+    VAL -- No --> DL["Dead-letter with reason"]
+    VAL -- Yes --> PUB["Publish canonical event"]
+    PUB --> OBS["Metrics: accepted, duplicate, failed, latency"]

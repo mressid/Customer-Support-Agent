@@ -1,0 +1,13 @@
+%% Source: 02-cross-cutting-flows.md - 2.4 Retry decision
+flowchart TD
+    E["Call failed"] --> T{"Error category"}
+    T -- "RATE_LIMITED, PROVIDER_UNAVAILABLE" --> R["Retryable"]
+    T -- "TIMEOUT" --> W{"Operation is a write?"}
+    W -- No --> R
+    W -- Yes --> U["UNKNOWN_OUTCOME: status lookup or human review"]
+    T -- "AUTHENTICATION_FAILED, AUTHORIZATION_DENIED, VALIDATION_FAILED, NOT_FOUND, CONFLICT" --> N["Not retryable"]
+    R --> B{"Attempts left and circuit closed?"}
+    B -- Yes --> J["Exponential backoff with jitter"] --> A["Retry with same idempotency key"]
+    B -- No --> D["Dead-letter or review queue"]
+    N --> F["Return typed error to caller"]
+    U --> D

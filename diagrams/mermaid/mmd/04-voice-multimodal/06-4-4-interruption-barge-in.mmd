@@ -1,0 +1,20 @@
+%% Source: 04-voice-multimodal.md - 4.4 Interruption (barge-in)
+sequenceDiagram
+    actor Cu as Customer
+    participant T as Voice transport
+    participant TTS as TTS
+    participant TS as Transcript sync
+    participant CV as Conversation
+    participant AI as AI Engine
+
+    T-->>Cu: assistant audio playing
+    Cu->>T: starts speaking
+    T->>TTS: cancel generation
+    T->>T: truncate playback buffer
+    T->>TS: interrupted at offset N
+    TS->>CV: store delivered portion only, flag truncated
+    Note over CV: never record cancelled utterance as fully delivered
+    T->>AI: cancel in-flight response if still generating
+    Cu->>T: new utterance
+    T->>TS: final transcript, new sequence id
+    TS->>CV: append and request turn

@@ -1,0 +1,15 @@
+%% Source: epics/E04-knowledge-and-rag.md - Deletion and freshness propagation
+sequenceDiagram
+    actor Admin
+    participant API
+    participant KB as Knowledge service
+    participant V as Vector index
+    participant OS as Object storage
+    participant AUD as Audit
+
+    Admin->>API: delete source
+    API->>KB: mark deleting, exclude from retrieval immediately
+    KB->>V: delete vectors by source filter
+    KB->>OS: delete original and derived objects
+    KB->>KB: invalidate caches
+    KB->>AUD: record deletion propagation complete

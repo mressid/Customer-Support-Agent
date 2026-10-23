@@ -1,0 +1,20 @@
+flowchart LR
+    CH[Channel Adapters] -->|canonical inbound event| CV[Conversation Management]
+    CV -->|new turn command| AI[AI Conversation Engine]
+    AI -->|retrieval request| KB[Knowledge and RAG]
+    KB -->|ranked passages + source IDs| AI
+    AI -->|typed tool request| TS[Tool Execution Service]
+    TS -->|authorized operation| INT[Integration Adapters]
+    INT -->|typed result| TS
+    TS -->|tool result| AI
+    AI -->|final response + metadata| CV
+    CV -->|delivery command| CH
+    AI -->|handoff request| HI[Human Inbox]
+    HI -->|ownership event| CV
+    CV -->|domain events| BUS[Durable Queue / Outbox]
+    BUS --> ANA[Analytics and Evaluation]
+    BUS --> NOTIF[Notifications / Workflows]
+    SEC[Security, Audit, Observability] -.cross-cutting.-> CH
+    SEC -.cross-cutting.-> CV
+    SEC -.cross-cutting.-> AI
+    SEC -.cross-cutting.-> TS

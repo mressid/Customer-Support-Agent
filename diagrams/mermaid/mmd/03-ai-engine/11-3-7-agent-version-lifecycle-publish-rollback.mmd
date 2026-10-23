@@ -1,0 +1,14 @@
+%% Source: 03-ai-engine.md - 3.7 Agent version lifecycle (publish, rollback)
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Draft: edit instructions, tools, knowledge, channels
+    Draft --> Validating: request publish
+    Validating --> Draft: validation fails
+    Validating --> Evaluating: schemas and allowlist OK
+    Evaluating --> Draft: safety or regression gate fails
+    Evaluating --> Published: gates pass, immutable version
+    Published --> Deployed: AgentDeployment to channel
+    Deployed --> Superseded: newer version deployed
+    Deployed --> RolledBack: rollback to previous version
+    RolledBack --> Deployed: previous version reactivated
+    Superseded --> [*]

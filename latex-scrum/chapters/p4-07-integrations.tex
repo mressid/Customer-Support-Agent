@@ -1,0 +1,96 @@
+\chapter{Integrations and Tool Contracts}
+
+\section{Connector architecture}
+
+Use three layers:
+
+\begin{enumerate}
+\item \textbf{Tool definition:} what the AI may request, with a stable name, description, input schema, output schema, and risk classification.
+\item \textbf{Tool execution service:} validation, authorization, idempotency, audit, timeout, and result normalization.
+\item \textbf{Connector adapter:} provider-specific authentication, endpoint calls, payload mapping, and error interpretation.
+\end{enumerate}
+Example: \code{AI engine \ensuremath{\rightarrow} orders.\allowbreak{}lookup tool \ensuremath{\rightarrow} tool execution service \ensuremath{\rightarrow} commerce connector \ensuremath{\rightarrow} commerce API}
+
+The AI should never receive raw integration credentials or unrestricted HTTP access.
+
+\section{Tool definition fields}
+
+\begin{itemize}
+\item stable tool name, e.g. \code{orders.\allowbreak{}lookup};
+\item human-readable description;
+\item version;
+\item JSON input schema;
+\item output schema;
+\item allowed agent/tenant scope;
+\item required permission;
+\item risk level: read-only, reversible write, sensitive write;
+\item confirmation/approval requirement;
+\item timeout and retry policy;
+\item idempotency behavior;
+\item audit and redaction policy.
+\end{itemize}
+\section{Example: read-only order lookup}
+
+\begin{lstlisting}
+{
+  "name": "orders.lookup",
+  "version": 1,
+  "risk": "read_only",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "order_reference": {
+        "type": "string",
+        "minLength": 3,
+        "maxLength": 80
+      }
+    },
+    "required": ["order_reference"],
+    "additionalProperties": false
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "status": {"type": "string"},
+      "estimated_delivery": {"type": ["string", "null"]}
+    },
+    "required": ["status", "estimated_delivery"],
+    "additionalProperties": false
+  }
+}
+\end{lstlisting}
+
+This is a contract example, not a claim that any particular commerce provider uses this schema.
+
+\section{Error mapping}
+
+Normalize connector failures into categories:
+
+\begin{itemize}
+\item \code{AUTHENTICATION\_\allowbreak{}FAILED}
+\item \code{AUTHORIZATION\_\allowbreak{}DENIED}
+\item \code{NOT\_\allowbreak{}FOUND}
+\item \code{VALIDATION\_\allowbreak{}FAILED}
+\item \code{RATE\_\allowbreak{}LIMITED}
+\item \code{TIMEOUT}
+\item \code{PROVIDER\_\allowbreak{}UNAVAILABLE}
+\item \code{CONFLICT}
+\item \code{UNKNOWN\_\allowbreak{}OUTCOME}
+\end{itemize}
+Only retry failures that are safe to retry. For writes, an unknown outcome may require a status lookup or human review instead of blind retry.
+
+\section{Webhook handling}
+
+\begin{enumerate}
+\item Verify provider signature and timestamp.
+\item Resolve the configured channel/integration from trusted endpoint configuration.
+\item Enforce body size and schema limits.
+\item Persist event ID and payload/minimal normalized data.
+\item Return success only after durable acceptance.
+\item Process asynchronously.
+\item Deduplicate provider retries.
+\item Record processing state and failure reason without leaking secrets.
+\end{enumerate}
+\mmdfigL{epics/E06-safe-business-tools/02-three-layer-connector-architecture}{Three-layer connector architecture}{fig:siness-tools-02-three-layer-connector-architecture-166}
+
+

@@ -1,0 +1,12 @@
+%% Source: 03-ai-engine.md - Phase 1 — Prepare (resolve trust, check state, build context)
+flowchart TD
+    A["ai.turn.requested"] --> B["1 Resolve tenant, conversation, customer identity, active AgentVersion"]
+    B --> C{"2 Conversation state"}
+    C -- closed --> X1["Reject or reopen per policy"]
+    C -- human_owned --> X2["Do not respond: AI paused"]
+    C -- rate_limited --> X3["Return throttle message"]
+    C -- open --> D["3 Build minimal context"]
+    D --> D1["Recent messages"]
+    D --> D2["Safe summary"]
+    D --> D3["Structured state: verification level, open ticket"]
+    D1 & D2 & D3 --> OUT["Context window ready"]

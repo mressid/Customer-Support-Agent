@@ -1,0 +1,25 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.6 Knowledge document ingestion
+sequenceDiagram
+    actor Ad as Administrator
+    participant API as Support API
+    participant OS as Object storage
+    participant KB as Knowledge service
+    participant Q as Queue
+    participant WK as Worker
+    participant EM as Embedder
+    participant VI as Vector index
+
+    Ad->>API: upload file
+    API->>API: size, type, content sniff, scan
+    API->>OS: store under tenant prefix
+    API->>KB: register Document and DocumentVersion
+    KB->>Q: ingestion.requested
+    API-->>Ad: status = queued
+    Q->>WK: run job
+    WK->>OS: read file
+    WK->>WK: parse and chunk
+    WK->>EM: embed batches
+    EM-->>WK: vectors
+    WK->>VI: upsert with tenant metadata
+    WK->>KB: version active, previous superseded
+    KB->>Q: ingestion.completed

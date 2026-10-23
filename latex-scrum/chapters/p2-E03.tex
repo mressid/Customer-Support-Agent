@@ -1,0 +1,63 @@
+\chapter{E03 --- Website Chat Channel}
+
+Goal: first customer-facing channel. Modules: M02, M03.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-020 & As an administrator, I can configure a website widget. & S2 \\
+US-021 & As a visitor, I can open chat and receive a session. & S2 \\
+US-022 & As a visitor, I can reconnect after a temporary network failure. & S2 \\
+\end{longtable}
+}
+
+\Needspace{130pt}
+\section{Epic overview}
+
+\mmdfig{epics/E03-website-chat/01-epic-overview}{E03: Epic overview}{fig:epics-e03-website-chat-01-epic-overview-23}
+
+
+\mmdfigLH{\section{US-020 --- Administrator configures the website widget}
+
+\begin{storybox}{User story US-020}
+\textbf{Story.} As an administrator, I can configure a website widget.\par
+\textbf{Acceptance.} widget is associated with the correct organization and agent configuration.
+\end{storybox}
+}{epics/E03-website-chat/02-us-020-administrator-configures-the-website-widget}{E03: US-020 --- Administrator configures the website widget}{fig:us-020-administrator-configures-the-website-widget-24}
+
+
+\mmdfigLH{\section{US-021 --- Visitor opens chat and receives a session}
+
+\begin{storybox}{User story US-021}
+\textbf{Story.} As a visitor, I can open chat and receive a session.\par
+\textbf{Acceptance.} session token is scoped, expires, and cannot access other tenants.
+\end{storybox}
+}{epics/E03-website-chat/03-us-021-visitor-opens-chat-and-receives-a-session}{E03: US-021 --- Visitor opens chat and receives a session}{fig:3-us-021-visitor-opens-chat-and-receives-a-session-25}
+
+
+\Needspace{627pt}
+\subsection{Token claim checks}
+
+\mmdfig{epics/E03-website-chat/04-token-claim-checks}{E03: US-021 --- Visitor opens chat and receives a session: Token claim checks}{fig:epics-e03-website-chat-04-token-claim-checks-26}
+
+
+\Needspace{538pt}
+\section{US-022 --- Reconnect after temporary network failure}
+
+\begin{storybox}{User story US-022}
+\textbf{Story.} As a visitor, I can reconnect after a temporary network failure.\par
+\textbf{Acceptance.} existing conversation can be resumed under a valid session policy.
+\end{storybox}
+
+\mmdfig{epics/E03-website-chat/05-us-022-reconnect-after-temporary-network-failure}{E03: US-022 --- Reconnect after temporary network failure}{fig:5-us-022-reconnect-after-temporary-network-failure-27}
+
+
+\mmdfigL{epics/E03-website-chat/06-us-022-reconnect-after-temporary-network-failure}{E03: US-022 --- Reconnect after temporary network failure}{fig:6-us-022-reconnect-after-temporary-network-failure-28}
+
+

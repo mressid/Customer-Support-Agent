@@ -1,0 +1,43 @@
+%% Source: uml/U1-use-cases.md - U1.1 System-level use cases
+flowchart LR
+    Customer(["Customer"])
+    Agent(["Support Agent"])
+    Lead(["Support Lead"])
+    Admin(["Org Administrator"])
+    Operator(["Platform Operator"])
+    Provider(["External Provider<br/>LLM, Speech, Business API"])
+
+    subgraph SYS["AI Customer Support Platform"]
+        direction TB
+        UC1(["Ask a question"])
+        UC2(["Request order status"])
+        UC3(["Request a human"])
+        UC4(["Talk by voice"])
+        UC5(["Take over conversation"])
+        UC6(["Manage tickets"])
+        UC7(["Configure agent and channels"])
+        UC8(["Manage knowledge sources"])
+        UC9(["Manage users and roles"])
+        UC10(["Review reports and SLAs"])
+        UC11(["Monitor health, cost, abuse"])
+        UC12(["Authenticate customer"])
+    end
+
+    Customer --- UC1
+    Customer --- UC2
+    Customer --- UC3
+    Customer --- UC4
+    Agent --- UC5
+    Agent --- UC6
+    Lead --- UC6
+    Lead --- UC10
+    Admin --- UC7
+    Admin --- UC8
+    Admin --- UC9
+    Operator --- UC11
+    UC2 -. include .-> UC12
+    UC3 -. extend .-> UC1
+    UC4 -. extend .-> UC1
+    UC5 -. include .-> UC6
+    UC1 --- Provider
+    UC2 --- Provider

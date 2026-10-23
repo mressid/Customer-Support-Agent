@@ -1,0 +1,35 @@
+%% Source: 01-architecture.md - 1.1 System context
+flowchart LR
+    Customer(["Customer"])
+    Agent(["Support Agent"])
+    Lead(["Support Lead"])
+    Admin(["Org Administrator"])
+    Operator(["Platform Operator"])
+
+    subgraph Platform["AI Customer Support Platform"]
+        Widget["Website Widget"]
+        API["Support API"]
+        Worker["Support Worker"]
+        Console["Agent Console / Admin UI"]
+    end
+
+    subgraph External["External providers"]
+        LLM["LLM provider"]
+        Speech["Speech provider STT/TTS/S2S"]
+        Msg["Email / Messaging providers"]
+        Biz["Business systems: CRM, Orders, Billing"]
+    end
+
+    Customer --> Widget --> API
+    Customer -. later .-> Msg --> API
+    Agent --> Console --> API
+    Lead --> Console
+    Admin --> Console
+    Operator --> Telemetry[("Telemetry")]
+    API --> Worker
+    API --> LLM
+    API --> Speech
+    API --> Biz
+    Worker --> Msg
+    API --> Telemetry
+    Worker --> Telemetry

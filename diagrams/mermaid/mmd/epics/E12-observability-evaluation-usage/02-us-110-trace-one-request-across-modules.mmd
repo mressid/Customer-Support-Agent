@@ -1,0 +1,18 @@
+%% Source: epics/E12-observability-evaluation-usage.md - US-110 — Trace one request across modules
+sequenceDiagram
+    participant W as Widget
+    participant API
+    participant Q as Queue
+    participant WK as Worker
+    participant LLM
+    participant KB as Retrieval
+    participant TS as Tool
+
+    W->>API: request
+    API->>API: create trace_id and correlation_id
+    API->>Q: job with ids, tenant_id, causation_id
+    Q->>WK: deliver, ids restored in context
+    WK->>LLM: call with span and provider_request_id logged
+    WK->>KB: retrieve, span
+    WK->>TS: tool call, tool_execution_id in span
+    Note over API,TS: all logs and spans carry trace_id, correlation_id, tenant_id, conversation_id, turn_id

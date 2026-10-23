@@ -1,0 +1,16 @@
+%% Source: epics/E04-knowledge-and-rag.md - US-030 — Register and upload a knowledge source
+flowchart TD
+    A["Admin uploads file"] --> B{"Size within limit?"}
+    B -- No --> X1["Reject 413"]
+    B -- Yes --> C{"Declared type allowed?"}
+    C -- No --> X2["Reject 415"]
+    C -- Yes --> D["Sniff real content type"]
+    D --> E{"Matches declared type?"}
+    E -- No --> X3["Reject"]
+    E -- Yes --> F["Malware scan where feasible"]
+    F --> G{"Clean?"}
+    G -- No --> X4["Quarantine and audit"]
+    G -- Yes --> H["Store in private object storage under tenant prefix"]
+    H --> I["Create KnowledgeSource, Document, DocumentVersion state=uploaded"]
+    I --> J["Emit knowledge.source.ingestion.requested"]
+    J --> K["UI shows status"]

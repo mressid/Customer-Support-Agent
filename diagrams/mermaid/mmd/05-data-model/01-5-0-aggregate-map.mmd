@@ -1,0 +1,13 @@
+%% Source: 05-data-model.md - 5.0 Aggregate map
+flowchart TB
+    ORG["Organization (tenant boundary)"]
+    ORG --> ACC["5.1 Access"]
+    ORG --> CUS["5.2 Customer and channel"]
+    ORG --> CON["5.3 Conversation"]
+    ORG --> AG["5.4 Agent configuration"]
+    ORG --> KB["5.5 Knowledge"]
+    ORG --> TL["5.6 Tools and integrations"]
+    ORG --> OPS["5.7 Handoff and tickets"]
+    ORG --> VC["5.8 Voice"]
+    ORG --> WF["5.9 Workflow, routing, SLA"]
+    ORG --> GOV["5.10 Audit, usage, evaluation"]

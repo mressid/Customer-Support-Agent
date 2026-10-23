@@ -1,0 +1,10 @@
+%% Source: 01-architecture.md - E. Platform and governance (M18–M20)
+flowchart LR
+    M18["M18 Orgs, Users, Access"]
+    M19["M19 Agent Configuration"]
+    M20["M20 Security, Audit, Telemetry, Usage"]
+    M18 -->|tenant context| M19
+    M19 -->|published AgentVersion| M04["M04 AI Engine"]
+    M20 -.->|cross-cutting| M18
+    M20 -.-> M19
+    M20 -.-> M04

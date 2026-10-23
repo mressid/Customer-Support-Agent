@@ -1,0 +1,18 @@
+%% Source: epics/E07-human-handoff.md - US-062 — Handoff summary for the agent
+flowchart LR
+    subgraph Inputs
+        direction LR
+        T["Transcript"]
+        I["Intent and unresolved question"]
+        TL["Tool executions: ok and failed"]
+        C["Citations used"]
+        K["Ticket and SLA state"]
+        V["Verification level"]
+    end
+    Inputs --> S["Summarizer: model call over trusted data"]
+    S --> P{"Policy filter: agent permission to see restricted data?"}
+    P -- No --> R["Redact or mask fields"]
+    P -- Yes --> B
+    R --> B["Handoff bundle"]
+    B --> UI["Agent console panel"]
+    B --> N["Stored with HandoffEvent"]

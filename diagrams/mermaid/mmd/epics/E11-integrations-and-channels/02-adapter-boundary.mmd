@@ -1,0 +1,10 @@
+%% Source: epics/E11-integrations-and-channels.md - Adapter boundary
+flowchart LR
+    P1["Provider A payload"] --> A1["Adapter A"]
+    P2["Provider B payload"] --> A2["Adapter B"]
+    A1 --> CAN["Canonical internal contract"]
+    A2 --> CAN
+    CAN --> CORE["Core domain: no provider types"]
+    CORE --> CAN2["Canonical outbound command"]
+    CAN2 --> A1
+    CAN2 --> A2

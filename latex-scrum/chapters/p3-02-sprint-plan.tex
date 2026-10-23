@@ -1,0 +1,182 @@
+\chapter{Provisional Sprint Plan}
+
+Assumption: two-week Sprints. This sequence is a planning hypothesis, not a fixed commitment. Reforecast after the first Sprint using actual capacity and discovered complexity.
+
+\mmdfigL{06-sprints/01-6-1-sprint-sequence-and-goals}{Sprint sequence and goals}{fig:06-sprints-01-6-1-sprint-sequence-and-goals-94}
+
+
+\mmdfig{06-sprints/02-6-2-increment-growth-what-the-demo-can-show-after-each-sprin}{What the demo can show after each Sprint}{fig:ent-growth-what-the-demo-can-show-after-each-sprin-95}
+
+
+\mmdfig{06-sprints/03-6-3-gantt-placeholder-dates}{Provisional timeline (placeholder dates)}{fig:06-sprints-03-6-3-gantt-placeholder-dates-96}
+
+
+\section{Sprint 0 / Enablement (only if needed)}
+
+\textbf{Sprint Goal:} make the team able to build, test, and release safely.
+
+\begin{itemize}
+\item Repository and module/package structure
+\item CI pipeline, formatting, static analysis, test setup
+\item Local development environment and database migrations
+\item Initial threat model and architecture decision records
+\item Minimal deployment and secret handling
+\item Definition of Done agreement
+\end{itemize}
+Do not use Sprint 0 as a permanent phase that postpones delivering product value.
+
+\mmdfigL{06-sprints/04-sprint-0-enablement}{Sprint 0 detail}{fig:06-sprints-04-sprint-0-enablement-97}
+
+
+\section{Sprint 1 --- Secure conversation foundation}
+
+\textbf{Sprint Goal:} a tenant-scoped conversation and message can be created, persisted, and retrieved.
+
+\begin{itemize}
+\item US-001 organization foundation
+\item US-003 tenant-isolation test foundation
+\item US-010 conversation creation
+\item US-011 text message persistence
+\item Initial audit/correlation ID conventions
+\end{itemize}
+\textbf{Review demo:} create a conversation, append messages, retrieve timeline, prove cross-tenant access is denied.
+
+\mmdfig{06-sprints/05-sprint-1-secure-conversation-foundation}{Sprint 1 detail}{fig:sprints-05-sprint-1-secure-conversation-foundation-98}
+
+
+\section{Sprint 2 --- Website chat vertical slice}
+
+\textbf{Sprint Goal:} a visitor can exchange text messages with the backend reliably.
+
+\begin{itemize}
+\item US-020 widget configuration
+\item US-021 chat session
+\item US-022 reconnect/resume
+\item US-013 inbound deduplication
+\item Basic delivery/error states and tracing
+\end{itemize}
+\textbf{Review demo:} customer sends a message; it is persisted and returned; duplicate/reconnect tests are shown.
+
+\mmdfig{06-sprints/06-sprint-2-website-chat-vertical-slice}{Sprint 2 detail}{fig:06-sprints-06-sprint-2-website-chat-vertical-slice-99}
+
+
+\section{Sprint 3 --- Knowledge ingestion and retrieval}
+
+\textbf{Sprint Goal:} organization knowledge can be ingested and retrieved with tenant boundaries.
+
+\begin{itemize}
+\item US-030 source registration/upload
+\item US-031 asynchronous parse/chunk/index
+\item US-032 retrieval with source metadata
+\item Basic ingestion status and failure retry
+\end{itemize}
+\textbf{Review demo:} upload a document, inspect ingestion status, query it, see source references.
+
+\mmdfig{06-sprints/07-sprint-3-knowledge-ingestion-and-retrieval}{Sprint 3 detail}{fig:ints-07-sprint-3-knowledge-ingestion-and-retrieval-100}
+
+
+\section{Sprint 4 --- Grounded AI answers}
+
+\textbf{Sprint Goal:} website chat answers common questions from approved knowledge and handles missing evidence safely.
+
+\begin{itemize}
+\item US-040 turn orchestration
+\item US-033 grounded response/fallback
+\item US-041 follow-up context
+\item US-042 model failure handling
+\item Minimal evaluation set and AI usage recording
+\end{itemize}
+\textbf{Review demo:} grounded FAQ, follow-up question, unknown answer fallback, provider timeout behavior.
+
+\mmdfig{06-sprints/08-sprint-4-grounded-ai-answers}{Sprint 4 detail}{fig:06-sprints-08-sprint-4-grounded-ai-answers-101}
+
+
+\section{Sprint 5 --- Safe business tool and human handoff}
+
+\textbf{Sprint Goal:} the AI can perform one authorized read-only lookup and transfer unresolved conversations to a human.
+
+\begin{itemize}
+\item US-050 tool registry and allowlist
+\item US-051 order lookup (or equivalent safe read-only tool)
+\item US-053 audit tool calls
+\item US-060 inbox/queue
+\item US-061 customer-requested handoff
+\item US-062 handoff summary
+\end{itemize}
+\textbf{Review demo:} tool success, tool denial/failure, and human takeover with preserved context.
+
+\mmdfig{06-sprints/09-sprint-5-safe-business-tool-and-human-handoff}{Sprint 5 detail}{fig:s-09-sprint-5-safe-business-tool-and-human-handoff-102}
+
+
+\section{Sprint 6 --- Tickets and release hardening}
+
+\textbf{Sprint Goal:} support staff can track unresolved work and the MVP meets agreed release gates.
+
+\begin{itemize}
+\item US-070 ticket creation
+\item US-071 ticket filtering
+\item US-043 agent version publication/rollback
+\item US-110 end-to-end tracing
+\item US-112 initial regression evaluation
+\item Security, load, backup/restore, and runbook work
+\end{itemize}
+\textbf{Review demo:} conversation becomes a ticket; team shows metrics, audit, test report, and rollback path.
+
+\mmdfigL{06-sprints/10-sprint-6-tickets-and-release-hardening}{Sprint 6 detail}{fig:-sprints-10-sprint-6-tickets-and-release-hardening-103}
+
+
+\section{Sprint 7 --- Voice technical spike / MVP slice}
+
+\textbf{Sprint Goal:} validate the selected voice architecture and complete a minimal browser voice turn.
+
+\begin{itemize}
+\item Select speech strategy and provider based on latency, language, cost, and privacy requirements
+\item US-080 start/end session
+\item US-081 basic speech exchange
+\item Voice telemetry and fallback
+\item Security/consent review
+\end{itemize}
+\textbf{Review demo:} customer speaks, receives response, and transcript is linked to conversation.
+
+\mmdfig{06-sprints/11-sprint-7-voice-technical-spike-and-slice}{Sprint 7 detail}{fig:prints-11-sprint-7-voice-technical-spike-and-slice-104}
+
+
+\section{Sprint 8 --- Voice synchronization and handoff}
+
+\textbf{Sprint Goal:} voice and text share a coherent conversation timeline.
+
+\begin{itemize}
+\item US-082 interruption
+\item US-083 modality switching
+\item US-084 voice handoff behavior for chosen provider
+\item Voice quality regression scenarios
+\item Cost/latency dashboard
+\end{itemize}
+\textbf{Review demo:} speak, interrupt, type a follow-up, and transfer context to human support.
+
+\mmdfig{06-sprints/12-sprint-8-voice-synchronization-and-handoff}{Sprint 8 detail}{fig:ints-12-sprint-8-voice-synchronization-and-handoff-105}
+
+
+\section{Later Sprints}
+
+\begin{itemize}
+\item Additional channels/connectors
+\item Workflow builder, routing, SLA, notifications
+\item Advanced evaluation and release gates
+\item Usage plans, quotas and billing
+\item Additional organization administration and reporting
+\end{itemize}
+\section{Planning caveats}
+
+\begin{itemize}
+\item Team size and capacity are unknown; sprint count may change substantially.
+\item Voice and integration work often depend on vendor capabilities and credentials.
+\item Pull security, observability, and tests into each Sprint rather than deferring them.
+\item Each Sprint should end with a usable Increment, not only design documents.
+\end{itemize}
+\mmdfig{06-sprints/13-6-5-story-to-sprint-traceability}{Story-to-Sprint traceability}{fig:06-sprints-13-6-5-story-to-sprint-traceability-106}
+
+
+\mmdfigL{scrum-existing/S5-scrum-mermaid-artifacts/07-7-sprint-review-demo-path-for-the-text-mvp}{Sprint Review demo path for the Text MVP}{fig:acts-07-7-sprint-review-demo-path-for-the-text-mvp-107}
+
+

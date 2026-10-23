@@ -1,0 +1,14 @@
+%% Source: epics/E05-ai-orchestration.md - US-042 — Handle model timeout or provider failure
+flowchart TD
+    A["Model call"] --> B{"Result"}
+    B -- ok --> OK["Continue turn"]
+    B -- "timeout or 5xx or rate limit" --> C{"Retries left?"}
+    C -- Yes --> D["Backoff with jitter"] --> A
+    C -- No --> E{"Fallback model configured?"}
+    E -- Yes --> F["Call fallback"] --> B
+    E -- No --> G["Circuit breaker records failure"]
+    G --> H["Deliver safe message: temporary issue"]
+    H --> I{"Policy: route to human?"}
+    I -- Yes --> J["Create handoff reason=provider_down"]
+    I -- No --> K["Mark turn failed, allow customer retry"]
+    B -- "invalid structured output" --> L["Repair or retry once then fallback message"]

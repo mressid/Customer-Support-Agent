@@ -1,0 +1,20 @@
+%% Source: 03-ai-engine.md - 3.3 Context sections and trust levels
+flowchart TB
+    subgraph Trusted["Trusted: authored by platform or org"]
+        S1["System behaviour and non-negotiable policy"]
+        S2["Org-approved agent instructions"]
+        S3["Trusted application state"]
+        S4["Tool descriptions and JSON schemas"]
+        S5["Output format requirements"]
+    end
+    subgraph Untrusted["Untrusted data: never overrides policy"]
+        U1["Customer messages"]
+        U2["Retrieved passages with source IDs"]
+        U3["Tool results"]
+        U4["Uploaded files"]
+    end
+    Trusted --> PROMPT["Assembled prompt with labelled sections"]
+    Untrusted --> PROMPT
+    PROMPT --> MODEL["Model call"]
+    MODEL --> OUT["Output is untrusted: validate before acting"]
+    OUT --> APP["Application code enforces authorization"]

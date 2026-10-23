@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Presentations - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @font-face { font-family:"Inter"; font-weight:400; font-display:swap; src:url("vendor/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:600; font-display:swap; src:url("vendor/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:700; font-display:swap; src:url("vendor/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:800; font-display:swap; src:url("vendor/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+  :root { --navy:#0a2540; --blue:#1b4f86; --blue-100:#e6f0fb; --green:#13724e; --green-100:#e0f4ea; --amber:#a85f10; --amber-100:#fbeedb; --ink:#14202e; --muted:#66758a; --line:#e2e8f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; font-family:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased;
+    background: radial-gradient(900px 500px at 90% -10%, rgba(53,133,212,.5), transparent 60%), radial-gradient(800px 500px at 0% 110%, rgba(27,154,104,.35), transparent 60%), linear-gradient(135deg,#06182a 0%,#0e3560 62%,#0f4f63 100%); }
+  body::before { content:""; position:fixed; inset:0; background-image:radial-gradient(rgba(255,255,255,.10) 1.1px, transparent 1.2px); background-size:30px 30px; mask-image:linear-gradient(90deg,transparent,#000); -webkit-mask-image:linear-gradient(90deg,transparent,#000); pointer-events:none; }
+  main { position:relative; max-width:1080px; margin:0 auto; padding:72px 28px 56px; }
+  .brand { display:flex; align-items:center; gap:12px; color:#e8f1fb; font-weight:600; font-size:15px; }
+  .logo { width:40px; height:40px; border-radius:12px; display:grid; place-items:center; color:#fff; background:linear-gradient(135deg,#3585d4,#1b9a68); }
+  h1 { color:#fff; font-size:clamp(36px,5.4vw,60px); line-height:1.04; margin:.5em 0 .2em; letter-spacing:-.03em; font-weight:800; }
+  h1::after { content:""; display:block; width:76px; height:5px; border-radius:5px; margin-top:.35em; background:linear-gradient(90deg,#72d6b0,#4a9be3); }
+  p.lead { color:#d3e1f1; font-size:18px; max-width:40em; line-height:1.55; margin:18px 0 40px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:22px; }
+  .card { position:relative; border:1px solid rgba(255,255,255,.65); display:flex; flex-direction:column; background:#fff; border-radius:20px; padding:24px 26px 22px; text-decoration:none; color:inherit; transition:transform .22s cubic-bezier(.22,.8,.3,1), border-color .22s; }
+  .card:hover, .card:focus-within { border-color:#7fb0e4; transform:translateY(-6px); outline:none; }
+  .chip { width:50px; height:50px; border-radius:15px; display:grid; place-items:center; background:var(--blue-100); color:var(--blue); }
+  .card.green .chip { background:var(--green-100); color:var(--green); }
+  .card.amber .chip { background:var(--amber-100); color:var(--amber); }
+  .tag { margin-top:18px; font-size:11.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
+  .card h2 { margin:.3em 0 .35em; font-size:25px; color:var(--navy); letter-spacing:-.02em; font-weight:750; }
+  .card p { margin:0 0 18px; color:#46566c; line-height:1.5; font-size:15px; flex:1; }
+  .meta { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line); padding-top:14px; }
+  .card h2 a.open { color:inherit; text-decoration:none; }
+  .card h2 a.open::after { content:""; position:absolute; inset:0; border-radius:20px; }
+  .card h2 a.open:focus-visible { outline:3px solid #4a9be3; outline-offset:4px; }
+  .meta a { position:relative; z-index:2; color:var(--blue); font-weight:700; text-decoration:none; padding:4px 11px; border-radius:999px; background:var(--blue-100); }
+  .meta a:hover { background:#d5e6f9; }
+  .keys { margin-top:44px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:16px; padding:18px 24px; color:#dce8f5; font-size:14.5px; line-height:2; backdrop-filter: blur(6px); }
+  kbd { background:#fff; color:#0a2540; border-radius:6px; padding:2px 8px; font:600 12.5px ui-monospace,Menlo,Consolas,monospace; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><span class="logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></svg></span>AI Customer Support Platform</div>
+  <h1>Presentations</h1>
+  <p class="lead">Three focused decks for three audiences. They open in any modern browser and work offline.</p>
+  <div class="grid">
+    <article class="card"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></svg></div><div class="tag">28 slides · 15 min</div><h2><a class="open" href="scrum.html">Scrum plan</a></h2>
+      <p>Product Goal, roles and events, the 43-story backlog, nine Sprints, release gates, risks and open items.</p>
+      <div class="meta"><span>For the team and stakeholders</span><a href="pdf/scrum.pdf">PDF</a></div></article>
+    <article class="card green"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /> <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" /> <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" /> <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" /></svg></div><div class="tag">12 chapters · 75 slides · 20 min</div><h2><a class="open" href="product.html">The product</a></h2>
+      <p>Vision, customer experience, architecture, AI engine, knowledge, integrations and tools, voice, humans, trust, quality and roadmap.</p>
+      <div class="meta"><span>For everyone</span><a href="pdf/product.pdf">PDF</a></div></article>
+    <article class="card amber"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 16 4-4-4-4" /> <path d="m6 8-4 4 4 4" /> <path d="m14.5 4-5 16" /></svg></div><div class="tag">6 chapters · 28 slides · 15 min</div><h2><a class="open" href="engineering.html">Engineering deep dive</a></h2>
+      <p>Ground rules, structure, key abstractions, runtime behaviour, testing gates and a first-week plan.</p>
+      <div class="meta"><span>For developers</span><a href="pdf/engineering.pdf">PDF</a></div></article>
+  </div>
+  <div class="keys"><kbd>→</kbd> <kbd>←</kbd> move &nbsp; <kbd>↓</kbd> <kbd>↑</kbd> details inside a chapter &nbsp; <kbd>Esc</kbd> overview map &nbsp; <kbd>S</kbd> speaker notes &nbsp; <kbd>F</kbd> full screen &nbsp; Click a diagram to enlarge &nbsp; <kbd>?</kbd> all shortcuts</div>
+</main>
+</body>
+</html>

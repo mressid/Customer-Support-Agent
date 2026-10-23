@@ -1,0 +1,8 @@
+%% Source: epics/E09-voice-mvp.md - Reuse of the text engine
+flowchart LR
+    T["Typed text"] --> N["Normalized customer message"]
+    V["Finalized transcript"] --> N
+    N --> E["Same AI Engine, same tool authorization"]
+    E --> R["Assistant text"]
+    R --> W["Widget text"]
+    R --> TTS["TTS audio"]

@@ -1,0 +1,7 @@
+%% Source: epics/E04-knowledge-and-rag.md - Epic overview
+flowchart LR
+    E04["E04 Knowledge and RAG"] --> US30["US-030 Register and upload source"]
+    E04 --> US31["US-031 Parse, chunk, embed, index"]
+    E04 --> US32["US-032 Retrieve relevant chunks"]
+    E04 --> US33["US-033 Grounded answer or fallback"]
+    US30 --> US31 --> US32 --> US33

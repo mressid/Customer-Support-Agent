@@ -1,0 +1,10 @@
+%% Source: epics/E10-workflow-routing-sla.md - Authoring and versioning
+stateDiagram-v2
+    [*] --> Draft
+    Draft --> Validated: schema, step refs, permissions OK
+    Validated --> Published: immutable WorkflowVersion
+    Published --> Active: enabled for tenant
+    Active --> Paused
+    Paused --> Active
+    Active --> Retired: new version replaces
+    Retired --> [*]

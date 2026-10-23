@@ -1,0 +1,14 @@
+%% Source: 04-voice-multimodal.md - 4.8 Voice privacy and consent
+flowchart TD
+    A["Customer clicks voice"] --> B["Show notice: voice active, transcription, retention"]
+    B --> C{"Consent given?"}
+    C -- No --> T["Stay in text"]
+    C -- Yes --> D["Request microphone permission only now"]
+    D --> E{"Granted?"}
+    E -- No --> T
+    E -- Yes --> F["Start session with visible active indicator"]
+    F --> G{"Recording retention enabled by tenant policy?"}
+    G -- No --> H["Process stream, keep transcript only per transcript policy"]
+    G -- Yes --> I["Store audio reference with audio retention policy"]
+    H --> J["On disconnect: release mic and cleanup session"]
+    I --> J

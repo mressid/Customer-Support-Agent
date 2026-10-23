@@ -1,0 +1,27 @@
+%% Source: uml/U4-activity-diagrams.md - U4.5 Release process
+flowchart TB
+    s((Start)) --> d1
+    subgraph Developers
+        d1["Implement story to Definition of Done"]
+        d2["Merge small change"]
+    end
+    subgraph CI
+        c1["Unit and integration tests"]
+        c2["Tenant and authorization tests"]
+        c3["AI regression and safety evaluation"]
+        c4["Latency, cost and failure-path checks"]
+        c5{"All gates pass?"}
+    end
+    subgraph Release
+        r1["Create versioned release"]
+        r2["Deploy behind feature flag"]
+        r3["Canary rollout"]
+        r4{"Healthy?"}
+        r5["Roll back or disable"]
+        r6["Full rollout"]
+    end
+    d1 --> d2 --> c1 --> c2 --> c3 --> c4 --> c5
+    c5 -- no --> d1
+    c5 -- yes --> r1 --> r2 --> r3 --> r4
+    r4 -- yes --> r6 --> e(((End)))
+    r4 -- no --> r5 --> d1

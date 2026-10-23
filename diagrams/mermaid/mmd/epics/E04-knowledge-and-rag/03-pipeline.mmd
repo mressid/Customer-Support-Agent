@@ -1,0 +1,9 @@
+%% Source: epics/E04-knowledge-and-rag.md - Pipeline
+flowchart LR
+    Q["Job: ingestion.requested"] --> P["Parse by type"]
+    P --> C["Clean and normalize"]
+    C --> K["Chunk with overlap, keep section metadata"]
+    K --> E["Embed via model adapter in batches"]
+    E --> I["Upsert into vector index with tenant, source, version metadata"]
+    I --> A["Activate DocumentVersion, deactivate previous"]
+    A --> D["Emit ingestion.completed"]

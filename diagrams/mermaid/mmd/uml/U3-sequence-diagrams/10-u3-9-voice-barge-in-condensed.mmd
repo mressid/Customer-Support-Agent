@@ -1,0 +1,17 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.9 Voice barge-in (condensed)
+sequenceDiagram
+    actor C as Customer
+    participant T as Transport
+    participant S as Sync
+    participant TTS as TTS
+    participant CV as Conversation
+
+    TTS-->>T: audio chunk 1..n
+    T-->>C: playing
+    C->>T: speaks over assistant
+    T->>TTS: cancel
+    T->>S: interrupted at offset
+    S->>CV: store delivered part, flag truncated
+    C->>T: new utterance
+    T->>S: final transcript
+    S->>CV: append message

@@ -1,0 +1,12 @@
+%% Source: 06-sprints.md - Sprint 2 — Website chat vertical slice
+flowchart TD
+    G2(["Goal: visitor exchanges text with backend reliably"])
+    G2 --> U20["US-020 Widget configuration"]
+    G2 --> U21["US-021 Chat session"]
+    G2 --> U22["US-022 Reconnect and resume"]
+    G2 --> U13["US-013 Inbound deduplication"]
+    G2 --> D["Delivery and error states, tracing"]
+    U20 --> U21 --> U22
+    U13 --> DEMO
+    U22 --> DEMO["Demo: send message, persisted and returned, duplicate and reconnect tests"]
+    D --> DEMO

@@ -1,0 +1,34 @@
+%% Source: uml/U4-activity-diagrams.md - U4.2 Document ingestion
+flowchart TB
+    s((Start)) --> u1
+    subgraph Administrator
+        u1["Select file and register source"]
+        u9["Review status"]
+    end
+    subgraph API
+        p1{"Size and type OK?"}
+        p2["Sniff content and scan"]
+        p3{"Clean?"}
+        p4["Store object, create version"]
+        p5["Enqueue ingestion"]
+    end
+    subgraph Worker
+        w1["Parse"]
+        w2["Chunk"]
+        w3["Embed"]
+        w4["Index with tenant metadata"]
+        w5{"Success?"}
+        w6["Backoff and retry"]
+        w7["Mark failed"]
+        w8["Activate version"]
+    end
+    u1 --> p1
+    p1 -- no --> rej["Reject"] --> u9
+    p1 -- yes --> p2 --> p3
+    p3 -- no --> q["Quarantine and audit"] --> u9
+    p3 -- yes --> p4 --> p5 --> w1 --> w2 --> w3 --> w4 --> w5
+    w5 -- yes --> w8 --> u9
+    w5 -- no --> w6
+    w6 -- attempts left --> w1
+    w6 -- exhausted --> w7 --> u9
+    u9 --> e(((End)))

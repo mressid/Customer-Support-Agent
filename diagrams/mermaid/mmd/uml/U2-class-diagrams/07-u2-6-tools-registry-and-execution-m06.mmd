@@ -1,0 +1,44 @@
+%% Source: uml/U2-class-diagrams.md - U2.6 Tools: registry and execution (M06)
+classDiagram
+    class ToolDefinition {
+        +String name
+        +String description
+    }
+    class ToolVersion {
+        +int version
+        +JsonSchema inputSchema
+        +JsonSchema outputSchema
+        +RiskLevel risk
+        +String requiredPermission
+        +Duration timeout
+        +RetryPolicy retry
+    }
+    class ToolRegistry {
+        +resolve(agentVersion, name) ToolVersion
+    }
+    class ToolExecutionService {
+        +execute(invocation) ToolResult
+        -validate(invocation)
+        -authorize(ctx, tool)
+        -redact(result)
+    }
+    class ToolExecution {
+        +UUID id
+        +String idempotencyKey
+        +ExecStatus status
+        +Map redactedArguments
+        +DateTime startedAt
+    }
+    class ActionApproval {
+        +ApprovalStatus status
+        +UUID approverId
+    }
+    class Connector {
+        <<interface>>
+    }
+    ToolDefinition "1" --> "*" ToolVersion
+    ToolRegistry ..> ToolVersion
+    ToolExecutionService ..> ToolRegistry
+    ToolExecutionService --> ToolExecution : persists
+    ToolExecution "1" --> "0..1" ActionApproval
+    ToolExecutionService ..> Connector

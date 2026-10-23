@@ -1,0 +1,7 @@
+%% Source: 04-voice-multimodal.md - Option A — modular pipeline
+flowchart LR
+    MIC["Customer audio"] --> T["M07 transport"] --> STT["M08 STT"]
+    STT -->|partial: provisional| UI["Live caption only"]
+    STT -->|final transcript| M09["M09 Transcript sync"]
+    M09 --> CONV["M01 Conversation"] --> AI["M04 AI Engine"]
+    AI --> TXT["Assistant text"] --> TTS["M08 TTS"] --> T --> SPK["Customer speaker"]

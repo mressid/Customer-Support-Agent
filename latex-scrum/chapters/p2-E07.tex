@@ -1,0 +1,68 @@
+\chapter{E07 --- Human Inbox and Handoff}
+
+Goal: a human can take over with context. Modules: M10, M13.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-060 & As a support agent, I can view an unassigned queue. & S5 \\
+US-061 & As a customer, I can request a human. & S5 \\
+US-062 & As a support agent, I receive a handoff summary. & S5 \\
+US-063 & As a support agent, I can resolve the conversation. & Backlog \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E07-human-handoff/01-epic-overview}{E07: Epic overview}{fig:epics-e07-human-handoff-01-epic-overview-47}
+
+
+\Needspace{518pt}
+\section{Ownership model}
+
+\mmdfig{epics/E07-human-handoff/02-ownership-model}{E07: Ownership model}{fig:epics-e07-human-handoff-02-ownership-model-48}
+
+
+\mmdfigLH{\section{US-060 --- Support agent views the unassigned queue}
+
+\begin{storybox}{User story US-060}
+\textbf{Story.} As a support agent, I can view an unassigned queue.\par
+\textbf{Acceptance.} queue is tenant scoped and supports assignment.
+\end{storybox}
+}{epics/E07-human-handoff/03-us-060-support-agent-views-the-unassigned-queue}{E07: US-060 --- Support agent views the unassigned queue}{fig:03-us-060-support-agent-views-the-unassigned-queue-49}
+
+
+\Needspace{640pt}
+\section{US-061 --- Customer requests a human}
+
+\begin{storybox}{User story US-061}
+\textbf{Story.} As a customer, I can request a human.\par
+\textbf{Acceptance.} AI stops responding when handoff policy requires; the customer receives a clear status.
+\end{storybox}
+
+\mmdfig{epics/E07-human-handoff/04-us-061-customer-requests-a-human}{E07: US-061 --- Customer requests a human}{fig:-human-handoff-04-us-061-customer-requests-a-human-50}
+
+
+\mmdfigLH{\section{US-062 --- Handoff summary for the agent}
+
+\begin{storybox}{User story US-062}
+\textbf{Story.} As a support agent, I receive a handoff summary.\par
+\textbf{Acceptance.} summary includes transcript, unresolved request and prior tool outcomes permitted by policy.
+\end{storybox}
+}{epics/E07-human-handoff/05-us-062-handoff-summary-for-the-agent}{E07: US-062 --- Handoff summary for the agent}{fig:an-handoff-05-us-062-handoff-summary-for-the-agent-51}
+
+
+\mmdfigLH{\section{US-063 --- Support agent resolves the conversation}
+
+\begin{storybox}{User story US-063}
+\textbf{Story.} As a support agent, I can resolve the conversation.\par
+\textbf{Acceptance.} resolution and ownership changes are recorded.
+\end{storybox}
+}{epics/E07-human-handoff/06-us-063-support-agent-resolves-the-conversation}{E07: US-063 --- Support agent resolves the conversation}{fig:-06-us-063-support-agent-resolves-the-conversation-52}
+
+

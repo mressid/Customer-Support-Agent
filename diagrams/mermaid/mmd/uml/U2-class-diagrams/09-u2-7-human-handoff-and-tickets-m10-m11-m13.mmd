@@ -1,0 +1,70 @@
+%% Source: uml/U2-class-diagrams.md - U2.7 Human handoff and tickets (M10, M11, M13)
+classDiagram
+    class HandoffEvent {
+        +UUID id
+        +ReasonCode reason
+        +Outcome outcome
+        +DateTime requestedAt
+    }
+    class HandoffBundle {
+        +String summary
+        +List~Message~ transcript
+        +List~ToolExecution~ toolOutcomes
+        +List~Citation~ citations
+        +VerificationLevel verification
+    }
+    class HandoffService {
+        +request(ctx, conv, reason) HandoffEvent
+        +prepareBundle(conv, viewerPermissions) HandoffBundle
+    }
+    class SupportQueue {
+        +String name
+        +enqueue(item)
+        +claim(item, agent)
+    }
+    class Assignment {
+        +int version
+        +AssignmentStatus status
+    }
+    class SupportAgent {
+        +UUID id
+        +Set~UUID~ queueIds
+    }
+    class Ticket {
+        +UUID id
+        +TicketStatus status
+        +Priority priority
+        +String category
+        +DateTime dueAt
+        +changeStatus(s, by)
+        +link(conversation)
+    }
+    class TicketComment {
+        +String body
+        +bool internal
+    }
+    class TicketStatusHistory {
+        +TicketStatus from
+        +TicketStatus to
+        +DateTime at
+    }
+    class RoutingRule {
+        +int priority
+        +Condition condition
+        +matches(item) bool
+    }
+    class SlaPolicy {
+        +Duration responseTarget
+        +Duration resolutionTarget
+    }
+    class EscalationPolicy
+    HandoffService --> HandoffEvent : creates
+    HandoffEvent --> HandoffBundle
+    HandoffEvent "1" --> "0..1" Assignment
+    SupportQueue "1" --> "*" Assignment
+    SupportAgent "1" --> "*" Assignment
+    Ticket "1" *-- "*" TicketComment
+    Ticket "1" *-- "*" TicketStatusHistory
+    RoutingRule --> SupportQueue : targets
+    SlaPolicy "1" --> "*" EscalationPolicy
+    Ticket ..> SlaPolicy

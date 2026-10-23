@@ -1,0 +1,15 @@
+%% Source: 06-sprints.md - 6.1 Sprint sequence and goals
+flowchart TB
+    subgraph row1["Foundations"]
+        direction LR
+        S0["Sprint 0<br/>Enablement (if needed)"] --> S1["Sprint 1<br/>Secure conversation foundation"] --> S2["Sprint 2<br/>Website chat slice"] --> S3["Sprint 3<br/>Knowledge ingestion"]
+    end
+    subgraph row2["AI MVP and Release 1"]
+        direction LR
+        S4["Sprint 4<br/>Grounded AI answers"] --> S5["Sprint 5<br/>Tool and handoff"] --> S6["Sprint 6<br/>Tickets and hardening"] --> R1{{"Release 1<br/>Text MVP"}}
+    end
+    subgraph row3["Voice and Release 2"]
+        direction LR
+        S7["Sprint 7<br/>Voice technical slice"] --> S8["Sprint 8<br/>Voice sync and handoff"] --> R2{{"Release 2<br/>Voice MVP"}}
+    end
+    row1 --> row2 --> row3

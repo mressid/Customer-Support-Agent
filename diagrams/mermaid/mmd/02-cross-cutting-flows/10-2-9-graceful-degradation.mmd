@@ -1,0 +1,11 @@
+%% Source: 02-cross-cutting-flows.md - 2.9 Graceful degradation
+flowchart TD
+    T["Customer turn"] --> LLM{"LLM provider healthy?"}
+    LLM -- No --> D1["Tell customer of temporary unavailability or route to human"]
+    LLM -- Yes --> RAG{"Retrieval healthy?"}
+    RAG -- No --> D2["Do not claim grounded answer: ask clarifying question or hand off"]
+    RAG -- Yes --> TOOL{"Tool needed and healthy?"}
+    TOOL -- "Not needed" --> ANS["Grounded answer"]
+    TOOL -- "Healthy" --> ANS
+    TOOL -- "Down or circuit open" --> D3["Explain limitation, offer human or ticket"]
+    D1 & D2 & D3 --> AUD["Emit failure metric and audit event"]

@@ -1,0 +1,199 @@
+\chapter{Module Communication and Contracts}
+
+\section{Communication principles}
+
+\begin{enumerate}
+\item Use direct application interfaces for short, local, request/response operations.
+\item Use asynchronous jobs/events for slow, retryable, or externally dependent operations.
+\item Use durable event records for inbound webhooks and outbound deliveries.
+\item Keep public provider payloads at the adapter boundary; convert them to canonical internal contracts.
+\item Never use an LLM prompt as the only interface contract between modules.
+\item Carry \code{tenant\_\allowbreak{}id}, \code{correlation\_\allowbreak{}id}, \code{causation\_\allowbreak{}id}, and \code{occurred\_\allowbreak{}at} on internal events.
+\item Version public/event contracts and make consumers tolerant of additive fields.
+\item Do not expose internal-only endpoints publicly.
+\end{enumerate}
+\section{Synchronous interactions}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.189\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.242\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.273\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.295\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Caller} & \textbf{Callee} & \textbf{Purpose} & \textbf{Contract expectations} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Channel adapter & Conversation application service & Normalize and append inbound message & Idempotent on provider event ID \\
+Conversation orchestrator & AI engine & Process a new turn & Bounded timeout; trace ID \\
+AI engine & Knowledge module & Retrieve relevant chunks & Tenant/source filters; citations/IDs \\
+AI engine & Tool execution module & Request a named tool & Schema validation and policy check \\
+Tool module & Business connector & Execute an allowed operation & Timeout, idempotency, typed result \\
+Admin API & Agent configuration & Publish agent version & Immutable version; audit record \\
+Human inbox & Conversation module & Claim/take over conversation & Optimistic concurrency or explicit lock \\
+\end{longtable}
+}
+
+\section{Asynchronous events/jobs}
+
+Suggested event names:
+
+\begin{itemize}
+\item \code{conversation.\allowbreak{}created}
+\item \code{message.\allowbreak{}received}
+\item \code{message.\allowbreak{}persisted}
+\item \code{ai.\allowbreak{}turn.\allowbreak{}requested}
+\item \code{ai.\allowbreak{}turn.\allowbreak{}completed}
+\item \code{tool.\allowbreak{}execution.\allowbreak{}requested}
+\item \code{tool.\allowbreak{}execution.\allowbreak{}completed}
+\item \code{human.\allowbreak{}handoff.\allowbreak{}requested}
+\item \code{human.\allowbreak{}handoff.\allowbreak{}accepted}
+\item \code{ticket.\allowbreak{}created}
+\item \code{knowledge.\allowbreak{}source.\allowbreak{}ingestion.\allowbreak{}requested}
+\item \code{knowledge.\allowbreak{}source.\allowbreak{}ingestion.\allowbreak{}completed}
+\item \code{channel.\allowbreak{}delivery.\allowbreak{}requested}
+\item \code{channel.\allowbreak{}delivery.\allowbreak{}completed}
+\item \code{channel.\allowbreak{}delivery.\allowbreak{}failed}
+\item \code{voice.\allowbreak{}session.\allowbreak{}started}
+\item \code{voice.\allowbreak{}session.\allowbreak{}ended}
+\item \code{evaluation.\allowbreak{}run.\allowbreak{}completed}
+\item \code{usage.\allowbreak{}recorded}
+\end{itemize}
+Events communicate facts that have happened. Commands request work. Do not use event names that imply success before the work has succeeded.
+
+\section{Canonical inbound message envelope}
+
+\begin{lstlisting}
+{
+  "event_id": "provider-or-internal-unique-id",
+  "tenant_id": "tenant-id",
+  "channel_connection_id": "channel-id",
+  "provider": "website-chat",
+  "provider_event_id": "provider-event-id",
+  "conversation_id": "conversation-id-or-null",
+  "customer_identity": {
+    "provider_identity_id": "external-identity-id",
+    "display_name": "Customer-provided-name-or-null"
+  },
+  "message": {
+    "message_id": "internal-message-id",
+    "direction": "inbound",
+    "kind": "text",
+    "text": "Where is my order?",
+    "attachments": []
+  },
+  "occurred_at": "2026-01-01T12:00:00Z",
+  "correlation_id": "trace-or-correlation-id"
+}
+\end{lstlisting}
+
+This is illustrative. Production contracts should define schemas, limits, optional fields, and validation rules. Never trust a provider-supplied tenant ID without resolving the configured channel connection.
+
+\section{Tool invocation envelope}
+
+\begin{lstlisting}
+{
+  "tool_execution_id": "execution-id",
+  "tenant_id": "tenant-id",
+  "conversation_id": "conversation-id",
+  "agent_version_id": "agent-version-id",
+  "tool_name": "orders.lookup",
+  "arguments": {
+    "order_reference": "ORDER-123"
+  },
+  "requested_by": "ai-agent",
+  "idempotency_key": "stable-operation-key",
+  "correlation_id": "correlation-id"
+}
+\end{lstlisting}
+
+The tool service must derive authorization from trusted application context. It must not accept model-generated claims of identity or permissions.
+
+\section{Delivery state machine}
+
+Recommended outbound states: \code{queued \ensuremath{\rightarrow} sending \ensuremath{\rightarrow} sent \ensuremath{\rightarrow} delivered} with side paths: \code{queued/\allowbreak{}sending \ensuremath{\rightarrow} retry\_\allowbreak{}wait \ensuremath{\rightarrow} sending} and terminal or review states: \code{failed}, \code{cancelled}, \code{unknown}.
+
+\code{sent} and \code{delivered} are distinct when the provider exposes a delivery receipt. An uncertain provider timeout must not automatically mean the message was not sent; retrying may duplicate it.
+
+\section{Reliability patterns}
+
+\begin{itemize}
+\item \textbf{Webhook inbox:} persist provider event IDs and processing state to deduplicate replays.
+\item \textbf{Transactional outbox:} commit domain changes and pending event records in one transaction, then publish.
+\item \textbf{Idempotent commands:} use stable idempotency keys for external write operations.
+\item \textbf{Retry policy:} exponential backoff with jitter, maximum attempts, and dead-letter/review path.
+\item \textbf{Concurrency:} protect conversation ownership and turn sequencing.
+\item \textbf{Ordering:} order by conversation/stream key when the broker supports partitioning.
+\item \textbf{Timeouts:} bound all provider calls.
+\item \textbf{Circuit breaking:} stop repeatedly calling a failing dependency.
+\item \textbf{Compensation:} define recovery for workflows that span systems without distributed transactions.
+\end{itemize}
+\section{Error contract}
+
+Return stable machine-readable error codes, safe user-facing messages, retryability, and correlation ID. Do not return stack traces, secret values, provider tokens, or internal prompts.
+
+\section{Cross-cutting flow diagrams}
+\Needspace{640pt}
+\subsection{Inbound webhook handling}
+
+\mmdfig{02-cross-cutting-flows/01-2-1-inbound-webhook-handling}{Inbound webhook handling}{fig:ross-cutting-flows-01-2-1-inbound-webhook-handling-120}
+
+
+\mmdfigLH{\subsection{Transactional outbox and inbox}
+}{02-cross-cutting-flows/02-2-2-transactional-outbox-and-inbox}{Transactional outbox and inbox}{fig:utting-flows-02-2-2-transactional-outbox-and-inbox-121}
+
+
+\Needspace{337pt}
+\subsection{Outbound delivery state machine}
+
+\mmdfig{02-cross-cutting-flows/03-2-3-outbound-delivery-state-machine}{Outbound delivery state machine}{fig:tting-flows-03-2-3-outbound-delivery-state-machine-122}
+
+
+\Needspace{640pt}
+\subsection{Retry decision}
+
+\mmdfig{02-cross-cutting-flows/04-2-4-retry-decision}{Retry decision}{fig:02-cross-cutting-flows-04-2-4-retry-decision-123}
+
+
+\Needspace{640pt}
+\subsection{Tool execution --- full pipeline (split in two parts)}
+
+\subsubsection{Part A: validation and authorization}
+
+\mmdfig{02-cross-cutting-flows/05-part-a-validation-and-authorization}{Tool execution --- full pipeline (split in two parts): Part A: validation and authorization}{fig:tting-flows-05-part-a-validation-and-authorization-124}
+
+
+\Needspace{404pt}
+\subsubsection{Part B: execution and result handling}
+
+\mmdfig{02-cross-cutting-flows/06-part-b-execution-and-result-handling}{Tool execution --- full pipeline (split in two parts): Part B: execution and result handling}{fig:ting-flows-06-part-b-execution-and-result-handling-125}
+
+
+\Needspace{402pt}
+\subsection{Tool execution state machine}
+
+\mmdfig{02-cross-cutting-flows/07-2-6-tool-execution-state-machine}{Tool execution state machine}{fig:-cutting-flows-07-2-6-tool-execution-state-machine-126}
+
+
+\mmdfigLH{\subsection{Tenant resolution and isolation}
+}{02-cross-cutting-flows/08-2-7-tenant-resolution-and-isolation}{Tenant resolution and isolation}{fig:tting-flows-08-2-7-tenant-resolution-and-isolation-127}
+
+
+\mmdfigLH{\subsection{Secrets and credential flow}
+}{02-cross-cutting-flows/09-2-8-secrets-and-credential-flow}{Secrets and credential flow}{fig:s-cutting-flows-09-2-8-secrets-and-credential-flow-128}
+
+
+\Needspace{582pt}
+\subsection{Graceful degradation}
+
+\mmdfig{02-cross-cutting-flows/10-2-9-graceful-degradation}{Graceful degradation}{fig:02-cross-cutting-flows-10-2-9-graceful-degradation-129}
+
+
+\mmdfigLH{\subsection{Data lifecycle and retention}
+}{02-cross-cutting-flows/11-2-10-data-lifecycle-and-retention}{Data lifecycle and retention}{fig:cutting-flows-11-2-10-data-lifecycle-and-retention-130}
+
+
+\Needspace{571pt}
+\subsection{Security test matrix}
+
+\mmdfig{02-cross-cutting-flows/12-2-11-security-test-matrix}{Security test matrix}{fig:2-cross-cutting-flows-12-2-11-security-test-matrix-131}
+
+

@@ -1,0 +1,17 @@
+%% Source: 06-sprints.md - Sprint 6 — Tickets and release hardening
+flowchart TD
+    G6(["Goal: unresolved work tracked and MVP meets release gates"])
+    G6 --> U70["US-070 Ticket creation"]
+    G6 --> U71["US-071 Ticket filtering"]
+    G6 --> U43["US-043 Agent version publish and rollback"]
+    G6 --> U110["US-110 End-to-end tracing"]
+    G6 --> U112["US-112 Initial regression evaluation"]
+    G6 --> HARD["Security, load, backup and restore, runbooks"]
+    U70 --> U71
+    U43 --> GATE
+    U112 --> GATE
+    U110 --> GATE
+    HARD --> GATE{"R1 exit criteria met?"}
+    U71 --> GATE
+    GATE -- Yes --> REL["Release 1"]
+    GATE -- No --> FIX["Carry fixes to next sprint"]

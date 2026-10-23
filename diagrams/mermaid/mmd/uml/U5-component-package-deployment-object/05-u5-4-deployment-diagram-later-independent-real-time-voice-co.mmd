@@ -1,0 +1,9 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.4 Deployment diagram — later: independent real-time voice component
+flowchart LR
+    W["Widget"] -- WebRTC --> VG["voice-gateway<br/>independently scaled"]
+    VG -- internal gRPC or events --> API["support-api"]
+    VG --> SPC["Speech provider"]
+    API --> PG[("postgres")]
+    API --> QU[["queue"]]
+    QU --> WRK["support-worker"]
+    note1["Extract only if independent scaling or fault isolation justifies cost"] -.-> VG

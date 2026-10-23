@@ -1,0 +1,25 @@
+%% Source: 05-data-model.md - 5.7 Handoff and tickets
+erDiagram
+    CONVERSATION ||--o{ HANDOFF_EVENT : escalates
+    HANDOFF_EVENT ||--o| ASSIGNMENT : results_in
+    SUPPORT_QUEUE ||--o{ ASSIGNMENT : holds
+    SUPPORT_AGENT ||--o{ ASSIGNMENT : takes
+    CONVERSATION }o--o{ TICKET : relates_to
+    TICKET ||--o{ TICKET_COMMENT : has
+    TICKET ||--o{ TICKET_STATUS_HISTORY : tracks
+    SUPPORT_AGENT ||--o{ TICKET : assigned
+
+    HANDOFF_EVENT {
+        uuid id PK
+        uuid conversation_id FK
+        string reason_code
+        json bundle_ref
+        string outcome
+    }
+    TICKET {
+        uuid id PK
+        string status
+        string priority
+        string category
+        timestamp due_at
+    }

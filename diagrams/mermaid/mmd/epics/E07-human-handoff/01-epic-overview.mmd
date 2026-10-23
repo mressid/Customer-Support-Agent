@@ -1,0 +1,7 @@
+%% Source: epics/E07-human-handoff.md - Epic overview
+flowchart LR
+    E07["E07 Human handoff"] --> US60["US-060 View unassigned queue"]
+    E07 --> US61["US-061 Customer requests human"]
+    E07 --> US62["US-062 Handoff summary"]
+    E07 --> US63["US-063 Resolve conversation"]
+    US61 --> US62 --> US60 --> US63

@@ -1,0 +1,5 @@
+%% Source: epics/E08-tickets.md - US-070 — Create a ticket from a conversation
+flowchart LR
+    AI["AI cannot resolve"] --> P{"Policy allows AI ticket creation?"}
+    P -- Yes --> T["Create ticket with summary, source=ai"]
+    P -- No --> H["Handoff to human who creates ticket"]

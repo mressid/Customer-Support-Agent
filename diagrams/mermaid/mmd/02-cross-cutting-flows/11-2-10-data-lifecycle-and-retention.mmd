@@ -1,0 +1,20 @@
+%% Source: 02-cross-cutting-flows.md - 2.10 Data lifecycle and retention
+flowchart LR
+    subgraph Classes["Data classes with independent retention"]
+        direction LR
+        MSG["Messages"]
+        TR["Transcripts"]
+        AUDIO["Raw audio: off by default"]
+        FILES["Uploaded files"]
+        LOGS["Logs"]
+        AUDITD["Audit events"]
+        PROV["Provider payloads"]
+    end
+    Classes --> POL["RetentionPolicy per tenant per class"]
+    POL --> JOB["Scheduled retention job"]
+    JOB --> DEL["Delete or redact"]
+    DEL --> PROP["Propagate to search index, caches, derived data"]
+    PROP --> REC["Write deletion audit record"]
+    REQ["Customer access or deletion request"] --> VERIFY{"Identity verified?"}
+    VERIFY -- Yes --> JOB
+    VERIFY -- No --> DENY["Reject or request verification"]

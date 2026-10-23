@@ -1,0 +1,19 @@
+%% Source: epics/E01-tenant-and-access.md - US-001 — Create and configure an organization
+sequenceDiagram
+    actor Admin
+    participant API as Support API
+    participant ORG as Organization service
+    participant DB as Postgres
+    participant AUD as Audit
+
+    Admin->>API: POST /organizations
+    API->>API: authenticate and validate input
+    API->>ORG: create(name, settings)
+    ORG->>DB: BEGIN
+    ORG->>DB: insert organization with generated id
+    ORG->>DB: insert default settings and default roles
+    ORG->>DB: insert admin membership
+    ORG->>DB: insert audit event organization.created
+    ORG->>DB: COMMIT
+    ORG-->>API: organization
+    API-->>Admin: 201 with organization id

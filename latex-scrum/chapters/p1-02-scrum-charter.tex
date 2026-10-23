@@ -1,0 +1,124 @@
+\chapter{Scrum Charter}
+
+\section{Product goal}
+
+Deliver an AI-native customer support platform that handles complete text conversations first, provides grounded answers and safe tool use, supports human handoff, and then expands to real-time voice and additional channels.
+
+\section{Scrum setup}
+
+\begin{itemize}
+\item \textbf{Product Owner:} accountable for product value, Product Goal, and Product Backlog ordering.
+\item \textbf{Scrum Master:} coaches Scrum, removes impediments, and helps the team improve.
+\item \textbf{Developers:} cross-functional team that designs, builds, tests, integrates, secures, and operates a usable Increment.
+\item \textbf{Stakeholders:} support teams, organization administrators, customers, security/privacy, and business-system owners.
+\end{itemize}
+Roles can be held by a small team, but accountabilities must remain clear.
+
+\mmdfigL{07-scrum-release-risks/01-7-1-scrum-roles-and-accountabilities}{Scrum roles and accountabilities}{fig:ease-risks-01-7-1-scrum-roles-and-accountabilities-3}
+
+
+\section{Product Goal}
+
+A customer can contact an organization through website chat, receive accurate knowledge-grounded answers, complete at least one authorized read-only business lookup, and reach a human without losing conversation context. The architecture must be ready to add voice without duplicating business reasoning.
+
+\section{Proposed release goals}
+
+\begin{itemize}
+\item \textbf{Release 1 --- Text support MVP:} tenant foundation, website chat, conversation lifecycle, RAG, one read-only tool, handoff, basic analytics and audit.
+\item \textbf{Release 2 --- Voice MVP:} real-time browser voice, speech processing, transcript synchronization, interruption handling, voice handoff and voice observability.
+\item \textbf{Release 3 --- Operations expansion:} additional channels, workflow automation, routing/SLA, connectors, evaluation, and commercial usage controls.
+\end{itemize}
+\section{Sprint approach}
+
+\begin{itemize}
+\item Suggested Sprint length: 2 weeks.
+\item Each Sprint has one Sprint Goal and a potentially releasable Increment.
+\item Sprint Planning selects work based on Product Goal, ordered backlog, capacity, and Definition of Done.
+\item Daily Scrum is for Developers to inspect progress toward the Sprint Goal and adapt the plan.
+\item Sprint Review inspects the Increment with stakeholders and adapts the Product Backlog.
+\item Sprint Retrospective improves team effectiveness and quality.
+\item Refinement is ongoing; it is not a formal Scrum event.
+\end{itemize}
+\mmdfigL{07-scrum-release-risks/02-7-2-scrum-events-within-a-sprint}{Scrum events within a Sprint}{fig:-release-risks-02-7-2-scrum-events-within-a-sprint-4}
+
+
+\mmdfig{scrum-existing/S5-scrum-mermaid-artifacts/04-4-scrum-workflow}{Scrum workflow}{fig:ing-s5-scrum-mermaid-artifacts-04-4-scrum-workflow-5}
+
+
+\section{Working assumptions}
+
+\begin{itemize}
+\item A small team is building a modular monolith initially.
+\item Product design, infrastructure, security and automated tests are part of delivery---not separate downstream phases.
+\item Story points are team-specific estimates, not time conversions.
+\item Sprint sequence and estimates are provisional until capacity and dependencies are confirmed.
+\end{itemize}
+
+\section{Scrum Events, Artifacts and Working Agreements}
+
+\subsection{Sprint Planning}
+
+Inputs:
+
+\begin{itemize}
+\item Product Goal and ordered Product Backlog
+\item latest Increment and feedback
+\item team capacity, leave, and known operational work
+\end{itemize}
+Outputs:
+
+\begin{itemize}
+\item Sprint Goal
+\item selected Product Backlog Items
+\item initial delivery plan
+\end{itemize}
+\subsection{Daily Scrum}
+
+\begin{itemize}
+\item 15 minutes for Developers.
+\item Inspect progress toward the Sprint Goal.
+\item Adapt the plan for the next day.
+\item Use follow-up conversations for detailed problem solving.
+\end{itemize}
+\subsection{Sprint Review}
+
+\begin{itemize}
+\item Demonstrate working software, not slides alone.
+\item Inspect outcomes against the Sprint Goal.
+\item Invite support staff/admins to test realistic scenarios.
+\item Capture feedback and reorder backlog based on evidence.
+\end{itemize}
+\subsection{Sprint Retrospective}
+
+Inspect:
+
+\begin{itemize}
+\item delivery flow and collaboration;
+\item defect/rework causes;
+\item CI/test speed;
+\item architectural friction;
+\item security/privacy and operational issues;
+\item one or two actionable improvements for the next Sprint.
+\end{itemize}
+\subsection{Backlog refinement}
+
+Ongoing activity to split, clarify, reorder, and estimate upcoming work. Refinement is not a formal Scrum event.
+
+\subsection{Scrum artifacts and commitments}
+
+\begin{itemize}
+\item \textbf{Product Backlog / Product Goal:} ordered work and desired future state.
+\item \textbf{Sprint Backlog / Sprint Goal:} selected work and plan to achieve the Sprint Goal.
+\item \textbf{Increment / Definition of Done:} integrated usable result meeting quality requirements.
+\end{itemize}
+\subsection{Suggested working agreements}
+
+\begin{itemize}
+\item Every story has observable acceptance criteria.
+\item Security, observability, and automated tests are included in feature work.
+\item Merge small changes frequently.
+\item No direct production secrets in source control.
+\item Do not let model output directly bypass application permissions.
+\item Review incidents and failed evaluations without blaming individuals.
+\item Keep story points team-specific; never treat them as hours.
+\end{itemize}

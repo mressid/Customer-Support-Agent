@@ -1,0 +1,11 @@
+%% Source: epics/E12-observability-evaluation-usage.md - US-112 — Run AI regression evaluations
+flowchart TD
+    DS["EvaluationDataset: FAQ, ambiguous, injection, restricted data, tool failure, human request, language switch, voice errors"] --> RUN["EvaluationRun on candidate AgentVersion"]
+    RUN --> DET["Deterministic assertions: permissions, schemas, state transitions"]
+    RUN --> JUDGE["Model judge: one signal only"]
+    RUN --> HUM["Human review sample"]
+    DET & JUDGE & HUM --> SC["Scores: correctness, groundedness, clarification, tool choice, authz, handoff, tone, latency, cost"]
+    SC --> CMP["Compare with baseline"]
+    CMP --> G{"Critical safety and authz tests pass? Regression within threshold?"}
+    G -- Yes --> REL["Create AgentRelease record, allow publish"]
+    G -- No --> BLK["Block publish and report failures"]

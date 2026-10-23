@@ -1,0 +1,38 @@
+%% Source: uml/U4-activity-diagrams.md - U4.4 Tool call authorization
+flowchart TB
+    s((Start)) --> a
+    subgraph AI_Engine["AI Engine"]
+        a["Propose tool call"]
+        z["Use typed result or denial"]
+    end
+    subgraph Tool_Service["Tool Service"]
+        b{"Allowlisted?"}
+        c{"Schema valid?"}
+        d{"Customer verified and tenant scope OK?"}
+        e{"Risk level"}
+        f["Create execution record"]
+        g["Call connector with timeout"]
+        h{"Outcome"}
+        i["Redact and store result"]
+        j["Mark unknown outcome"]
+    end
+    subgraph Approval
+        k["Wait for human approval"]
+        l{"Approved?"}
+    end
+    a --> b
+    b -- no --> deny["Denied"] --> z
+    b -- yes --> c
+    c -- no --> deny
+    c -- yes --> d
+    d -- no --> deny
+    d -- yes --> e
+    e -- "read only" --> f
+    e -- "sensitive write" --> k --> l
+    l -- no --> deny
+    l -- yes --> f
+    f --> g --> h
+    h -- success --> i --> z
+    h -- "write timeout" --> j --> z
+    h -- "failure" --> z
+    z --> fin(((End)))

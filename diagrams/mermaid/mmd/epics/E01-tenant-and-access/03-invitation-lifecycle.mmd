@@ -1,0 +1,10 @@
+%% Source: epics/E01-tenant-and-access.md - Invitation lifecycle
+stateDiagram-v2
+    [*] --> Created
+    Created --> Sent: email dispatched
+    Sent --> Accepted: valid token before expiry
+    Sent --> Expired: expires_at passed
+    Sent --> Revoked: admin cancels
+    Accepted --> [*]
+    Expired --> [*]
+    Revoked --> [*]

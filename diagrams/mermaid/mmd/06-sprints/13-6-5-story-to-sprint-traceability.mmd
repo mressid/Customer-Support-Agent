@@ -1,0 +1,21 @@
+%% Source: 06-sprints.md - 6.5 Story to sprint traceability
+flowchart LR
+    subgraph E01_E02["E01 E02 E03"]
+        US001 & US003 & US010 & US011 --> S1
+        US020 & US021 & US022 & US013 --> S2
+    end
+    subgraph E04_E05["E04 E05"]
+        US030 & US031 & US032 --> S3
+        US040 & US033 & US041 & US042 --> S4
+    end
+    subgraph E06_E08["E06 E07 E08"]
+        US050 & US051 & US053 & US060 & US061 & US062 --> S5
+        US070 & US071 & US043 & US110 & US112 --> S6
+    end
+    subgraph E09["E09"]
+        US080 & US081 --> S7
+        US082 & US083 & US084 --> S8
+    end
+    subgraph Later["Unscheduled backlog"]
+        US002 & US012 & US052 & US063 & US090 & US091 & US092 & US100 & US101 & US102 & US111 & US113 --> BL["Later sprints"]
+    end

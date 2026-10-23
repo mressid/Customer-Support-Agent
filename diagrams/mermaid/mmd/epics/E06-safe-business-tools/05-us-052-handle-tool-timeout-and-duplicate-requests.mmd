@@ -1,0 +1,17 @@
+%% Source: epics/E06-safe-business-tools.md - US-052 — Handle tool timeout and duplicate requests
+flowchart TD
+    A["Tool request with idempotency key"] --> B{"Key already seen?"}
+    B -- "Yes, succeeded" --> C["Return stored result: no second call"]
+    B -- "Yes, running" --> D["Wait or return in-progress"]
+    B -- No --> E["Create ToolExecution"]
+    E --> F["Call connector with timeout"]
+    F --> G{"Outcome"}
+    G -- success --> H["Store result"]
+    G -- "timeout, read tool" --> I["Retry with backoff"]
+    G -- "timeout, write tool" --> J["Mark UNKNOWN_OUTCOME"]
+    J --> K{"Status lookup available?"}
+    K -- Yes --> L["Query external system by idempotency key"]
+    K -- No --> M["Human review"]
+    L --> H
+    L --> N["Confirmed failure: safe to retry or tell customer"]
+    J --> O["AI must not claim success"]

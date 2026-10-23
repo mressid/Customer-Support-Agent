@@ -1,0 +1,78 @@
+\chapter{E12 --- Observability, Evaluation and Usage}
+
+Goal: operate and improve the platform with evidence. Modules: M16, M17, M20. Source: the observability chapter.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-110 & As an operator, I can trace one request across modules. & S6 \\
+US-111 & As a product owner, I can see resolution and handoff metrics. & Backlog \\
+US-112 & As a team, we can run AI regression evaluations. & S6 \\
+US-113 & As an administrator, I can inspect usage by agent and channel. & Backlog \\
+\end{longtable}
+}
+
+\Needspace{294pt}
+\section{Epic overview}
+
+\mmdfig{epics/E12-observability-evaluation-usage/01-epic-overview}{E12: Epic overview}{fig:12-observability-evaluation-usage-01-epic-overview-79}
+
+
+\mmdfigLH{\section{US-110 --- Trace one request across modules}
+
+\begin{storybox}{User story US-110}
+\textbf{Story.} As an operator, I can trace one request across modules.\par
+\textbf{Acceptance.} correlation IDs connect API, worker, model, retrieval and tool activity.
+\end{storybox}
+}{epics/E12-observability-evaluation-usage/02-us-110-trace-one-request-across-modules}{E12: US-110 --- Trace one request across modules}{fig:n-usage-02-us-110-trace-one-request-across-modules-80}
+
+
+\Needspace{222pt}
+\subsection{Correlation identifiers}
+
+\mmdfig{epics/E12-observability-evaluation-usage/03-correlation-identifiers}{E12: US-110 --- Trace one request across modules: Correlation identifiers}{fig:bility-evaluation-usage-03-correlation-identifiers-81}
+
+
+\mmdfigLH{\section{US-111 --- Resolution and handoff metrics}
+
+\begin{storybox}{User story US-111}
+\textbf{Story.} As a product owner, I can see resolution and handoff metrics.\par
+\textbf{Acceptance.} definitions are documented and metrics are tenant-safe.
+\end{storybox}
+}{epics/E12-observability-evaluation-usage/04-us-111-resolution-and-handoff-metrics}{E12: US-111 --- Resolution and handoff metrics}{fig:ion-usage-04-us-111-resolution-and-handoff-metrics-82}
+
+
+\mmdfigLH{\subsection{Platform signal groups}
+}{epics/E12-observability-evaluation-usage/05-platform-signal-groups}{E12: US-111 --- Resolution and handoff metrics: Platform signal groups}{fig:ability-evaluation-usage-05-platform-signal-groups-83}
+
+
+\Needspace{640pt}
+\section{US-112 --- Run AI regression evaluations}
+
+\begin{storybox}{User story US-112}
+\textbf{Story.} As a team, we can run AI regression evaluations.\par
+\textbf{Acceptance.} dataset and agent/model version are recorded; critical policy tests gate release.
+\end{storybox}
+
+\mmdfig{epics/E12-observability-evaluation-usage/06-us-112-run-ai-regression-evaluations}{E12: US-112 --- Run AI regression evaluations}{fig:tion-usage-06-us-112-run-ai-regression-evaluations-84}
+
+
+\mmdfigLH{\subsection{Improvement loop}
+}{epics/E12-observability-evaluation-usage/07-improvement-loop}{E12: US-112 --- Run AI regression evaluations: Improvement loop}{fig:observability-evaluation-usage-07-improvement-loop-85}
+
+
+\mmdfigLH{\section{US-113 --- Inspect usage by agent and channel}
+
+\begin{storybox}{User story US-113}
+\textbf{Story.} As an administrator, I can inspect usage by agent and channel.\par
+\textbf{Acceptance.} provider usage is reconciled and sensitive data is not exposed in metrics.
+\end{storybox}
+}{epics/E12-observability-evaluation-usage/08-us-113-inspect-usage-by-agent-and-channel}{E12: US-113 --- Inspect usage by agent and channel}{fig:usage-08-us-113-inspect-usage-by-agent-and-channel-86}
+
+

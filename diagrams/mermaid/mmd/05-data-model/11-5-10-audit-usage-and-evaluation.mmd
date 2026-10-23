@@ -1,0 +1,12 @@
+%% Source: 05-data-model.md - 5.10 Audit, usage and evaluation
+erDiagram
+    ORGANIZATION ||--o{ AUDIT_EVENT : records
+    ORGANIZATION ||--o{ USAGE_RECORD : meters
+    USAGE_RECORD ||--o{ PROVIDER_USAGE : reconciles
+    ORGANIZATION ||--o{ RETENTION_POLICY : sets
+    EVALUATION_DATASET ||--o{ EVALUATION_RUN : used_by
+    EVALUATION_RUN ||--o{ EVALUATION_RESULT : yields
+    EVALUATION_RUN }o--|| AGENT_VERSION : tests
+    AGENT_VERSION ||--o| AGENT_RELEASE : released_as
+    CONVERSATION ||--o| CONVERSATION_OUTCOME : ends_with
+    CONVERSATION ||--o{ FEEDBACK : receives

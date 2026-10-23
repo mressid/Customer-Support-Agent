@@ -1,0 +1,63 @@
+\chapter{Definition of Ready and Definition of Done}
+
+\section{Definition of Ready (team working agreement)}
+
+A backlog item is ready for Sprint Planning when:
+
+\begin{itemize}
+\item user/business outcome is clear;
+\item acceptance criteria are testable;
+\item dependencies and external-provider assumptions are identified;
+\item UX/API/data behavior is sufficiently understood;
+\item security/privacy implications have been considered;
+\item the item is small enough to complete in one Sprint (split it if not);
+\item the team has an estimate or agreed sizing approach;
+\item required credentials, test data, and environments are available or have a plan.
+\end{itemize}
+This is a team aid, not a gate that should block all discovery work.
+
+\mmdfig{07-scrum-release-risks/03-7-3-definition-of-ready-check}{Definition of Ready check}{fig:rum-release-risks-03-7-3-definition-of-ready-check-108}
+
+
+\section{Definition of Done}
+
+A Product Backlog Item is Done only when:
+
+\begin{itemize}
+\item implementation meets acceptance criteria;
+\item code is reviewed and follows module boundaries;
+\item automated tests cover relevant behavior and failure cases;
+\item tenant isolation and authorization are tested where relevant;
+\item input validation and error handling are implemented;
+\item database migrations are reviewed and repeatable;
+\item logs/metrics/traces include safe correlation fields;
+\item sensitive values are redacted;
+\item documentation/API contracts are updated;
+\item no known critical/high-severity defect remains without explicit risk acceptance;
+\item deployment/rollback or feature-flag behavior is understood;
+\item product owner can inspect the completed behavior.
+\end{itemize}
+\section{AI-specific Done checks}
+
+\begin{itemize}
+\item model and prompt/config version are identifiable;
+\item tool schemas are validated;
+\item tool permissions are enforced in code;
+\item retrieval is tenant-scoped;
+\item failure, empty retrieval, and uncertainty paths are tested;
+\item a regression example is added for important behavior;
+\item no secrets or hidden reasoning are persisted in logs.
+\end{itemize}
+\section{Voice-specific Done checks}
+
+\begin{itemize}
+\item microphone permission and active state are clear;
+\item session cleanup works on disconnect;
+\item interruption/cancellation behavior is tested;
+\item transcript finalization and ordering are tested;
+\item audio/transcript retention follows policy;
+\item latency and failure metrics are emitted.
+\end{itemize}
+\mmdfig{07-scrum-release-risks/04-7-4-definition-of-done-layers}{Definition of Done layers}{fig:rum-release-risks-04-7-4-definition-of-done-layers-109}
+
+

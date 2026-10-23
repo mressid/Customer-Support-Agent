@@ -1,0 +1,9 @@
+%% Source: epics/E01-tenant-and-access.md - Epic overview
+flowchart LR
+    E01["E01 Tenant and access"] --> US1["US-001 Create organization"]
+    E01 --> US2["US-002 Invite users and roles"]
+    E01 --> US3["US-003 Tenant isolation tests"]
+    US1 --> OUT1["Tenant context available to every module"]
+    US2 --> OUT2["Server-side RBAC"]
+    US3 --> OUT3["CI gate: no cross-tenant access"]
+    OUT1 --> NEXT["Unblocks E02, E04"]

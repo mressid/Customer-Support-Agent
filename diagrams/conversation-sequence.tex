@@ -1,0 +1,27 @@
+% Compile with pdflatex or include in Overleaf.
+% Requires: \usepackage{tikz}
+%           \usetikzlibrary{arrows.meta,positioning,fit}
+\begin{tikzpicture}[
+  font=\small,
+  actor/.style={draw, rounded corners, align=center, minimum width=2.7cm, minimum height=0.75cm},
+  arr/.style={-{Stealth[length=2.3mm]}, thick},
+  node distance=0.8cm and 0.65cm
+]
+\node[actor] (customer) {Customer};
+\node[actor, right=of customer] (channel) {Channel Adapter};
+\node[actor, right=of channel] (conv) {Conversation Service};
+\node[actor, right=of conv] (ai) {AI Engine};
+\node[actor, below=1.2cm of ai] (rag) {Knowledge / Tools};
+\node[actor, left=of rag] (human) {Human Inbox};
+
+\draw[arr] (customer) -- node[above,align=center]{Message / speech} (channel);
+\draw[arr] (channel) -- node[above,align=center]{Normalized event} (conv);
+\draw[arr] (conv) -- node[above,align=center]{New turn} (ai);
+\draw[arr] (ai) -- node[right,align=left]{Retrieve / execute\\authorized tool} (rag);
+\draw[arr] (rag) -- node[left,align=left]{Evidence / result} (ai);
+\draw[arr] (ai) -- node[above,sloped,align=center]{Final response} (conv);
+\draw[arr] (conv) -- node[above,sloped,align=center]{Persist and deliver} (channel);
+\draw[arr] (channel) -- node[above,align=center]{Text / audio} (customer);
+\draw[arr,dashed] (ai) -- node[left,align=right]{Escalation required} (human);
+\draw[arr,dashed] (human) -- node[below,align=center]{Takeover and resolution} (conv);
+\end{tikzpicture}

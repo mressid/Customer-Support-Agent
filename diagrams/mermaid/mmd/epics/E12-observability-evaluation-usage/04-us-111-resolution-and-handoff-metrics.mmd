@@ -1,0 +1,13 @@
+%% Source: epics/E12-observability-evaluation-usage.md - US-111 — Resolution and handoff metrics
+flowchart LR
+    EV["Domain events via outbox"] --> AGG["Aggregation job"]
+    AGG --> CO["ConversationOutcome: resolved by AI, by human, abandoned, escalated"]
+    AGG --> UA["UsageAggregate"]
+    CO --> DASH["Dashboard per tenant"]
+    UA --> DASH
+    DASH --> K1["Resolution rate"]
+    DASH --> K2["Escalation rate by reason"]
+    DASH --> K3["p50 and p95 latency"]
+    DASH --> K4["CSAT"]
+    DASH --> K5["Cost per resolved conversation"]
+    GUARD["Rule: no message text, email, phone or tokens in metric labels"] -.-> AGG

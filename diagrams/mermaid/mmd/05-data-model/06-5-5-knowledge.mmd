@@ -1,0 +1,25 @@
+%% Source: 05-data-model.md - 5.5 Knowledge
+erDiagram
+    KNOWLEDGE_SOURCE ||--o{ DOCUMENT : contains
+    KNOWLEDGE_SOURCE ||--o{ INGESTION_JOB : runs
+    DOCUMENT ||--o{ DOCUMENT_VERSION : versions
+    DOCUMENT_VERSION ||--o{ DOCUMENT_CHUNK : splits_into
+    DOCUMENT_CHUNK ||--o| EMBEDDING : indexed_as
+    AGENT_EXECUTION ||--o{ RETRIEVAL_RUN : performs
+    RETRIEVAL_RUN ||--o{ RETRIEVAL_RESULT : returns
+    RETRIEVAL_RESULT }o--|| DOCUMENT_CHUNK : cites
+
+    DOCUMENT_VERSION {
+        uuid id PK
+        uuid document_id FK
+        string content_hash
+        string state
+        object_ref storage_key
+    }
+    RETRIEVAL_RUN {
+        uuid id PK
+        uuid agent_execution_id FK
+        string query_summary
+        int result_count
+        int latency_ms
+    }

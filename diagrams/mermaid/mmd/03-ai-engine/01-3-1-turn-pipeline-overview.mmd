@@ -1,0 +1,7 @@
+%% Source: 03-ai-engine.md - 3.1 Turn pipeline overview
+flowchart LR
+    P1["Phase 1<br/>Prepare<br/>steps 1-3"] --> P2["Phase 2<br/>Understand and retrieve<br/>steps 4-5"]
+    P2 --> P3["Phase 3<br/>Plan and act<br/>steps 6-8"]
+    P3 --> P4["Phase 4<br/>Respond and persist<br/>steps 9-12"]
+    P3 -. escalate .-> H["Handoff"]
+    P1 -. blocked .-> H

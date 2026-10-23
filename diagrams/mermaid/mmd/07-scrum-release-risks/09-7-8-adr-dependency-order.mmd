@@ -1,0 +1,15 @@
+%% Source: 07-scrum-release-risks.md - 7.8 ADR dependency order
+flowchart TD
+    A1["ADR-001 Modular monolith boundaries"] --> A2["ADR-002 Database and tenant isolation"]
+    A2 --> A3["ADR-003 Queue and outbox/inbox"]
+    A2 --> A4["ADR-004 Vector/search technology"]
+    A1 --> A5["ADR-005 LLM abstraction and data policy"]
+    A2 --> A9["ADR-009 Authentication and customer verification"]
+    A9 --> A10["ADR-010 Tool authorization and approval"]
+    A5 --> A6["ADR-006 Voice strategy"]
+    A6 --> A7["ADR-007 Browser voice transport and telephony"]
+    A7 --> A8["ADR-008 Audio and transcript retention and consent"]
+    classDef early fill:#e6f4ea,stroke:#2e7d32
+    classDef later fill:#fff4e5,stroke:#ef6c00
+    class A1,A2,A3,A4,A5,A9,A10 early
+    class A6,A7,A8 later

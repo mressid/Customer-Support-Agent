@@ -1,0 +1,8 @@
+%% Source: epics/E02-conversation-core.md - Message delivery status as seen by the customer
+stateDiagram-v2
+    [*] --> Sending: client submits
+    Sending --> Sent: server ack
+    Sending --> FailedLocal: network error
+    FailedLocal --> Sending: retry with same client_message_id
+    Sent --> Delivered: widget confirms render
+    Delivered --> [*]

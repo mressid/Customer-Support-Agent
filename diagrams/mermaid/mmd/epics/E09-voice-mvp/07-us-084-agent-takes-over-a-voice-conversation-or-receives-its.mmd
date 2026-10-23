@@ -1,0 +1,12 @@
+%% Source: epics/E09-voice-mvp.md - US-084 — Agent takes over a voice conversation or receives its context
+flowchart TD
+    A["Handoff requested during voice"] --> B{"Provider supports live transfer to human audio?"}
+    B -- Yes --> C["Transfer media leg to agent softphone, include bundle"]
+    B -- No --> D["End AI voice leg, notify customer"]
+    D --> E["Agent receives bundle in console"]
+    E --> F{"Customer reachable?"}
+    F -- "Chat widget open" --> G["Agent continues in text"]
+    F -- No --> H["Callback ticket"]
+    C --> I["Record HandoffEvent with provider transfer reference"]
+    G --> I
+    H --> I

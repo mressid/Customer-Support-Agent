@@ -1,0 +1,26 @@
+%% Source: uml/U4-activity-diagrams.md - U4.6 Incident response for provider outage
+flowchart TB
+    s((Start)) --> m1
+    subgraph Monitoring
+        m1["Alert: error rate or latency breach"]
+    end
+    subgraph Operator
+        o1["Acknowledge and open incident"]
+        o2{"Provider or internal?"}
+        o3["Enable fallback model or degrade"]
+        o4["Fix or roll back release"]
+        o5["Close incident"]
+    end
+    subgraph Platform
+        p1["Circuit breaker opens"]
+        p2["Customers get safe message or human handoff"]
+        p3["Queue retries with backoff"]
+    end
+    subgraph Team
+        t1["Blameless review"]
+        t2["Add regression case and runbook update"]
+    end
+    m1 --> o1 --> o2
+    o2 -- provider --> p1 --> p2 --> o3 --> p3 --> o5
+    o2 -- internal --> o4 --> o5
+    o5 --> t1 --> t2 --> e(((End)))

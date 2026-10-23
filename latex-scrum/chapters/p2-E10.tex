@@ -1,0 +1,74 @@
+\chapter{E10 --- Workflow, Routing and SLA}
+
+Goal: automate repeatable support operations. Modules: M12, M13, M14.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-090 & As an administrator, I can define a workflow trigger and steps. & Backlog \\
+US-091 & As a support lead, I can define routing rules and SLA targets. & Backlog \\
+US-092 & As a system, I can retry a failed workflow step safely. & Backlog \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E10-workflow-routing-sla/01-epic-overview}{E10: Epic overview}{fig:epics-e10-workflow-routing-sla-01-epic-overview-66}
+
+
+\mmdfigLH{\section{Principle: deterministic procedure, AI proposes}
+}{epics/E10-workflow-routing-sla/02-principle-deterministic-procedure-ai-proposes}{E10: Principle: deterministic procedure, AI proposes}{fig:a-02-principle-deterministic-procedure-ai-proposes-67}
+
+
+\Needspace{557pt}
+\section{US-090 --- Define workflow trigger and steps}
+
+\begin{storybox}{User story US-090}
+\textbf{Story.} As an administrator, I can define a workflow trigger and steps.\par
+\textbf{Acceptance.} workflow version, run state, and failures are visible.
+\end{storybox}
+
+\subsection{Authoring and versioning}
+
+\mmdfig{epics/E10-workflow-routing-sla/03-authoring-and-versioning}{E10: US-090 --- Define workflow trigger and steps: Authoring and versioning}{fig:0-workflow-routing-sla-03-authoring-and-versioning-68}
+
+
+\Needspace{640pt}
+\subsection{Run execution}
+
+\mmdfig{epics/E10-workflow-routing-sla/04-run-execution}{E10: US-090 --- Define workflow trigger and steps: Run execution}{fig:epics-e10-workflow-routing-sla-04-run-execution-69}
+
+
+\Needspace{640pt}
+\section{US-091 --- Routing rules and SLA targets}
+
+\begin{storybox}{User story US-091}
+\textbf{Story.} As a support lead, I can define routing rules and SLA targets.\par
+\textbf{Acceptance.} rule priority and fallback behavior are deterministic.
+\end{storybox}
+
+\mmdfig{epics/E10-workflow-routing-sla/05-us-091-routing-rules-and-sla-targets}{E10: US-091 --- Routing rules and SLA targets}{fig:outing-sla-05-us-091-routing-rules-and-sla-targets-70}
+
+
+\Needspace{399pt}
+\subsection{SLA timers}
+
+\mmdfig{epics/E10-workflow-routing-sla/06-sla-timers}{E10: US-091 --- Routing rules and SLA targets: SLA timers}{fig:epics-e10-workflow-routing-sla-06-sla-timers-71}
+
+
+\Needspace{640pt}
+\section{US-092 --- Retry a failed workflow step safely}
+
+\begin{storybox}{User story US-092}
+\textbf{Story.} As a system, I can retry a failed workflow step safely.\par
+\textbf{Acceptance.} retry policy is bounded; idempotency is defined per step.
+\end{storybox}
+
+\mmdfig{epics/E10-workflow-routing-sla/07-us-092-retry-a-failed-workflow-step-safely}{E10: US-092 --- Retry a failed workflow step safely}{fig:-sla-07-us-092-retry-a-failed-workflow-step-safely-72}
+
+

@@ -1,0 +1,22 @@
+# LaTeX build artifacts (local compiles)
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+
+# editors and OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# dependencies and temp
+node_modules/
+*.err

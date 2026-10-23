@@ -1,0 +1,20 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.6 Composite structure — tool execution internals
+flowchart LR
+    subgraph TES["ToolExecutionService (composite structure)"]
+        direction LR
+        IN(["port: invoke"])
+        V["Validator"]
+        AZ["Authorizer"]
+        ID["IdempotencyGuard"]
+        EX["Executor"]
+        RD["Redactor"]
+        AU["Auditor"]
+        OUT(["port: result"])
+        CN(["port: connector"])
+    end
+    IN --> V --> AZ --> ID --> EX
+    EX --> CN
+    CN --> EX
+    EX --> RD --> OUT
+    EX --> AU
+    AZ --> AU

@@ -1,0 +1,55 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.2 Package diagram (code organization and allowed dependencies)
+classDiagram
+    namespace api {
+        class HttpControllers
+        class WebhookEndpoints
+        class AuthMiddleware
+    }
+    namespace modules_conversation {
+        class ConversationApp
+        class ChannelApp
+        class CustomerApp
+    }
+    namespace modules_ai {
+        class EngineApp
+        class KnowledgeApp
+        class ToolsApp
+        class VoiceApp
+    }
+    namespace modules_ops {
+        class InboxApp
+        class TicketApp
+        class WorkflowApp
+    }
+    namespace modules_platform {
+        class AccessApp
+        class AgentConfigApp
+        class AuditApp
+    }
+    namespace infrastructure {
+        class SqlRepositories
+        class ObjectStorageAdapter
+        class VectorAdapter
+        class QueueAdapter
+        class LlmAdapters
+        class SpeechAdapters
+        class ConnectorAdapters
+    }
+    HttpControllers ..> ConversationApp
+    WebhookEndpoints ..> ChannelApp
+    AuthMiddleware ..> AccessApp
+    ConversationApp ..> EngineApp : via interface
+    EngineApp ..> KnowledgeApp
+    EngineApp ..> ToolsApp
+    EngineApp ..> InboxApp
+    InboxApp ..> TicketApp
+    WorkflowApp ..> TicketApp
+    EngineApp ..> AgentConfigApp
+    EngineApp ..> LlmAdapters
+    VoiceApp ..> SpeechAdapters
+    KnowledgeApp ..> VectorAdapter
+    ToolsApp ..> ConnectorAdapters
+    ConversationApp ..> SqlRepositories
+    ConversationApp ..> QueueAdapter
+    KnowledgeApp ..> ObjectStorageAdapter
+    ConversationApp ..> AuditApp

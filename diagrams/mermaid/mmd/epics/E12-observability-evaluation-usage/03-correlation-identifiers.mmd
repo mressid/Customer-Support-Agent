@@ -1,0 +1,9 @@
+%% Source: epics/E12-observability-evaluation-usage.md - Correlation identifiers
+flowchart LR
+    TR["trace_id"] --> CO["correlation_id"]
+    CO --> CA["causation_id: id of parent event"]
+    CO --> TID["tenant_id (logs only, not metric labels)"]
+    CO --> CVID["conversation_id"]
+    CVID --> TN["turn_id"]
+    TN --> TE["tool_execution_id"]
+    TN --> PR["provider_request_id"]

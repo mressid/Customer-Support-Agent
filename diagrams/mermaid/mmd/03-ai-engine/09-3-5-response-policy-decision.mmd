@@ -1,0 +1,12 @@
+%% Source: 03-ai-engine.md - 3.5 Response policy decision
+flowchart TD
+    A["Candidate answer"] --> B{"Relies on order, account or action data?"}
+    B -- Yes --> C{"Tool confirmed the data or action?"}
+    C -- No --> X1["Do not state it as fact"]
+    C -- Yes --> D["State with tool-sourced wording"]
+    B -- No --> E{"Relies on policy or FAQ?"}
+    E -- Yes --> F{"Retrieved source supports it?"}
+    F -- No --> X2["Say not sure and offer human"]
+    F -- Yes --> G["Answer with citation"]
+    E -- No --> H["General conversational reply"]
+    D & G & H --> I["Concise, understandable wording, requested language"]

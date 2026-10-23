@@ -1,0 +1,12 @@
+%% Source: epics/E07-human-handoff.md - US-061 — Customer requests a human
+flowchart TD
+    A["Customer: I want a human"] --> B["AI detects request, reason=customer_requested"]
+    B --> C{"Handoff allowed now? business hours, queue open"}
+    C -- Yes --> D["Set conversation HandoffPending, pause AI"]
+    C -- No --> E["Offer ticket or callback, tell expected hours"]
+    D --> F["Build handoff bundle"]
+    F --> G["Route to queue by routing rules"]
+    G --> H["Tell customer: connecting you to an agent"]
+    H --> I["Emit human.handoff.requested"]
+    I --> J["Further AI replies suppressed until released"]
+    E --> K["Create ticket"]

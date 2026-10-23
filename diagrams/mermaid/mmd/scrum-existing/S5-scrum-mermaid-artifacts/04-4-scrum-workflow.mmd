@@ -1,0 +1,17 @@
+%% Source: scrum-existing/S5-scrum-mermaid-artifacts.md - 4. Scrum workflow
+flowchart TD
+    PB[Product Backlog] --> REF[Ongoing Refinement]
+    REF --> PLAN[Sprint Planning]
+    PLAN --> SB[Sprint Backlog + Sprint Goal]
+    SB --> DEV[Design, Build, Test, Integrate]
+    DEV --> DS{Meets Definition of Done?}
+    DS -- No --> DEV
+    DS -- Yes --> INC[Potentially Releasable Increment]
+    INC --> REVIEW[Sprint Review]
+    REVIEW --> FB[Stakeholder Feedback]
+    FB --> PB
+    REVIEW --> RETRO[Sprint Retrospective]
+    RETRO --> IMP[Improvement Actions]
+    IMP --> PLAN
+    DEV --> DAILY[Daily Scrum: inspect and adapt]
+    DAILY --> DEV

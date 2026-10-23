@@ -1,0 +1,12 @@
+%% Source: epics/E10-workflow-routing-sla.md - SLA timers
+stateDiagram-v2
+    [*] --> Running
+    Running --> Paused: waiting on customer or outside hours
+    Paused --> Running
+    Running --> AtRisk: 80 percent of target elapsed
+    AtRisk --> Breached: target exceeded
+    AtRisk --> Met: first response or resolution
+    Running --> Met
+    Breached --> EscalationPolicy: notify lead, reassign
+    Met --> [*]
+    EscalationPolicy --> [*]

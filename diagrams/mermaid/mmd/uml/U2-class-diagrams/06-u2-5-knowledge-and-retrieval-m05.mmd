@@ -1,0 +1,73 @@
+%% Source: uml/U2-class-diagrams.md - U2.5 Knowledge and retrieval (M05)
+classDiagram
+    class KnowledgeSource {
+        +UUID id
+        +SourceType type
+        +SourceState state
+        +register()
+        +delete()
+    }
+    class Document {
+        +UUID id
+        +String title
+    }
+    class DocumentVersion {
+        +UUID id
+        +String contentHash
+        +IngestionState state
+        +String storageKey
+    }
+    class DocumentChunk {
+        +UUID id
+        +int ordinal
+        +String text
+        +Map metadata
+    }
+    class IngestionJob {
+        +UUID id
+        +JobState state
+        +int attempts
+        +run()
+        +retry()
+    }
+    class Parser {
+        <<interface>>
+        +parse(file) ParsedDocument
+    }
+    class Chunker {
+        +chunk(doc) List~DocumentChunk~
+    }
+    class Embedder {
+        <<interface>>
+        +embed(chunks) List~Vector~
+    }
+    class VectorIndex {
+        <<interface>>
+        +upsert(tenantId, chunks, vectors)
+        +search(tenantId, vector, filter, k) List~Hit~
+        +deleteBySource(tenantId, sourceId)
+    }
+    class RetrievalService {
+        +retrieve(ctx, query, sources, k) List~Passage~
+    }
+    class RetrievalRun {
+        +int resultCount
+        +int latencyMs
+    }
+    class Passage {
+        +String text
+        +UUID sourceId
+        +float score
+    }
+    KnowledgeSource "1" --> "*" Document
+    Document "1" --> "*" DocumentVersion
+    DocumentVersion "1" --> "*" DocumentChunk
+    KnowledgeSource "1" --> "*" IngestionJob
+    IngestionJob ..> Parser
+    IngestionJob ..> Chunker
+    IngestionJob ..> Embedder
+    IngestionJob ..> VectorIndex
+    RetrievalService ..> VectorIndex
+    RetrievalService ..> Embedder
+    RetrievalService --> RetrievalRun : logs
+    RetrievalService --> Passage : returns

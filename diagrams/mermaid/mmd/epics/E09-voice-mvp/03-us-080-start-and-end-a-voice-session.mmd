@@ -1,0 +1,22 @@
+%% Source: epics/E09-voice-mvp.md - US-080 — Start and end a voice session
+sequenceDiagram
+    actor C as Customer
+    participant W as Widget
+    participant API as Support API
+    participant VS as Voice session service
+    participant MEDIA as Media transport
+
+    C->>W: click voice
+    W->>C: notice about voice and transcription
+    W->>W: request microphone permission
+    W->>API: create voice session for conversation
+    API->>VS: authorize via session token, check quota
+    VS-->>API: session id and transport credentials short-lived
+    API-->>W: credentials
+    W->>MEDIA: connect (WebRTC or WebSocket)
+    MEDIA-->>VS: connected, emit voice.session.started
+    W-->>C: visible active indicator
+    C->>W: end call
+    W->>MEDIA: close
+    MEDIA-->>VS: ended, emit voice.session.ended
+    VS->>VS: release resources, finalize transcript

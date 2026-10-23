@@ -1,0 +1,23 @@
+%% Source: 04-voice-multimodal.md - 4.3 One voice turn (Option A) with persistence boundaries
+sequenceDiagram
+    actor Cu as Customer
+    participant T as Voice transport
+    participant STT as STT
+    participant TS as Transcript sync
+    participant CV as Conversation
+    participant AI as AI Engine
+    participant TTS as TTS
+
+    Cu->>T: audio frames
+    T->>STT: stream
+    STT-->>TS: partial segments
+    Note over TS: provisional, not persisted as messages
+    STT-->>TS: final segment with sequence id
+    TS->>CV: append finalized transcript message
+    CV->>AI: new turn
+    AI-->>CV: reply text
+    CV->>TTS: synthesize
+    TTS-->>T: audio stream
+    T-->>Cu: spoken reply
+    T->>TS: playback complete marker
+    TS->>CV: mark assistant audio delivered

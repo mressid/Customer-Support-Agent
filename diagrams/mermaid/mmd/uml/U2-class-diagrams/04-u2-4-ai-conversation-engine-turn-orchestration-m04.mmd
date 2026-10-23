@@ -1,0 +1,53 @@
+%% Source: uml/U2-class-diagrams.md - U2.4 AI Conversation Engine: turn orchestration (M04)
+classDiagram
+    class TurnOrchestrator {
+        +runTurn(ctx, turnId) TurnResult
+    }
+    class ContextBuilder {
+        +build(ctx, conv) PromptContext
+    }
+    class IntentClassifier {
+        +classify(text, taxonomy) Intent
+    }
+    class Planner {
+        +nextStep(state) PlannedStep
+    }
+    class PolicyEngine {
+        +evaluate(ctx, step) PolicyDecision
+        +shouldEscalate(state) bool
+    }
+    class ResponseGenerator {
+        +generate(state) Draft
+    }
+    class OutputGuard {
+        +check(draft, evidence) GuardResult
+    }
+    class AgentExecution {
+        +UUID id
+        +String modelName
+        +int latencyMs
+        +Outcome outcome
+        +Map decisionMetadata
+    }
+    class AgentVersion {
+        +UUID id
+        +allowsTool(name) bool
+    }
+    class ModelProvider {
+        <<interface>>
+        +generateResponse(input, schema) ModelOutput
+        +streamResponse(input) Stream
+        +classify(input, taxonomy) Label
+        +embed(texts) List~Vector~
+    }
+    TurnOrchestrator --> ContextBuilder
+    TurnOrchestrator --> IntentClassifier
+    TurnOrchestrator --> Planner
+    TurnOrchestrator --> PolicyEngine
+    TurnOrchestrator --> ResponseGenerator
+    TurnOrchestrator --> OutputGuard
+    TurnOrchestrator --> AgentExecution : records
+    TurnOrchestrator ..> AgentVersion : runs on
+    Planner ..> ModelProvider
+    ResponseGenerator ..> ModelProvider
+    IntentClassifier ..> ModelProvider

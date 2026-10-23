@@ -1,0 +1,11 @@
+%% Source: epics/E03-website-chat.md - US-022 — Reconnect after temporary network failure
+sequenceDiagram
+    participant W as Widget
+    participant API as Support API
+    participant CV as Conversation service
+
+    W->>API: resume with token and last_seen_sequence
+    API->>CV: messages after sequence N
+    CV-->>API: missed messages including assistant replies
+    API-->>W: replay in order
+    W->>W: dedupe by message id, resend unsent with same client_message_id

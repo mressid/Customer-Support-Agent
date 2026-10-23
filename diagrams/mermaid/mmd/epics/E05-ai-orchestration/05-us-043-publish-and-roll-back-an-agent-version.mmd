@@ -1,0 +1,26 @@
+%% Source: epics/E05-ai-orchestration.md - US-043 — Publish and roll back an agent version
+sequenceDiagram
+    actor Admin
+    participant UI as Admin console
+    participant AG as Agent config service
+    participant EV as Evaluation service
+    participant DB as Postgres
+    participant AUD as Audit
+
+    Admin->>UI: publish draft
+    UI->>AG: publish(draft id)
+    AG->>AG: validate tool allowlist and schemas
+    AG->>EV: run release gate suite
+    EV-->>AG: pass or fail with report
+    alt gates pass
+        AG->>DB: create immutable AgentVersion n+1
+        AG->>AUD: agent.version.published
+        AG-->>UI: published
+    else gates fail
+        AG-->>UI: blocked with failures
+    end
+    Admin->>UI: rollback
+    UI->>AG: activate AgentVersion n
+    AG->>DB: move deployment pointer
+    AG->>AUD: agent.version.rolled_back
+    Note over AG: in-flight turns finish on the version they started with

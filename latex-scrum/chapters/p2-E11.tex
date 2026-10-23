@@ -1,0 +1,64 @@
+\chapter{E11 --- Integrations and Additional Channels}
+
+Goal: add provider connectors without contaminating core domain logic. Modules: M02, M15.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-100 & As an administrator, I can configure an integration securely. & Backlog \\
+US-101 & As a system, I can normalize a provider webhook into a canonical event. & Backlog \\
+US-102 & As a customer, I can continue support through a second channel. & Backlog \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E11-integrations-and-channels/01-epic-overview}{E11: Epic overview}{fig:ics-e11-integrations-and-channels-01-epic-overview-73}
+
+
+\mmdfigLH{\section{Adapter boundary}
+}{epics/E11-integrations-and-channels/02-adapter-boundary}{E11: Adapter boundary}{fig:-e11-integrations-and-channels-02-adapter-boundary-74}
+
+
+\mmdfigLH{\section{US-100 --- Configure an integration securely}
+
+\begin{storybox}{User story US-100}
+\textbf{Story.} As an administrator, I can configure an integration securely.\par
+\textbf{Acceptance.} credentials are secret references; test status and health are visible.
+\end{storybox}
+}{epics/E11-integrations-and-channels/03-us-100-configure-an-integration-securely}{E11: US-100 --- Configure an integration securely}{fig:annels-03-us-100-configure-an-integration-securely-75}
+
+
+\Needspace{417pt}
+\subsection{Integration health states}
+
+\mmdfig{epics/E11-integrations-and-channels/04-integration-health-states}{E11: US-100 --- Configure an integration securely: Integration health states}{fig:grations-and-channels-04-integration-health-states-76}
+
+
+\Needspace{640pt}
+\section{US-101 --- Normalize provider webhook into canonical event}
+
+\begin{storybox}{User story US-101}
+\textbf{Story.} As a system, I can normalize a provider webhook into a canonical event.\par
+\textbf{Acceptance.} signature verified; replay deduplicated; event processing observable.
+\end{storybox}
+
+\mmdfig{epics/E11-integrations-and-channels/05-us-101-normalize-provider-webhook-into-canonical-event}{E11: US-101 --- Normalize provider webhook into canonical event}{fig:01-normalize-provider-webhook-into-canonical-event-77}
+
+
+\Needspace{640pt}
+\section{US-102 --- Continue support through a second channel}
+
+\begin{storybox}{User story US-102}
+\textbf{Story.} As a customer, I can continue support through a second channel.\par
+\textbf{Acceptance.} identity linking follows verification policy; duplicate conversations are avoided where possible.
+\end{storybox}
+
+\mmdfig{epics/E11-integrations-and-channels/06-us-102-continue-support-through-a-second-channel}{E11: US-102 --- Continue support through a second channel}{fig:6-us-102-continue-support-through-a-second-channel-78}
+
+

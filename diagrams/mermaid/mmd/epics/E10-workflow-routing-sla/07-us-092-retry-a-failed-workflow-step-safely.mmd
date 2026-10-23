@@ -1,0 +1,14 @@
+%% Source: epics/E10-workflow-routing-sla.md - US-092 — Retry a failed workflow step safely
+flowchart TD
+    F["Step failed"] --> A{"Step declares idempotent or has idempotency key?"}
+    A -- No --> H["Pause run and ask human"]
+    A -- Yes --> B{"Error retryable?"}
+    B -- No --> X["Mark step failed, run failed, notify"]
+    B -- Yes --> C{"Attempts below max?"}
+    C -- No --> D["Dead-letter, mark run needs_review"]
+    C -- Yes --> E["Wait backoff with jitter"]
+    E --> G["Re-run step with same idempotency key"]
+    G --> R{"Outcome"}
+    R -- success --> N["Continue workflow"]
+    R -- failure --> F
+    D --> COMP["Compensation steps if defined"]

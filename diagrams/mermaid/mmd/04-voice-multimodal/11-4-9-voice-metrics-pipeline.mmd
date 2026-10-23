@@ -1,0 +1,12 @@
+%% Source: 04-voice-multimodal.md - 4.9 Voice metrics pipeline
+flowchart LR
+    ev1["session establishment"] --> M
+    ev2["time to first audio"] --> M
+    ev3["end-of-speech to response-start"] --> M
+    ev4["total turn latency"] --> M
+    ev5["interruption rate"] --> M
+    ev6["transcript finalization failures"] --> M
+    ev7["reconnects and drops"] --> M
+    ev8["cost and duration per session"] --> M
+    M[("Metrics store, tenant safe labels")] --> D["Cost and latency dashboard"]
+    M --> A["Alerts on p95 latency or drop rate"]

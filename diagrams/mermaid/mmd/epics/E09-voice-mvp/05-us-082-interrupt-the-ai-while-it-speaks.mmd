@@ -1,0 +1,10 @@
+%% Source: epics/E09-voice-mvp.md - US-082 — Interrupt the AI while it speaks
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> UserSpeaking: voice activity
+    UserSpeaking --> Thinking: end of speech
+    Thinking --> AssistantSpeaking: audio starts
+    AssistantSpeaking --> Idle: finished, mark delivered
+    AssistantSpeaking --> Cancelling: barge-in detected
+    Cancelling --> UserSpeaking: stop TTS, flush buffer, store delivered part only
+    Thinking --> UserSpeaking: user spoke again, cancel pending generation

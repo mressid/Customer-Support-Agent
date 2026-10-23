@@ -1,0 +1,9 @@
+%% Source: epics/E01-tenant-and-access.md - Where tenant filtering is enforced
+flowchart LR
+    REQ["Request"] --> MW["Tenant context middleware"]
+    MW --> REPO["Tenant-aware repository base class"]
+    REPO --> DBQ["SQL WHERE organization_id or RLS policy"]
+    MW --> VS["Vector filter"]
+    MW --> OS["Object prefix"]
+    MW --> CK["Cache key prefix"]
+    DBQ -. "missing filter?" .-> LINT["Static check and test failure"]

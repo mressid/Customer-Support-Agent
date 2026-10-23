@@ -1,0 +1,10 @@
+%% Source: 05-data-model.md - 5.9 Workflow, routing and SLA
+erDiagram
+    WORKFLOW_DEFINITION ||--o{ WORKFLOW_VERSION : versions
+    WORKFLOW_VERSION ||--o{ WORKFLOW_RUN : runs
+    WORKFLOW_RUN ||--o{ WORKFLOW_STEP_RUN : executes
+    ORGANIZATION ||--o{ ROUTING_RULE : defines
+    ROUTING_RULE }o--|| SUPPORT_QUEUE : targets
+    ORGANIZATION ||--o{ SLA_POLICY : defines
+    SLA_POLICY }o--|| BUSINESS_SCHEDULE : uses
+    SLA_POLICY ||--o{ ESCALATION_POLICY : triggers

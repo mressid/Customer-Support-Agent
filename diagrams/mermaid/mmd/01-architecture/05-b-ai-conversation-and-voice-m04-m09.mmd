@@ -1,0 +1,16 @@
+%% Source: 01-architecture.md - B. AI conversation and voice (M04–M09)
+flowchart LR
+    M04["M04 AI Engine"]
+    M05["M05 Knowledge / RAG"]
+    M06["M06 Tools and Actions"]
+    M07["M07 Real-time Voice Sessions"]
+    M08["M08 Speech Processing"]
+    M09["M09 Transcript Sync"]
+    M01["M01 Conversation"]
+    M04 -->|retrieve| M05
+    M04 -->|tool request| M06
+    M07 --> M08
+    M08 --> M09
+    M09 -->|final transcript| M01
+    M01 -->|new turn| M04
+    M04 -->|response text| M08

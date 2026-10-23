@@ -1,0 +1,11 @@
+%% Source: 06-sprints.md - Sprint 0 — Enablement
+flowchart TD
+    G0(["Goal: team can build, test and release safely"])
+    G0 --> A["Repo and module package structure"]
+    G0 --> B["CI: format, static analysis, tests"]
+    G0 --> C["Local env and DB migrations"]
+    G0 --> D["Threat model and first ADRs"]
+    G0 --> E["Minimal deployment and secret handling"]
+    G0 --> F["Definition of Done agreed"]
+    A & B & C & D & E & F --> OUT["Walking skeleton deployed"]
+    NOTE["Do not turn Sprint 0 into a permanent phase"] -.-> G0

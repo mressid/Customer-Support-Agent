@@ -1,0 +1,34 @@
+%% Source: uml/U1-use-cases.md - U1.3 Support staff use cases
+flowchart LR
+    AG(["Support Agent"])
+    LD(["Support Lead"])
+    subgraph B["Support console boundary"]
+        S1(["View queue"])
+        S2(["Claim conversation"])
+        S3(["Read handoff summary"])
+        S4(["Reply to customer"])
+        S5(["Add internal note"])
+        S6(["Return to AI"])
+        S7(["Resolve conversation"])
+        S8(["Create ticket"])
+        S9(["Filter tickets"])
+        S10(["Define routing and SLA"])
+        S11(["Review quality and metrics"])
+        S12(["Approve sensitive action"])
+    end
+    AG --- S1
+    AG --- S2
+    AG --- S4
+    AG --- S5
+    AG --- S6
+    AG --- S7
+    AG --- S8
+    AG --- S12
+    LD --- S9
+    LD --- S10
+    LD --- S11
+    LD --- S12
+    S2 -. include .-> S3
+    S4 -. extend .-> S2
+    S7 -. extend .-> S2
+    S8 -. extend .-> S7

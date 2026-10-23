@@ -1,0 +1,11 @@
+%% Source: 07-scrum-release-risks.md - 7.6 Rollout and rollback
+flowchart TD
+    A["Versioned release created"] --> B["Deploy behind feature flag, 0 percent"]
+    B --> C["Internal tenant test"]
+    C --> D["Canary tenants 5 percent"]
+    D --> E{"SLO, error rate, eval sample, cost healthy?"}
+    E -- Yes --> F["Increase to 25, 50, 100 percent"]
+    F --> E
+    E -- No --> G["Disable flag or roll back AgentVersion"]
+    G --> H["Incident review without blame"]
+    H --> I["Add regression case"]

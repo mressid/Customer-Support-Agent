@@ -1,0 +1,12 @@
+%% Source: epics/E11-integrations-and-channels.md - Integration health states
+stateDiagram-v2
+    [*] --> Unconfigured
+    Unconfigured --> Configured: secret saved
+    Configured --> Healthy: test OK
+    Configured --> Failing: test failed
+    Healthy --> Degraded: errors or rate limited
+    Degraded --> Healthy
+    Degraded --> Failing: circuit open
+    Failing --> Healthy: recovered
+    Healthy --> Disabled: admin disables
+    Disabled --> Configured

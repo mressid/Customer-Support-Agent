@@ -1,0 +1,18 @@
+%% Source: 07-scrum-release-risks.md - 7.2 Scrum events within a sprint
+sequenceDiagram
+    participant PO as Product Owner
+    participant DEV as Developers
+    participant SM as Scrum Master
+    participant STK as Stakeholders
+
+    Note over PO,DEV: Sprint Planning: goal, selected items, plan
+    PO->>DEV: ordered backlog and goal proposal
+    DEV->>DEV: select items by capacity and DoD
+    loop each working day
+        DEV->>DEV: Daily Scrum 15 minutes, adapt plan
+    end
+    Note over PO,DEV: refinement continues in parallel (not an event)
+    DEV->>STK: Sprint Review: demo working software
+    STK-->>PO: feedback, backlog reordering
+    DEV->>SM: Sprint Retrospective
+    SM-->>DEV: one or two improvement actions

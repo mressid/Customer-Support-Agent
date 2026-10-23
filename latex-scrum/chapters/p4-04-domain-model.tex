@@ -1,0 +1,94 @@
+\chapter{Domain Model}
+
+\section{Core aggregate boundaries}
+
+\begin{itemize}
+\item \textbf{Organization:} tenant boundary and configuration owner.
+\item \textbf{Conversation:} durable interaction and message timeline.
+\item \textbf{Customer:} profile and verified identity links.
+\item \textbf{Agent configuration/version:} published AI behavior and allowed capabilities.
+\item \textbf{Knowledge source/document version:} ingestion and retrieval lifecycle.
+\item \textbf{Tool execution:} authorization, idempotency, result, and audit.
+\item \textbf{Ticket:} support work item that can span conversations.
+\item \textbf{Voice session:} live media lifecycle linked to a conversation.
+\item \textbf{Workflow run:} deterministic multi-step execution.
+\item \textbf{Audit/usage event:} immutable record for governance and measurement.
+\end{itemize}
+\section{Relationship overview}
+
+\section{Data modeling rules}
+
+\begin{itemize}
+\item All tenant-owned rows must include or be reachable through a trusted \code{organization\_\allowbreak{}id}.
+\item Use internal UUIDs/ULIDs; keep provider IDs in separate fields with uniqueness scoped to provider/connection.
+\item Avoid using phone number/email as the primary key for a customer.
+\item Store timestamps in UTC; render local time at the edge.
+\item Keep external provider payloads only when needed for debugging/compliance and with explicit retention/redaction.
+\item Prefer immutable version rows for agent configuration, knowledge documents, workflows, and tool schemas.
+\item Keep messages, transcripts, audio references, and attachments distinct so retention/access policies can differ.
+\item Store object references rather than large binary payloads in the primary relational database.
+\item Record deletion and re-indexing propagation for knowledge sources.
+\item Do not store hidden chain-of-thought. Store concise decision metadata, tool calls, sources, and outcomes needed for debugging and audit.
+\end{itemize}
+\section{Suggested message kinds}
+
+\begin{itemize}
+\item \code{text}
+\item \code{image\_\allowbreak{}reference}
+\item \code{file\_\allowbreak{}reference}
+\item \code{audio\_\allowbreak{}reference}
+\item \code{system\_\allowbreak{}event}
+\item \code{internal\_\allowbreak{}note} (not customer-visible)
+\item \code{transcript\_\allowbreak{}segment} (if transcript is modeled in the message timeline)
+\end{itemize}
+Use explicit visibility and direction fields rather than relying on message text conventions.
+
+\section{Data model diagrams}
+\mmdfigLH{\subsection{Aggregate map}
+}{05-data-model/01-5-0-aggregate-map}{Aggregate map}{fig:05-data-model-01-5-0-aggregate-map-132}
+
+
+\mmdfigLH{\subsection{Organizations, users and access}
+}{05-data-model/02-5-1-organizations-users-and-access}{Organizations, users and access}{fig:5-data-model-02-5-1-organizations-users-and-access-133}
+
+
+\mmdfigLH{\subsection{Customer and channel}
+}{05-data-model/03-5-2-customer-and-channel}{Customer and channel}{fig:05-data-model-03-5-2-customer-and-channel-134}
+
+
+\Needspace{560pt}
+\subsection{Conversation}
+
+\mmdfig{05-data-model/04-5-3-conversation}{Conversation}{fig:05-data-model-04-5-3-conversation-135}
+
+
+\mmdfigLH{\subsection{Agent configuration and execution}
+}{05-data-model/05-5-4-agent-configuration-and-execution}{Agent configuration and execution}{fig:ata-model-05-5-4-agent-configuration-and-execution-136}
+
+
+\Needspace{628pt}
+\subsection{Knowledge}
+
+\mmdfig{05-data-model/06-5-5-knowledge}{Knowledge}{fig:05-data-model-06-5-5-knowledge-137}
+
+
+\mmdfigLH{\subsection{Tools and integrations}
+}{05-data-model/07-5-6-tools-and-integrations}{Tools and integrations}{fig:05-data-model-07-5-6-tools-and-integrations-138}
+
+
+\mmdfigLH{\subsection{Handoff and tickets}
+}{05-data-model/08-5-7-handoff-and-tickets}{Handoff and tickets}{fig:05-data-model-08-5-7-handoff-and-tickets-139}
+
+
+\mmdfigLH{\subsection{Voice}
+}{05-data-model/09-5-8-voice}{Voice}{fig:05-data-model-09-5-8-voice-140}
+
+
+\mmdfigLH{\subsection{Workflow, routing and SLA}
+}{05-data-model/10-5-9-workflow-routing-and-sla}{Workflow, routing and SLA}{fig:05-data-model-10-5-9-workflow-routing-and-sla-141}
+
+
+\mmdfigLH{\subsection{Audit, usage and evaluation}
+}{05-data-model/11-5-10-audit-usage-and-evaluation}{Audit, usage and evaluation}{fig:05-data-model-11-5-10-audit-usage-and-evaluation-142}
+
+

@@ -1,0 +1,20 @@
+%% Source: 07-scrum-release-risks.md - 7.10 Epic delivery map by release
+flowchart LR
+    subgraph R1["Release 1 Text MVP"]
+        E01 --> E02 --> E03
+        E01 --> E04
+        E02 & E04 --> E05 --> E06
+        E02 --> E07 --> E08
+    end
+    subgraph R2["Release 2 Voice MVP"]
+        E09
+    end
+    subgraph R3["Release 3 Operations"]
+        E10
+        E11
+    end
+    E12["E12 Observability and evaluation (minimal in R1, advanced in R3)"]
+    E05 & E02 --> E09
+    E06 --> E10
+    E03 --> E11
+    E05 & E06 & E09 --> E12

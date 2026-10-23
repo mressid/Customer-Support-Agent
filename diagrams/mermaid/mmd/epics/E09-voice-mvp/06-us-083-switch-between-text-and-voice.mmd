@@ -1,0 +1,21 @@
+%% Source: epics/E09-voice-mvp.md - US-083 — Switch between text and voice
+sequenceDiagram
+    actor C as Customer
+    participant W as Widget
+    participant CV as Conversation timeline
+    participant AI as AI Engine
+
+    C->>W: types question
+    W->>CV: message seq 1 (text)
+    CV->>AI: turn
+    AI-->>CV: reply seq 2
+    C->>W: start voice
+    CV->>CV: system_event seq 3 voice started
+    C->>W: speaks
+    W->>CV: transcript seq 4 (final only)
+    CV->>AI: turn (same history)
+    AI-->>CV: reply seq 5 (text plus audio ref)
+    C->>W: hang up, types follow-up
+    CV->>CV: system_event seq 6 voice ended
+    W->>CV: message seq 7
+    Note over CV: single ordered timeline, sequence assigned server-side

@@ -1,0 +1,16 @@
+%% Source: 02-cross-cutting-flows.md - Part A: validation and authorization
+flowchart TD
+    A["AI proposes tool call"] --> B{"Tool in agent version allowlist?"}
+    B -- No --> X1["Deny: TOOL_NOT_ALLOWED"]
+    B -- Yes --> C{"Arguments valid against JSON schema?"}
+    C -- No --> X2["Deny: VALIDATION_FAILED"]
+    C -- Yes --> D["Derive tenant, customer, conversation from trusted context"]
+    D --> E{"Customer verified for this data?"}
+    E -- No --> X3["Deny or ask for verification"]
+    E -- Yes --> F{"Caller has required permission?"}
+    F -- No --> X4["Deny: AUTHORIZATION_DENIED"]
+    F -- Yes --> G{"Risk level"}
+    G -- read_only --> OK["Proceed to Part B"]
+    G -- "reversible write" --> H["Require customer confirmation"] --> OK
+    G -- "sensitive write" --> I["Require human approval: ActionApproval"] --> OK
+    X1 & X2 & X3 & X4 --> AUD["Write audit record and return typed denial"]

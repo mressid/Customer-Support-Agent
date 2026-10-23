@@ -1,0 +1,8 @@
+%% Source: epics/E02-conversation-core.md - Epic overview
+flowchart LR
+    E02["E02 Conversation core"] --> US10["US-010 Start conversation"]
+    E02 --> US11["US-011 Send and receive text"]
+    E02 --> US12["US-012 Inspect timeline"]
+    E02 --> US13["US-013 Deduplicate inbound events"]
+    US10 --> US11 --> US12
+    US13 -. protects .-> US11

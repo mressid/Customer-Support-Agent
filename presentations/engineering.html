@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Engineering deep dive - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css">
+<link rel="stylesheet" href="vendor/reveal/plugin/highlight/monokai.css">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<!--ICON-SPRITE--><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3" /> <path d="M6 6v11" /> <path d="M10 3v18" /> <path d="M14 8v7" /> <path d="M18 5v13" /> <path d="M22 10v3" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /> <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /> <path d="m9 14 2 2 4-4" /></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2" /> <path d="M12 2v2" /> <path d="M17 20v2" /> <path d="M17 2v2" /> <path d="M2 12h2" /> <path d="M2 17h2" /> <path d="M2 7h2" /> <path d="M20 12h2" /> <path d="M20 17h2" /> <path d="M20 7h2" /> <path d="M7 20v2" /> <path d="M7 2v2" /> <rect x="4" y="4" width="16" height="16" rx="2" /> <rect x="8" y="8" width="8" height="8" rx="1" /></symbol><symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /></symbol><symbol id="i-file-check" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="m9 15 2 2 4-4" /></symbol><symbol id="i-flask-conical" viewBox="0 0 24 24"><path d="M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2" /> <path d="M6.453 15h11.094" /> <path d="M8.5 2h7" /></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol><symbol id="i-key-round" viewBox="0 0 24 24"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z" /> <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" /></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol><symbol id="i-list-ordered" viewBox="0 0 24 24"><path d="M11 5h10" /> <path d="M11 12h10" /> <path d="M11 19h10" /> <path d="M4 4h1v5" /> <path d="M4 9h2" /> <path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02" /></symbol><symbol id="i-message-square" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></symbol><symbol id="i-pen-line" viewBox="0 0 24 24"><path d="M13 21h8" /> <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5" /> <path d="M15 8V2" /> <path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z" /> <path d="M9 8V2" /></symbol><symbol id="i-refresh-ccw" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /> <path d="M3 3v5h5" /> <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" /> <path d="M16 16h5v5" /></symbol><symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3" /> <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /> <circle cx="18" cy="5" r="3" /></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18" /> <path d="m19 8 3 8a5 5 0 0 1-6 0zV7" /> <path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1" /> <path d="m5 8 3 8a5 5 0 0 1-6 0zV7" /> <path d="M7 21h10" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></symbol><symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /></symbol></svg><!--/ICON-SPRITE-->
+<div class="reveal"><div class="slides">
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><div class="brandbar"><span class="logo-mark"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></span><span>AI Customer Support Platform</span></div><div class="kicker">Engineering deep dive</div><h1>Under the hood</h1>
+  <p>Structure, key abstractions, runtime behaviour and the quality gates that keep an AI product trustworthy.</p></div>
+  <div class="hint">→ next chapter · ↓ details · click a diagram to enlarge · Esc overview · I all decks</div>
+</section>
+<section data-chapter="1 · Ground rules">
+  <section class="on-dark" data-transition="convex" data-background-gradient="linear-gradient(135deg,#0f2b46,#1F4E79)">
+    <div class="hero"><div class="kicker">Chapter 1</div><h1>Ground rules</h1><p>The handful of rules that shape almost every design decision.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Rules of thumb</div><h2>Ten rules</h2>
+  <div class="grid g2"><ol class="small">
+   <li class="fragment">AI output is <b>untrusted input</b></li>
+   <li class="fragment">Authorization lives in <b>application code</b>, not in prompts</li>
+   <li class="fragment">Tenant id comes from <b>trusted context</b> only</li>
+   <li class="fragment">Provider details stay in <b>adapters</b></li>
+   <li class="fragment">Commit durable state <b>before</b> acknowledging</li></ol>
+   <ol class="small" start="6">
+   <li class="fragment">No DB transaction while waiting on an LLM or provider</li>
+   <li class="fragment">Every external call: timeout, bounded retry, idempotency</li>
+   <li class="fragment">Streaming tokens are <b>not</b> a committed message</li>
+   <li class="fragment">Never claim an action succeeded until the tool confirms</li>
+   <li class="fragment">Store decision metadata, <b>not</b> hidden reasoning</li></ol></div>
+
+  </section>
+  <section >
+  <div class="kicker">Never</div><h2>Things that look convenient and are not</h2>
+  <ul class="cross small"><li>Trust a tenant id from a request body</li><li>Give the model raw credentials or open HTTP access</li><li>Let retrieved documents change system policy</li><li>Retry a write blindly after a timeout</li><li>Put message text, email or phone in metric labels</li><li>Share one Postgres transaction with a slow external call</li></ul>
+
+  </section>
+</section>
+<section data-chapter="2 · Structure">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-02.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 2</div><h1>Structure</h1><p>A modular monolith with explicit module boundaries and ports to the outside.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>Packages and allowed dependencies</h2><figure class="diagram short"><img src="assets/package.svg" alt="Package diagram"><figcaption>API depends on module interfaces; modules reach providers only through infrastructure adapters</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Ports and adapters</div><h2>Six ports to the outside world</h2>
+  <div class="grid g3" style="gap:14px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-cpu"/></svg></div><h3>ModelProvider</h3><p>generate, stream, classify, embed</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-audio-lines"/></svg></div><h3>SpeechProvider</h3><p>STT, TTS, speech to speech</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></div><h3>Connector</h3><p>Business systems, health check, typed errors</p></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></div><h3>VectorIndex</h3><p>Tenant-filtered upsert and search</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-key-round"/></svg></div><h3>SecretManager</h3><p>Resolve a reference to a short-lived secret</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-list-ordered"/></svg></div><h3>Queue</h3><p>Outbox relay, retries, dead letters</p></div>
+  </div>
+
+  </section>
+  <section data-transition="fade">
+<h2>Deployment at MVP</h2><figure class="diagram short"><img src="assets/deployment.svg" alt="MVP deployment"><figcaption>One app image runs as API and as worker. Extract voice streaming only if scaling demands it.</figcaption></figure>
+
+  </section>
+</section>
+<section data-chapter="3 · Key abstractions">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-03.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 3</div><h1>Key abstractions</h1><p>The few types that carry the design.</p></div>
+  </section>
+  <section >
+  <div class="kicker">AI engine</div><h2>A turn orchestrator with small collaborators</h2>
+  <div class="grid g3" style="gap:14px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-workflow"/></svg></div><h3>TurnOrchestrator</h3><p>Runs one turn and records an <code>AgentExecution</code>.</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></div><h3>ContextBuilder</h3><p>Minimal, labelled context from trusted state.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-route"/></svg></div><h3>Planner</h3><p>Next step from the allowed tool registry.</p></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-scale"/></svg></div><h3>PolicyEngine</h3><p>Evaluates each step. Decides escalation.</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-pen-line"/></svg></div><h3>ResponseGenerator</h3><p>Writes from verified results and sources.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>OutputGuard</h3><p>Checks the draft against evidence and disclosure rules.</p></div>
+  </div><p class="small muted">All model calls go through <code>ModelProvider</code>. Agent behaviour is an immutable <code>AgentVersion</code>.</p>
+
+  </section>
+  <section data-transition="fade">
+<h2>Tools: registry and execution</h2><figure class="diagram short"><img src="assets/class-tools.svg" alt="Tool classes"><figcaption>Each execution is persisted with an idempotency key and redacted arguments</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Connectors and secrets</h2><figure class="diagram short"><img src="assets/class-connectors.svg" alt="Connector classes"><figcaption>A connector never exposes credentials; it resolves a secret reference at call time</figcaption></figure>
+
+  </section>
+  <section >
+  <div class="kicker">Illustrative sketch, not final code</div><h2>One tool call, all the rules</h2>
+  <pre><code class="language-typescript" data-trim data-noescape>async function executeTool(ctx: TenantContext, call: ToolCall) {
+  const tool = registry.resolve(ctx.agentVersionId, call.name);  // allowlist
+  const args = tool.inputSchema.parse(call.arguments);            // validate
+  await authz.require(ctx, tool.requiredPermission);              // trusted context
+
+  const prior = await executions.byKey(ctx.tenantId, call.idempotencyKey);
+  if (prior?.status === "succeeded") return prior.result;         // no second call
+
+  const exec = await executions.start(ctx, tool, args);           // no open tx below
+  try {
+    const raw = await connector.call(tool.operation, args, { timeoutMs: tool.timeoutMs });
+    return await executions.succeed(exec, tool.outputSchema.parse(raw));
+  } catch (e) {
+    return await executions.fail(exec, mapError(e)); // write timeout => UNKNOWN_OUTCOME
+  }
+}</code></pre>
+
+  </section>
+</section>
+<section data-chapter="4 · Runtime behaviour">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-04.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 4</div><h1>Runtime behaviour</h1><p>What happens when things repeat, fail, or try to misbehave.</p></div>
+  </section>
+  <section data-transition="fade">
+<h2>The turn as a state machine</h2><figure class="diagram tall"><img src="assets/turn-state.svg" alt="Turn state machine"></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Outbox and inbox</h2><figure class="diagram short"><img src="assets/outbox.svg" alt="Transactional outbox and inbox"><figcaption>The domain change and its event commit atomically. Consumers deduplicate by event id.</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Sensitive action with approval</h2><figure class="diagram short"><img src="assets/seq-approval.svg" alt="Approval sequence"><figcaption>The customer hears "confirmed" only after the approved action succeeds</figcaption></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Prompt injection is stopped in code</h2><figure class="diagram short"><img src="assets/seq-injection.svg" alt="Prompt injection blocked"></figure>
+
+  </section>
+  <section data-transition="fade">
+<h2>Circuit breaker around a provider</h2><figure class="diagram tall"><img src="assets/seq-circuit.svg" alt="Circuit breaker"><figcaption>Closed, open (fail fast), half-open (trial), closed again</figcaption></figure>
+
+  </section>
+</section>
+<section data-chapter="5 · Testing and gates">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-05.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 5</div><h1>Testing and release gates</h1><p>Deterministic checks for rules, evaluations for behaviour.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Layers</div><h2>What we test, and how</h2>
+  <div class="grid g3" style="gap:14px">
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-flask-conical"/></svg></div><h3>Unit and integration</h3><p>Domain rules, repositories, state transitions, failure paths.</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-file-check"/></svg></div><h3>Contract tests</h3><p>Every adapter against its port, so a provider can be swapped.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></div><h3>Tenant and authz tests</h3><p>Cross-tenant read and write, unauthorized tool calls, in CI.</p></div>
+   <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-clipboard-check"/></svg></div><h3>AI evaluation</h3><p>Curated conversations scored for correctness, grounding, tool choice, handoff.</p></div>
+   <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-refresh-ccw"/></svg></div><h3>Resilience</h3><p>Duplicate webhooks, tool timeouts with unknown outcome, provider outages.</p></div>
+   <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></div><h3>Load and recovery</h3><p>Backup and restore, queue depth, p95 latency and cost.</p></div>
+  </div>
+
+  </section>
+  <section >
+  <div class="kicker">Security checklist</div><h2>Run on every release</h2>
+  <div class="grid g3 small"><ul class="check"><li>Cross-tenant read and write</li><li>Unauthorized tool invocation</li><li>Prompt injection: input and documents</li></ul><ul class="check"><li>Webhook signature failure and replay</li><li>Duplicate webhook delivery</li><li>Tool timeout, unknown write outcome</li></ul><ul class="check"><li>Secret leakage in logs and traces</li><li>Unauthorized transcript or audio access</li><li>Rate limit and abuse</li></ul></div>
+
+  </section>
+  <section >
+  <div class="kicker">Gate order</div><h2>From commit to production</h2>
+  <div class="steps" style="font-size:.9em">
+   <div class="step fragment" data-n="1"><b>Tests</b>Unit and integration</div>
+   <div class="step fragment" data-n="2"><b>Isolation</b>Tenant and authorization</div>
+   <div class="step fragment" data-n="3"><b>AI regression</b>Safety and quality</div>
+   <div class="step fragment" data-n="4"><b>Budget</b>Latency, cost, failure paths</div>
+   <div class="step fragment rel" data-n="5"><b>Release</b>Flag, canary, rollback ready</div>
+  </div>
+
+  </section>
+</section>
+<section data-chapter="6 · Week one">
+  <section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-06.svg" data-background-size="cover">
+    <div class="hero"><div class="kicker">Chapter 6</div><h1>Getting started</h1><p>What the first days look like.</p></div>
+  </section>
+  <section >
+  <div class="kicker">Sprint 0, only if needed</div><h2>Make the team able to ship</h2>
+  <ul class="check small"><li class="fragment">Repository and module package structure</li><li class="fragment">CI: format, static analysis, tests</li><li class="fragment">Local environment and repeatable migrations</li><li class="fragment">Threat model and the first architecture decision records</li><li class="fragment">Minimal deployment and secret handling</li><li class="fragment">Definition of Done agreed</li></ul>
+
+  </section>
+  <section >
+  <div class="kicker">First Sprint</div><h2>A tenant-scoped conversation, proven isolated</h2>
+  <div class="grid g2"><ul class="small"><li><b>US-001</b> create an organization, audited</li><li><b>US-003</b> tenant isolation tests</li><li><b>US-010</b> start a conversation</li><li><b>US-011</b> persist and order messages</li></ul>
+  <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></div><h3>Demo</h3><p>Create a conversation, append messages, fetch the timeline, and show a cross-tenant read denied.</p></div></div>
+
+  </section>
+  <section >
+  <div class="kicker">Write these first</div><h2>Architecture decisions to settle early</h2>
+  <div class="grid g2"><ol class="small"><li>ADR-001 Modular monolith boundaries</li><li>ADR-002 Database and tenant isolation</li><li>ADR-003 Queue, outbox and inbox</li><li>ADR-004 Vector and search technology</li><li>ADR-005 LLM abstraction and data policy</li></ol>
+  <ol class="small" start="6"><li>ADR-009 Authentication and customer verification</li><li>ADR-010 Tool authorization and approval</li><li class="muted">ADR-006 to 008 voice strategy, transport and retention, decided in Sprint 7</li></ol></div>
+
+  </section>
+</section>
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><h1>Build it so it can be trusted</h1><p>Questions, and where to look next: <b>latex-scrum</b> report, <b>diagrams/mermaid</b> pack.</p></div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/zoom/zoom.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>

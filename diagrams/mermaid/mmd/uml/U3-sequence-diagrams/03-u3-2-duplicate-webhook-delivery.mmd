@@ -1,0 +1,17 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.2 Duplicate webhook delivery
+sequenceDiagram
+    participant P as Provider
+    participant WH as Webhook controller
+    participant IB as Inbound inbox
+    participant CV as Conversation
+
+    P->>WH: event E1
+    WH->>WH: verify signature
+    WH->>IB: insert (connection, E1)
+    IB-->>WH: inserted
+    WH-->>P: 200
+    WH->>CV: process async
+    P->>WH: event E1 again (retry)
+    WH->>IB: insert (connection, E1)
+    IB-->>WH: unique violation
+    WH-->>P: 200 (no reprocess)

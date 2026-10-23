@@ -1,0 +1,8 @@
+%% Source: epics/E06-safe-business-tools.md - Epic overview
+flowchart LR
+    E06["E06 Safe tools"] --> US50["US-050 Enable versioned tool for agent"]
+    E06 --> US51["US-051 Order status lookup"]
+    E06 --> US52["US-052 Timeout and duplicate safety"]
+    E06 --> US53["US-053 Audit tool calls"]
+    US50 --> US51 --> US52
+    US51 --> US53

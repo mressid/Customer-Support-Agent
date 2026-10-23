@@ -1,0 +1,68 @@
+%% Source: uml/U2-class-diagrams.md - U2.2 Conversation core (M01, M03)
+classDiagram
+    class Conversation {
+        +UUID id
+        +UUID organizationId
+        +ConversationStatus status
+        +OwnerType owner
+        +int version
+        +appendInbound(msg) Message
+        +appendOutbound(msg) Message
+        +claim(agent)
+        +release()
+        +resolve(outcome)
+        +reopen()
+    }
+    class ConversationParticipant {
+        +ParticipantRole role
+    }
+    class ConversationTurn {
+        +UUID id
+        +int turnNumber
+        +TurnStatus status
+    }
+    class Message {
+        +UUID id
+        +long sequence
+        +MessageKind kind
+        +Direction direction
+        +Visibility visibility
+        +String body
+        +DateTime createdAt
+    }
+    class MessageMediaReference {
+        +String storageKey
+        +String mimeType
+    }
+    class ConversationEvent {
+        +String type
+        +DateTime occurredAt
+    }
+    class Customer {
+        +UUID id
+        +String displayName
+        +VerificationLevel level
+    }
+    class CustomerIdentity {
+        +String provider
+        +String providerIdentityId
+    }
+    class CustomerConsent {
+        +String purpose
+        +bool granted
+    }
+    class ConversationService {
+        +start(ctx, channel) Conversation
+        +append(ctx, envelope) Message
+        +timeline(ctx, id, visibility) List~Message~
+    }
+    Conversation "1" *-- "*" Message
+    Conversation "1" *-- "*" ConversationTurn
+    Conversation "1" *-- "*" ConversationEvent
+    Conversation "1" *-- "*" ConversationParticipant
+    Message "1" o-- "*" MessageMediaReference
+    ConversationTurn "1" --> "*" Message : produces
+    Customer "1" --> "*" CustomerIdentity
+    Customer "1" --> "*" CustomerConsent
+    Customer "1" --> "*" Conversation
+    ConversationService ..> Conversation : manages

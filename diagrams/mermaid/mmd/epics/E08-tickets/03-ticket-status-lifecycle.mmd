@@ -1,0 +1,10 @@
+%% Source: epics/E08-tickets.md - Ticket status lifecycle
+stateDiagram-v2
+    [*] --> New
+    New --> Open: assigned or triaged
+    Open --> Pending: waiting on customer
+    Pending --> Open: customer replies
+    Open --> Resolved
+    Resolved --> Open: reopened
+    Resolved --> Closed: after grace period
+    Closed --> [*]

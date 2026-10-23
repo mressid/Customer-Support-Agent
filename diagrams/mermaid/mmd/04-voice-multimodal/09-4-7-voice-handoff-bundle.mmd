@@ -1,0 +1,17 @@
+%% Source: 04-voice-multimodal.md - 4.7 Voice handoff bundle
+flowchart LR
+    subgraph Bundle["Handoff bundle"]
+        direction LR
+        B1["Conversation ID and verification level"]
+        B2["Transcript and concise summary"]
+        B3["Intent and unresolved question"]
+        B4["Citations already used"]
+        B5["Completed and failed tool executions"]
+        B6["Ticket and SLA state"]
+        B7["Current modality and provider transfer refs"]
+    end
+    AI["AI Engine"] --> F{"Restricted account data?"}
+    F -- Yes --> R["Redact or mask per agent permission"]
+    F -- No --> Bundle
+    R --> Bundle
+    Bundle --> INBOX["Human Inbox"]

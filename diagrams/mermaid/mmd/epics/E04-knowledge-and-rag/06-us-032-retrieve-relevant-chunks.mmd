@@ -1,0 +1,17 @@
+%% Source: epics/E04-knowledge-and-rag.md - US-032 — Retrieve relevant chunks
+sequenceDiagram
+    participant AI as AI Engine
+    participant KB as Knowledge service
+    participant EM as Embedding adapter
+    participant V as Vector/search index
+    participant DB as Postgres
+
+    AI->>KB: retrieve(query, tenant, allowed sources, k)
+    KB->>EM: embed query
+    EM-->>KB: vector
+    KB->>V: search with mandatory tenant and source filter
+    V-->>KB: ranked chunk ids and scores
+    KB->>DB: load chunk text and source metadata
+    KB->>KB: drop below threshold, dedupe, rerank
+    KB->>DB: log RetrievalRun
+    KB-->>AI: passages with source ids, version, score

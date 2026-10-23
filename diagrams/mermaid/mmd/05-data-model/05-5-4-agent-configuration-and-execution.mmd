@@ -1,0 +1,28 @@
+%% Source: 05-data-model.md - 5.4 Agent configuration and execution
+erDiagram
+    ORGANIZATION ||--o{ AGENT_CONFIGURATION : configures
+    AGENT_CONFIGURATION ||--o{ AGENT_VERSION : versions
+    AGENT_VERSION ||--o{ AGENT_DEPLOYMENT : deployed_as
+    AGENT_VERSION ||--o{ AGENT_POLICY : enforces
+    AGENT_VERSION }o--o{ KNOWLEDGE_SOURCE : uses
+    AGENT_VERSION }o--o{ TOOL_VERSION : allows
+    AGENT_VERSION }o--|| MODEL_CONFIGURATION : uses
+    AGENT_DEPLOYMENT }o--|| CHANNEL_CONNECTION : serves
+    AGENT_VERSION ||--o{ AGENT_EXECUTION : runs
+
+    AGENT_VERSION {
+        uuid id PK
+        uuid agent_configuration_id FK
+        int version_number
+        text instructions
+        string status
+        boolean immutable
+    }
+    AGENT_EXECUTION {
+        uuid id PK
+        uuid conversation_turn_id FK
+        uuid agent_version_id FK
+        string outcome
+        int latency_ms
+        json decision_metadata
+    }

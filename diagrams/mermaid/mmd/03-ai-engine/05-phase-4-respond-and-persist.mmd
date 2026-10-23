@@ -1,0 +1,15 @@
+%% Source: 03-ai-engine.md - Phase 4 — Respond and persist
+flowchart TD
+    A["9 Generate customer reply from verified results and sources"] --> B["10 Output safety and disclosure rules"]
+    B --> C{"Passes?"}
+    C -- No --> D["Regenerate once or fallback message"] --> B
+    C -- Yes --> E["11 Persist in one transaction"]
+    E --> E1["Final message"]
+    E --> E2["Citations"]
+    E --> E3["Tool results and timing"]
+    E --> E4["Usage and outcome metadata"]
+    E1 & E2 & E3 & E4 --> F["12 Emit events via outbox"]
+    F --> G["channel.delivery.requested"]
+    F --> H["ai.turn.completed"]
+    F --> I["usage.recorded"]
+    F --> J["evaluation sampling"]

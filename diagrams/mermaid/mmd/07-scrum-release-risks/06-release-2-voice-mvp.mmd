@@ -1,0 +1,11 @@
+%% Source: 07-scrum-release-risks.md - Release 2 — Voice MVP
+flowchart LR
+    R2(["R2 Voice MVP"]) --> v1["Session start, stop, cleanup reliable"]
+    R2 --> v2["Transcript finalization and ordering"]
+    R2 --> v3["Interruption tested"]
+    R2 --> v4["Audio and transcript privacy policy implemented"]
+    R2 --> v5["Latency and cost metrics visible"]
+    R2 --> v6["Handoff validated for selected provider"]
+    v1 & v2 & v3 & v4 & v5 & v6 --> GO{"All met?"}
+    GO -- Yes --> SHIP["Ship"]
+    GO -- No --> HOLD["Hold and fix"]

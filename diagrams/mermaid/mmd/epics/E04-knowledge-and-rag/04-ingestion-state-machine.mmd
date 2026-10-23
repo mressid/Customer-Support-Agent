@@ -1,0 +1,17 @@
+%% Source: epics/E04-knowledge-and-rag.md - Ingestion state machine
+stateDiagram-v2
+    [*] --> Uploaded
+    Uploaded --> Parsing
+    Parsing --> Chunking
+    Parsing --> Failed: unreadable
+    Chunking --> Embedding
+    Embedding --> Indexing
+    Embedding --> RetryWait: provider error
+    RetryWait --> Embedding: backoff
+    Indexing --> Active: swap complete
+    Indexing --> Failed
+    Failed --> Uploaded: manual retry
+    Active --> Superseded: new version active
+    Active --> Deleting: source deleted
+    Deleting --> Deleted: chunks and vectors removed
+    Deleted --> [*]

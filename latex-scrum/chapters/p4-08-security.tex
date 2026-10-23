@@ -1,0 +1,84 @@
+\chapter{Security, Privacy and Reliability}
+
+\section{Tenant isolation}
+
+\begin{itemize}
+\item Resolve tenant from authenticated identity or trusted channel configuration.
+\item Never trust a tenant ID from an arbitrary customer payload.
+\item Apply tenant filters to SQL, search/vector retrieval, object storage, cache keys, jobs, events, and analytics.
+\item Add cross-tenant access tests to CI.
+\item Use least-privilege database and service credentials.
+\end{itemize}
+\section{Authentication and authorization}
+
+\begin{itemize}
+\item Separate organization administrators, support agents, customers, and service identities.
+\item Enforce permissions on the server for every protected operation.
+\item Verify customer identity before exposing protected order/account details.
+\item Require confirmation/approval for sensitive or irreversible actions.
+\item Re-check authorization at execution time, not only when the AI proposes a tool call.
+\end{itemize}
+\section{Secret management}
+
+\begin{itemize}
+\item Store provider credentials in a secret manager or protected encrypted store.
+\item Reference secrets by identifier in configuration.
+\item Redact tokens, passwords, API keys, and authorization headers from logs and traces.
+\item Support rotation and revocation.
+\end{itemize}
+\section{Prompt injection and untrusted content}
+
+\begin{itemize}
+\item Treat customer messages, uploaded files, retrieved passages, web pages, and tool results as data, not authority.
+\item Keep tool permissions outside the model prompt.
+\item Allowlist tool names and validate every argument.
+\item Prevent retrieved instructions from changing system policy.
+\item Require human approval for high-risk actions.
+\item Use output validation and structured schemas where appropriate.
+\end{itemize}
+\section{Privacy and retention}
+
+\begin{itemize}
+\item Classify personal and sensitive data.
+\item Define retention for messages, transcripts, raw audio, uploaded files, logs, and audit events separately.
+\item Support access/deletion workflows where applicable.
+\item Limit access to transcripts and recordings.
+\item Avoid putting unnecessary personal data into prompts or evaluation datasets.
+\item Use synthetic or redacted data for tests whenever practical.
+\end{itemize}
+\section{Reliability}
+
+\begin{itemize}
+\item Durable inbox for inbound events.
+\item Transactional outbox for important events.
+\item Idempotency keys for retried commands.
+\item Bounded retries with exponential backoff and jitter.
+\item Dead-letter/review queue for exhausted retries.
+\item Provider timeouts and circuit breakers.
+\item Health checks and dependency readiness.
+\item Graceful degradation: if RAG is down, do not pretend a grounded answer was produced; ask/hand off instead.
+\item If AI provider is down, communicate temporary unavailability or route to a human.
+\end{itemize}
+\section{Upload safety}
+
+\begin{itemize}
+\item Limit size and accepted file types.
+\item Validate actual file content rather than trusting extension.
+\item Malware-scan files where feasible.
+\item Keep private objects non-public by default.
+\item Use short-lived signed URLs when appropriate.
+\item Apply tenant and retention policies to object storage.
+\end{itemize}
+\section{Security testing checklist}
+
+\begin{itemize}
+\item Cross-tenant read/write tests
+\item Unauthorized tool invocation
+\item Prompt injection through user input and retrieved documents
+\item Webhook signature failures and replay attempts
+\item Duplicate webhook delivery
+\item Tool timeout with unknown write outcome
+\item Secret leakage in logs/traces
+\item Unauthorized transcript/audio access
+\item Rate-limit and abuse scenarios
+\end{itemize}

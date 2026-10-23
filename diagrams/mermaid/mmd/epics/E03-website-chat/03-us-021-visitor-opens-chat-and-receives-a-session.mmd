@@ -1,0 +1,15 @@
+%% Source: epics/E03-website-chat.md - US-021 — Visitor opens chat and receives a session
+sequenceDiagram
+    actor V as Visitor
+    participant W as Widget in browser
+    participant API as Support API
+    participant S as Session service
+
+    V->>W: page loads, opens chat
+    W->>API: POST /sessions with public key, Origin header
+    API->>API: verify origin is in allow list, rate limit by IP
+    API->>S: issue session
+    S->>S: sign token with tenant, connection, conversation, expiry
+    S-->>API: token
+    API-->>W: short-lived token
+    Note over W,API: every later call is authorized from token claims only

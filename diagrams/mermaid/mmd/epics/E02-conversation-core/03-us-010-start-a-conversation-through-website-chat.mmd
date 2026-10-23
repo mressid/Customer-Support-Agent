@@ -1,0 +1,18 @@
+%% Source: epics/E02-conversation-core.md - US-010 — Start a conversation through website chat
+sequenceDiagram
+    actor V as Visitor
+    participant W as Widget
+    participant API as Support API
+    participant CH as Channel service
+    participant CV as Conversation service
+    participant DB as Postgres
+
+    V->>W: opens chat
+    W->>API: start session with widget public key
+    API->>CH: resolve ChannelConnection and organization
+    CH-->>API: tenant context
+    API->>CV: create conversation
+    CV->>DB: insert conversation, customer identity (anonymous), conversation.created event
+    CV->>DB: insert outbox event
+    CV-->>API: conversation id
+    API-->>W: session token and conversation id

@@ -1,0 +1,151 @@
+\chapter{Voice and Multimodal Conversations}
+
+\section{Goal}
+
+A customer can start with text, switch to voice, return to text, or be transferred to a human without losing the durable conversation history.
+
+\section{Voice subsystem responsibilities}
+
+\subsection{Real-time voice session}
+
+\begin{itemize}
+\item Open and close media sessions.
+\item Track transport state, audio input/output, interruptions, silence, reconnects, and failures.
+\item Associate every voice session with a conversation and tenant.
+\item Enforce session duration and resource quotas.
+\end{itemize}
+\subsection{Speech processing}
+
+Two strategies should be supported behind a common abstraction.
+
+\textbf{Option A: modular pipeline} \code{audio \ensuremath{\rightarrow} STT \ensuremath{\rightarrow} conversation engine \ensuremath{\rightarrow} TTS \ensuremath{\rightarrow} audio}
+
+Advantages: explicit transcript, modular provider choice, easier inspection of each stage. \\ Trade-off: additional latency and more orchestration.
+
+\textbf{Option B: speech-to-speech} \code{audio \ensuremath{\leftrightarrow} real-time multimodal model}
+
+Advantages: potentially more natural, lower-latency interactions. \\ Trade-off: provider coupling and less explicit control over intermediate artifacts depending on provider.
+
+Start with one strategy that matches latency, language, cost, and observability requirements; do not implement both fully before validating the product.
+
+\section{Turn and interruption semantics}
+
+\begin{itemize}
+\item Partial transcription is provisional.
+\item Finalized user speech creates a durable turn input.
+\item When a user interrupts generated speech, cancel or truncate the obsolete response where supported.
+\item Do not persist a canceled assistant utterance as if it were fully delivered.
+\item Avoid processing the same audio segment as both a final transcript and a second independent message.
+\item Preserve turn order with sequence IDs or timestamps plus server-side ordering.
+\item Keep audio chunks and ephemeral transport events separate from canonical messages.
+\end{itemize}
+\section{Switching modalities}
+
+A conversation can contain:
+
+\begin{itemize}
+\item text customer messages;
+\item finalized speech transcripts;
+\item assistant text;
+\item generated audio references;
+\item system events such as voice started/ended;
+\item handoff events.
+\end{itemize}
+The conversation engine should consume normalized text/intent and trusted state, not depend on whether the text came from typing or transcription.
+
+\section{Human handoff}
+
+A handoff bundle should include:
+
+\begin{itemize}
+\item conversation ID and customer identity level/verification status;
+\item transcript and concise summary;
+\item customer intent and unresolved question;
+\item source citations already used;
+\item completed/failed tool executions;
+\item relevant ticket and SLA state;
+\item current modality and provider transfer references where appropriate.
+\end{itemize}
+Do not silently expose restricted account data in a handoff summary.
+
+\section{Voice-specific operational metrics}
+
+\begin{itemize}
+\item time to first audio;
+\item end-of-speech to response-start latency;
+\item total turn latency;
+\item interruption/cancellation rate;
+\item transcription confidence or provider quality indicators when available;
+\item reconnect and dropped-session rate;
+\item audio generation failures;
+\item cost and duration per session;
+\item handoff completion rate.
+\end{itemize}
+\section{Privacy}
+
+\begin{itemize}
+\item Request microphone permission only when needed.
+\item Clearly communicate when voice is active and when recording/transcription is retained.
+\item Define audio and transcript retention separately.
+\item Avoid storing raw audio by default unless required by a defined product feature.
+\item Provide deletion, access, and consent workflows according to applicable law and customer policy.
+\end{itemize}
+\section{Voice and multimodal diagrams}
+\Needspace{456pt}
+\subsection{Voice session lifecycle}
+
+\mmdfig{04-voice-multimodal/01-4-1-voice-session-lifecycle}{Voice session lifecycle}{fig:04-voice-multimodal-01-4-1-voice-session-lifecycle-155}
+
+
+\mmdfigLH{\subsection{Two speech strategies}
+
+\subsubsection{Option A --- modular pipeline}
+}{04-voice-multimodal/02-option-a-modular-pipeline}{Two speech strategies: Option A --- modular pipeline}{fig:04-voice-multimodal-02-option-a-modular-pipeline-156}
+
+
+\mmdfigLH{\subsubsection{Option B --- speech-to-speech}
+}{04-voice-multimodal/03-option-b-speech-to-speech}{Two speech strategies: Option B --- speech-to-speech}{fig:04-voice-multimodal-03-option-b-speech-to-speech-157}
+
+
+\Needspace{640pt}
+\subsubsection{Decision: which to start with}
+
+\mmdfig{04-voice-multimodal/04-decision-which-to-start-with}{Two speech strategies: Decision: which to start with}{fig:4-voice-multimodal-04-decision-which-to-start-with-158}
+
+
+\mmdfigLH{\subsection{One voice turn (Option A) with persistence boundaries}
+}{04-voice-multimodal/05-4-3-one-voice-turn-option-a-with-persistence-boundaries}{One voice turn (Option A) with persistence boundaries}{fig:ne-voice-turn-option-a-with-persistence-boundaries-159}
+
+
+\mmdfigLH{\subsection{Interruption (barge-in)}
+}{04-voice-multimodal/06-4-4-interruption-barge-in}{Interruption (barge-in)}{fig:04-voice-multimodal-06-4-4-interruption-barge-in-160}
+
+
+\Needspace{600pt}
+\subsection{Partial vs final transcript handling}
+
+\mmdfig{04-voice-multimodal/07-4-5-partial-vs-final-transcript-handling}{Partial vs final transcript handling}{fig:imodal-07-4-5-partial-vs-final-transcript-handling-161}
+
+
+\Needspace{412pt}
+\subsection{Modality switching in one conversation}
+
+\mmdfig{04-voice-multimodal/08-4-6-modality-switching-in-one-conversation}{Modality switching in one conversation}{fig:odal-08-4-6-modality-switching-in-one-conversation-162}
+
+
+\mmdfigLH{\subsection{Voice handoff bundle}
+}{04-voice-multimodal/09-4-7-voice-handoff-bundle}{Voice handoff bundle}{fig:04-voice-multimodal-09-4-7-voice-handoff-bundle-163}
+
+
+\Needspace{640pt}
+\subsection{Voice privacy and consent}
+
+\mmdfig{04-voice-multimodal/10-4-8-voice-privacy-and-consent}{Voice privacy and consent}{fig:-voice-multimodal-10-4-8-voice-privacy-and-consent-164}
+
+
+\Needspace{455pt}
+\subsection{Voice metrics pipeline}
+
+\mmdfig{04-voice-multimodal/11-4-9-voice-metrics-pipeline}{Voice metrics pipeline}{fig:04-voice-multimodal-11-4-9-voice-metrics-pipeline-165}
+
+

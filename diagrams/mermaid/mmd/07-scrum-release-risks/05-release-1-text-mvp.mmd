@@ -1,0 +1,12 @@
+%% Source: 07-scrum-release-risks.md - Release 1 — Text MVP
+flowchart LR
+    R1(["R1 Text MVP"]) --> c1["Tenant isolation tests pass"]
+    R1 --> c2["Inbound dedupe works"]
+    R1 --> c3["Safe fallback for unknown questions"]
+    R1 --> c4["Tools allowlisted, authorized, audited"]
+    R1 --> c5["Human can take over"]
+    R1 --> c6["API and worker telemetry available"]
+    R1 --> c7["No unresolved critical eval failure"]
+    c1 & c2 & c3 & c4 & c5 & c6 & c7 --> GO{"All met?"}
+    GO -- Yes --> SHIP["Ship"]
+    GO -- No --> HOLD["Hold and fix"]

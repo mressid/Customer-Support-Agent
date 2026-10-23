@@ -1,0 +1,18 @@
+%% Source: 02-cross-cutting-flows.md - 2.3 Outbound delivery state machine
+stateDiagram-v2
+    [*] --> queued
+    queued --> sending
+    sending --> sent: provider accepted
+    sent --> delivered: delivery receipt
+    sending --> retry_wait: retryable error
+    retry_wait --> sending: backoff elapsed
+    sending --> failed: non-retryable or attempts exhausted
+    sending --> unknown: timeout with uncertain outcome
+    unknown --> sent: status lookup confirms
+    unknown --> failed: status lookup denies
+    unknown --> review: cannot determine
+    queued --> cancelled: obsolete or human takeover
+    delivered --> [*]
+    failed --> [*]
+    cancelled --> [*]
+    review --> [*]

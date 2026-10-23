@@ -1,0 +1,56 @@
+%% Source: uml/U2-class-diagrams.md - U2.9 Workflow automation (M12) and notifications (M14)
+classDiagram
+    class WorkflowDefinition {
+        +UUID id
+        +String name
+    }
+    class WorkflowVersion {
+        +int number
+        +Trigger trigger
+        +List~Step~ steps
+        +bool immutable
+    }
+    class WorkflowRun {
+        +UUID id
+        +RunState state
+        +int currentStep
+        +advance()
+        +suspend()
+        +fail(reason)
+    }
+    class WorkflowStepRun {
+        +int attempts
+        +StepState state
+        +String idempotencyKey
+    }
+    class Step {
+        <<interface>>
+        +execute(ctx) StepResult
+        +isIdempotent() bool
+    }
+    class ToolStep
+    class ApprovalStep
+    class NotifyStep
+    class ConditionStep
+    class WorkflowEngine {
+        +onEvent(event)
+        +resume(runId)
+        +retry(stepRun)
+    }
+    class Notification {
+        +NotificationStatus status
+    }
+    class NotificationTemplate {
+        +String name
+        +String body
+    }
+    WorkflowDefinition "1" --> "*" WorkflowVersion
+    WorkflowVersion "1" --> "*" WorkflowRun
+    WorkflowRun "1" *-- "*" WorkflowStepRun
+    Step <|.. ToolStep
+    Step <|.. ApprovalStep
+    Step <|.. NotifyStep
+    Step <|.. ConditionStep
+    WorkflowEngine --> WorkflowRun
+    NotifyStep ..> Notification
+    Notification --> NotificationTemplate

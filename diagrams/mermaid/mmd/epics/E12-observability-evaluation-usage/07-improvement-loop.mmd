@@ -1,0 +1,9 @@
+%% Source: epics/E12-observability-evaluation-usage.md - Improvement loop
+flowchart LR
+    PROD["Production conversations"] --> SAMP["Sample and redact"]
+    SAMP --> REV["Human review"]
+    REV --> CASE["New regression case in dataset"]
+    CASE --> FIX["Prompt, retrieval or tool change"]
+    FIX --> RUN["Evaluation run"]
+    RUN --> PUB["Publish new version"]
+    PUB --> PROD

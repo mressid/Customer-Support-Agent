@@ -1,0 +1,37 @@
+%% Source: uml/U4-activity-diagrams.md - U4.1 Customer support conversation — end to end
+flowchart TB
+    start((Start)) --> a1
+    subgraph Customer
+        a1["Open chat"]
+        a2["Send message"]
+        a9["Read reply"]
+    end
+    subgraph Platform
+        b1["Create session and conversation"]
+        b2["Persist message"]
+        b3["Request AI turn"]
+        b8["Deliver reply"]
+    end
+    subgraph AI_Engine["AI Engine"]
+        c1["Build context"]
+        c2{"Need knowledge?"}
+        c3["Retrieve passages"]
+        c4{"Need live data?"}
+        c5["Execute authorized tool"]
+        c6{"Can answer safely?"}
+        c7["Compose grounded reply"]
+    end
+    subgraph Human["Human support"]
+        h1["Claim from queue"]
+        h2["Resolve with customer"]
+    end
+    a1 --> b1 --> a2 --> b2 --> b3 --> c1 --> c2
+    c2 -- yes --> c3 --> c4
+    c2 -- no --> c4
+    c4 -- yes --> c5 --> c6
+    c4 -- no --> c6
+    c6 -- yes --> c7 --> b8 --> a9
+    c6 -- no --> h1 --> h2 --> fin
+    a9 --> d{"Resolved?"}
+    d -- no --> a2
+    d -- yes --> fin(((End)))

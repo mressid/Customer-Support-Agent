@@ -1,0 +1,8 @@
+%% Source: epics/E08-tickets.md - Conversation vs ticket
+flowchart LR
+    C1["Conversation 1 chat"] --> T["Ticket: work to resolve"]
+    C2["Conversation 2 voice"] --> T
+    C3["Conversation 3 email later"] --> T
+    T --> H["Status history"]
+    T --> CM["Comments"]
+    T --> A["Assignment"]

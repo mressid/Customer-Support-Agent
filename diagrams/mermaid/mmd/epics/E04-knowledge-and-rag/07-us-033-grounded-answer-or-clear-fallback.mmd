@@ -1,0 +1,11 @@
+%% Source: epics/E04-knowledge-and-rag.md - US-033 — Grounded answer or clear fallback
+flowchart TD
+    A["Retrieval result"] --> B{"Any passage above threshold?"}
+    B -- No --> F1["Fallback: say not found, offer to clarify, ticket or human"]
+    B -- Yes --> C{"Passages contradict each other or are stale?"}
+    C -- Yes --> F2["Ask clarifying question or escalate"]
+    C -- No --> D["Generate answer constrained to passages"]
+    D --> E{"Every claim supported?"}
+    E -- No --> G["Remove unsupported claims or fallback"]
+    E -- Yes --> H["Reply with citations"]
+    F1 & F2 & G --> I["Never mark as sourced"]

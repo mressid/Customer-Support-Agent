@@ -1,0 +1,8 @@
+%% Source: epics/E06-safe-business-tools.md - US-053 — Audit tool calls
+flowchart LR
+    TE["ToolExecution event"] --> R["Redaction filter<br/>mask PII and secrets per tool policy"]
+    R --> AE["AuditEvent<br/>actor, tenant, tool, version, args redacted, outcome, time, correlation id"]
+    AE --> DB[("Append-only audit table")]
+    DB --> Q["Security reviewer query UI"]
+    DB --> EX["Export with retention policy"]
+    AE --> M["Metric: tool success and failure rate"]

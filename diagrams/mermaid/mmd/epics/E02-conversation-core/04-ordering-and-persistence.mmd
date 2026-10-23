@@ -1,0 +1,18 @@
+%% Source: epics/E02-conversation-core.md - Ordering and persistence
+sequenceDiagram
+    participant W as Widget
+    participant API as Support API
+    participant CV as Conversation service
+    participant DB as Postgres
+    participant Q as Queue
+
+    W->>API: send message with client_message_id
+    API->>CV: append inbound
+    CV->>DB: BEGIN
+    CV->>DB: lock conversation row or use sequence
+    CV->>DB: insert message with next sequence number
+    CV->>DB: insert outbox message.persisted
+    CV->>DB: COMMIT
+    CV-->>API: message with sequence
+    API-->>W: ack with server id
+    DB-->>Q: relay ai.turn.requested

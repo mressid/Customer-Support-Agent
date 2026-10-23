@@ -1,0 +1,15 @@
+%% Source: 03-ai-engine.md - Phase 3 — Plan and act (tool loop)
+flowchart TD
+    A["6 Plan next step using only allowed tool registry"] --> B{"Plan type"}
+    B -- "direct answer" --> Z["Go to Phase 4"]
+    B -- clarify --> Z
+    B -- handoff --> H["HandoffPending"]
+    B -- "tool call" --> C["7 Validate schema and policy"]
+    C -- denied --> D["Record denial, tell planner"] --> A
+    C -- allowed --> E["8 Execute authorized tool"]
+    E -- success --> F["Validate returned data"] --> A
+    E -- "retryable failure" --> G{"Retry budget left?"}
+    G -- Yes --> E
+    G -- No --> H
+    E -- "unknown outcome" --> H
+    A -. "loop guard: max steps" .-> H

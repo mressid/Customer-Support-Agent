@@ -1,0 +1,22 @@
+%% Source: 03-ai-engine.md - 3.2 Turn state machine
+stateDiagram-v2
+    [*] --> Received
+    Received --> ContextBuilding
+    ContextBuilding --> Deciding
+    Deciding --> Retrieving: knowledge needed
+    Deciding --> ToolValidation: tool proposed
+    Deciding --> Responding: direct response
+    Deciding --> HandoffPending: escalate
+    Retrieving --> Deciding
+    ToolValidation --> ToolRunning: authorized
+    ToolValidation --> Responding: invalid or denied
+    ToolRunning --> Deciding: result received
+    ToolRunning --> Recovery: retryable failure
+    Recovery --> ToolRunning: retry budget remains
+    Recovery --> HandoffPending: exhausted or policy
+    Responding --> Persisting
+    Persisting --> DeliveryPending
+    DeliveryPending --> Completed
+    HandoffPending --> HumanOwned
+    HumanOwned --> Completed
+    Completed --> [*]

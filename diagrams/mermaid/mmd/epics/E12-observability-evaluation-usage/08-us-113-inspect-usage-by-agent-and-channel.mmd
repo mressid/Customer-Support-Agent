@@ -1,0 +1,11 @@
+%% Source: epics/E12-observability-evaluation-usage.md - US-113 — Inspect usage by agent and channel
+flowchart LR
+    CALL["Model, speech, embedding calls"] --> UR["UsageRecord per call: tenant, agent version, channel, tokens or seconds"]
+    UR --> AGG["Hourly aggregate"]
+    PU["Provider invoice or usage export"] --> REC["Reconciliation job"]
+    AGG --> REC
+    REC --> DIFF{"Difference above tolerance?"}
+    DIFF -- Yes --> ALERT["Alert operator"]
+    DIFF -- No --> OK["Usage view by agent and channel"]
+    AGG --> Q["Quota checks and rate limits"]
+    Q --> BLK["Throttle or block when quota exceeded"]

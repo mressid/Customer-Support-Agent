@@ -1,0 +1,101 @@
+\chapter{Observability, Analytics and AI Evaluation}
+
+\section{Correlation model}
+
+Carry:
+
+\begin{itemize}
+\item \code{trace\_\allowbreak{}id}
+\item \code{correlation\_\allowbreak{}id}
+\item \code{causation\_\allowbreak{}id}
+\item \code{tenant\_\allowbreak{}id} (safe internal identifier; avoid high-cardinality metric labels)
+\item \code{conversation\_\allowbreak{}id}
+\item \code{turn\_\allowbreak{}id}
+\item \code{tool\_\allowbreak{}execution\_\allowbreak{}id}
+\item \code{provider\_\allowbreak{}request\_\allowbreak{}id} where available
+\end{itemize}
+Do not place message text, customer email, phone, access tokens, or other sensitive values in metric labels.
+
+\section{Operational signals}
+
+\subsection{API and platform}
+
+\begin{itemize}
+\item request rate, error rate, latency;
+\item queue depth and oldest-job age;
+\item worker failures and retry count;
+\item database connection pool, slow queries;
+\item object-storage errors;
+\item dependency health.
+\end{itemize}
+\subsection{Conversation and delivery}
+
+\begin{itemize}
+\item inbound acceptance and processing latency;
+\item outbound delivery success/failure;
+\item duplicate event count;
+\item conversation completion and handoff;
+\item abandoned session rate.
+\end{itemize}
+\subsection{AI and RAG}
+
+\begin{itemize}
+\item model latency, errors, token usage/cost;
+\item retrieval latency, empty retrieval, source distribution;
+\item tool proposal/authorization/success/failure;
+\item groundedness and unsupported-claim review;
+\item clarification and escalation rates.
+\end{itemize}
+\subsection{Voice}
+
+\begin{itemize}
+\item session establishment time;
+\item time to first audio;
+\item turn latency;
+\item interruption rate;
+\item transcript finalization failures;
+\item reconnects and dropped sessions.
+\end{itemize}
+\section{Evaluation plan}
+
+Build a curated set of realistic, anonymized or synthetic conversations covering:
+
+\begin{itemize}
+\item common FAQ;
+\item ambiguous questions;
+\item missing information;
+\item conflicting or stale documents;
+\item prompt injection attempts;
+\item requests for restricted customer data;
+\item tool success and tool failure;
+\item external provider timeout;
+\item customer asks for human;
+\item language switching;
+\item interruption and voice transcript errors.
+\end{itemize}
+Score:
+
+\begin{itemize}
+\item factual correctness;
+\item source support/groundedness;
+\item appropriate clarification;
+\item correct tool selection and arguments;
+\item authorization compliance;
+\item correct handoff decisions;
+\item response usefulness and tone;
+\item latency and cost.
+\end{itemize}
+Use deterministic assertions for permissions, schemas, and state transitions. Use model-based judges only as one signal, not as the sole release gate.
+
+\section{Release gates}
+
+A new prompt/model/agent version should not be published until:
+
+\begin{itemize}
+\item critical safety tests pass;
+\item tool authorization tests pass;
+\item regression quality is within agreed thresholds;
+\item latency and cost are measured;
+\item rollback path is known;
+\item a versioned release record exists.
+\end{itemize}

@@ -1,0 +1,9 @@
+%% Source: 04-voice-multimodal.md - Decision: which to start with
+flowchart TD
+    A["ADR-006: choose first strategy"] --> B{"Need explicit transcript and per-stage control?"}
+    B -- Yes --> C["Option A modular"]
+    B -- No --> D{"Lowest latency is top priority and provider coupling is acceptable?"}
+    D -- Yes --> E["Option B speech-to-speech"]
+    D -- No --> C
+    C --> F["Validate product first. Do not build both fully."]
+    E --> F

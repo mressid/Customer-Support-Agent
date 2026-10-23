@@ -1,0 +1,13 @@
+%% Source: 03-ai-engine.md - Phase 2 — Understand and retrieve
+flowchart TD
+    A["Context ready"] --> B["4 Classify intent and risk"]
+    B --> C{"Missing information?"}
+    C -- Yes --> Q["Plan: ask clarifying question"]
+    C -- No --> D{"Risk level"}
+    D -- "high risk or policy flag" --> H["Plan: handoff"]
+    D -- normal --> E{"Knowledge useful?"}
+    E -- No --> OUT["Proceed to Phase 3"]
+    E -- Yes --> R["5 Retrieve approved knowledge, tenant filtered"]
+    R --> F{"Evidence above threshold?"}
+    F -- Yes --> OUT
+    F -- No --> G["Mark evidence insufficient"] --> OUT

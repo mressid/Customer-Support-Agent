@@ -1,0 +1,4 @@
+%% Source: epics/E10-workflow-routing-sla.md - Principle: deterministic procedure, AI proposes
+flowchart LR
+    AI["AI classifies or proposes"] --> WF["Workflow engine enforces the procedure"]
+    WF --> S1["Step: validate"] --> S2["Step: approval if needed"] --> S3["Step: execute tool"] --> S4["Step: notify"]

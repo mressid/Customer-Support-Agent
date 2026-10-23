@@ -1,0 +1,9 @@
+%% Source: 07-scrum-release-risks.md - 7.9 Decisions to defer
+flowchart LR
+    D(["Do not decide yet"]) --> a["One microservice per module"]
+    D --> b["Universal workflow builder"]
+    D --> c["Multiple speech providers"]
+    D --> d["Autonomous write access to all systems"]
+    D --> e["Permanent raw audio retention"]
+    D --> f["Complex billing and subscriptions"]
+    a & b & c & d & e & f --> W["Revisit with evidence: scale, usage, validated need"]

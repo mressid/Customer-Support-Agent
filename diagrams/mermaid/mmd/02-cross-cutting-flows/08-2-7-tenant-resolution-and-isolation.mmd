@@ -1,0 +1,20 @@
+%% Source: 02-cross-cutting-flows.md - 2.7 Tenant resolution and isolation
+flowchart LR
+    subgraph Sources["Trusted sources only"]
+        S1["Authenticated user token"]
+        S2["Channel connection config"]
+        S3["Widget session token"]
+        S4["Service identity"]
+    end
+    subgraph Rejected["Never trusted"]
+        P["tenant_id in customer payload"]
+    end
+    S1 & S2 & S3 & S4 --> R["Tenant context resolver"]
+    P -. ignored .-> R
+    R --> CTX["Request context: tenant_id, correlation_id, actor"]
+    CTX --> SQL["SQL filters / RLS"]
+    CTX --> VEC["Vector search filter"]
+    CTX --> OBJ["Object storage prefix"]
+    CTX --> CACHE["Cache key prefix"]
+    CTX --> JOB["Job and event metadata"]
+    CTX --> ANA["Analytics scoping"]

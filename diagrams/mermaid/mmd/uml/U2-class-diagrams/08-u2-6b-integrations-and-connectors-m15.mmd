@@ -1,0 +1,32 @@
+%% Source: uml/U2-class-diagrams.md - U2.6b Integrations and connectors (M15)
+classDiagram
+    class Connector {
+        <<interface>>
+        +call(operation, args, secretRef) ConnectorResult
+        +healthCheck() Health
+    }
+    class CommerceConnector
+    class CrmConnector
+    class ConnectorError {
+        +ErrorCategory category
+        +bool retryable
+    }
+    class Integration {
+        +UUID id
+        +Health health
+        +SecretRef credentialRef
+    }
+    class SecretManager {
+        <<interface>>
+        +resolve(ref) Secret
+    }
+    class ToolVersion {
+        +String name
+        +int version
+    }
+    Connector <|.. CommerceConnector
+    Connector <|.. CrmConnector
+    Connector ..> ConnectorError : raises
+    Integration --> SecretManager : via ref
+    ToolVersion --> Integration : backed by
+    Connector ..> Integration : configured by

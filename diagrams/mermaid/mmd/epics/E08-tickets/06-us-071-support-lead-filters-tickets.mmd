@@ -1,0 +1,10 @@
+%% Source: epics/E08-tickets.md - US-071 — Support lead filters tickets
+flowchart TD
+    A["Lead sets filters: status, priority, assignee, queue, date"] --> B["API validates filter fields allowlist"]
+    B --> C["Tenant scope from token"]
+    C --> D{"Permission scope"}
+    D -- "tickets.read.all" --> E["All tenant tickets"]
+    D -- "tickets.read.team" --> F["Only team queues"]
+    D -- "tickets.read.own" --> G["Only assigned to caller"]
+    E & F & G --> H["Indexed query with pagination and stable sort"]
+    H --> I["Result list with counts"]

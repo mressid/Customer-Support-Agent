@@ -1,0 +1,21 @@
+%% Source: 04-voice-multimodal.md - 4.1 Voice session lifecycle
+stateDiagram-v2
+    [*] --> Requested
+    Requested --> PermissionPending: widget asks for microphone
+    PermissionPending --> Denied: user refuses
+    PermissionPending --> Connecting: granted
+    Connecting --> Active: transport established
+    Connecting --> Failed: timeout
+    Active --> Listening
+    Listening --> Processing: end of speech detected
+    Processing --> Speaking: assistant audio starts
+    Speaking --> Listening: playback finished
+    Speaking --> Interrupted: user barge-in
+    Interrupted --> Listening: obsolete audio cancelled
+    Active --> Reconnecting: transport drop
+    Reconnecting --> Active: resumed within window
+    Reconnecting --> Ended: window expired
+    Active --> Ended: user hangs up, quota or timeout
+    Denied --> [*]
+    Failed --> [*]
+    Ended --> [*]

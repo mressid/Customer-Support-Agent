@@ -1,0 +1,12 @@
+%% Source: epics/E06-safe-business-tools.md - US-050 — Enable a versioned tool for an agent
+flowchart TD
+    A["Admin selects tool version for agent draft"] --> B{"Tool schema valid JSON Schema, additionalProperties false?"}
+    B -- No --> X1["Reject"]
+    B -- Yes --> C{"Integration configured and healthy for tenant?"}
+    C -- No --> X2["Block: configure integration first"]
+    C -- Yes --> D{"Risk level"}
+    D -- read_only --> E["Allow"]
+    D -- "write" --> F["Require confirmation or approval policy to be set"]
+    E & F --> G["Add to agent allowlist in draft"]
+    G --> H["Takes effect only after publish of new AgentVersion"]
+    H --> I["Audit event"]

@@ -1,0 +1,65 @@
+%% Source: uml/U2-class-diagrams.md - U2.10 Security, audit, usage and evaluation (M16, M17, M20)
+classDiagram
+    class AuditEvent {
+        +UUID id
+        +String action
+        +Actor actor
+        +UUID tenantId
+        +UUID correlationId
+        +Map redactedDetails
+        +DateTime at
+    }
+    class AuditService {
+        +record(event)
+        +query(ctx, filter) List~AuditEvent~
+    }
+    class Redactor {
+        +redact(payload, policy) Payload
+    }
+    class UsageRecord {
+        +String meter
+        +decimal quantity
+        +UUID agentVersionId
+        +UUID channelId
+    }
+    class QuotaService {
+        +check(ctx, meter) bool
+    }
+    class RetentionPolicy {
+        +DataClass dataClass
+        +Duration keepFor
+    }
+    class SecurityEvent {
+        +String kind
+        +Severity severity
+    }
+    class EvaluationDataset {
+        +List~EvalCase~ cases
+    }
+    class EvaluationRun {
+        +UUID agentVersionId
+        +RunStatus status
+        +execute()
+    }
+    class EvaluationResult {
+        +Map scores
+        +bool critical
+    }
+    class ReleaseGate {
+        +decide(run) GateDecision
+    }
+    class AgentRelease {
+        +String version
+        +DateTime releasedAt
+    }
+    class MetricEvent {
+        +String name
+        +Map safeLabels
+    }
+    AuditService ..> Redactor
+    AuditService --> AuditEvent
+    QuotaService ..> UsageRecord
+    EvaluationDataset "1" --> "*" EvaluationRun
+    EvaluationRun "1" --> "*" EvaluationResult
+    ReleaseGate ..> EvaluationRun
+    ReleaseGate --> AgentRelease : allows

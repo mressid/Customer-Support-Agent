@@ -1,0 +1,103 @@
+\chapter{System Architecture}
+
+\section{Recommended starting point}
+
+Use a modular monolith with:
+
+\begin{itemize}
+\item a single primary application deployment;
+\item strict module packages and interfaces;
+\item a relational database for transactional state;
+\item object storage for documents and permitted media;
+\item a queue/job runner for ingestion, outbound delivery, and other retryable work;
+\item a vector/search index for knowledge retrieval;
+\item provider adapters for LLMs, speech, channels, and business integrations.
+\end{itemize}
+Avoid creating a microservice for every module in the first release. Voice streaming may later need an independently scaled real-time component.
+
+\section{Logical layers}
+
+\begin{enumerate}
+\item \textbf{Edge and channel adapters:} website widget, webhook adapters, voice transport, email/messaging adapters.
+\item \textbf{Application API:} authentication, tenant resolution, validation, rate limiting.
+\item \textbf{Conversation domain:} sessions, messages, turns, lifecycle, identity references.
+\item \textbf{AI orchestration:} model routing, policy evaluation, retrieval, tool planning, response generation.
+\item \textbf{Capability modules:} knowledge, business tools, workflow, tickets, human inbox.
+\item \textbf{Infrastructure adapters:} SQL, object storage, vector index, queue, LLM provider, speech provider.
+\item \textbf{Cross-cutting controls:} security, audit, observability, evaluation, usage metering.
+\end{enumerate}
+\section{Architecture constraints}
+
+\begin{itemize}
+\item The core domain must not depend on a specific LLM vendor or messaging provider.
+\item Every request/job must have a trace/correlation ID and tenant context.
+\item Every tool execution must record actor, tenant, tool version, validated arguments (redacted where needed), outcome, and idempotency key.
+\item Durable state must be committed before acknowledging a webhook or inbound message when loss would be unacceptable.
+\item Use a transactional outbox when database changes must reliably publish events.
+\item External calls require timeouts, bounded retries, backoff, and idempotency where possible.
+\item Do not hold a database transaction open while waiting for an LLM or external provider.
+\item Streaming tokens/audio are not equivalent to a committed final message.
+\end{itemize}
+\section{Suggested deployable components at MVP}
+
+\begin{itemize}
+\item \code{support-api}: HTTP API and modular domain/application modules
+\item \code{support-worker}: background jobs and event consumers; may share code with API
+\item \code{support-web-widget}: lightweight customer-facing widget
+\item \code{support-agent-console}: human support and organization admin UI
+\item \code{postgres}: transactional database
+\item \code{object-storage}: uploaded source documents and approved attachments
+\item \code{queue}: durable asynchronous work
+\item \code{vector-search}: managed or self-hosted vector/search capability
+\item \code{telemetry}: logs, metrics, traces, alerts
+\end{itemize}
+These can initially be combined where appropriate. Keep logical ownership even if API and worker share a codebase.
+
+\mmdfigLH{\section{System context}
+}{01-architecture/01-1-1-system-context}{System context}{fig:01-architecture-01-1-1-system-context-110}
+
+
+\Needspace{640pt}
+\section{Logical layers}
+
+\mmdfig{01-architecture/02-1-2-logical-layers}{Logical layers}{fig:01-architecture-02-1-2-logical-layers-111}
+
+
+\mmdfigLH{\section{MVP deployable components}
+}{01-architecture/03-1-3-mvp-deployable-components}{MVP deployable components}{fig:01-architecture-03-1-3-mvp-deployable-components-112}
+
+
+\mmdfigLH{\section{Module map --- split by domain}
+
+\subsection{A. Customer interaction and conversation (M01--M03)}
+}{01-architecture/04-a-customer-interaction-and-conversation-m01-m03}{Module map --- split by domain: A. Customer interaction and conversation (M01--M03)}{fig:04-a-customer-interaction-and-conversation-m01-m03-113}
+
+
+\mmdfigLH{\subsection{B. AI conversation and voice (M04--M09)}
+}{01-architecture/05-b-ai-conversation-and-voice-m04-m09}{Module map --- split by domain: B. AI conversation and voice (M04--M09)}{fig:rchitecture-05-b-ai-conversation-and-voice-m04-m09-114}
+
+
+\mmdfigLH{\subsection{C. Support operations (M10--M14)}
+}{01-architecture/06-c-support-operations-m10-m14}{Module map --- split by domain: C. Support operations (M10--M14)}{fig:01-architecture-06-c-support-operations-m10-m14-115}
+
+
+\Needspace{175pt}
+\subsection{D. Integrations and insights (M15--M17)}
+
+\mmdfig{01-architecture/07-d-integrations-and-insights-m15-m17}{Module map --- split by domain: D. Integrations and insights (M15--M17)}{fig:rchitecture-07-d-integrations-and-insights-m15-m17-116}
+
+
+\mmdfigLH{\subsection{E. Platform and governance (M18--M20)}
+}{01-architecture/08-e-platform-and-governance-m18-m20}{Module map --- split by domain: E. Platform and governance (M18--M20)}{fig:-architecture-08-e-platform-and-governance-m18-m20-117}
+
+
+\Needspace{457pt}
+\section{Combined module dependency view}
+
+\mmdfig{01-architecture/09-1-5-combined-module-dependency-view}{Combined module dependency view}{fig:rchitecture-09-1-5-combined-module-dependency-view-118}
+
+
+\mmdfigLH{\section{Event catalog by lifecycle}
+}{01-architecture/10-1-6-event-catalog-by-lifecycle}{Event catalog by lifecycle}{fig:01-architecture-10-1-6-event-catalog-by-lifecycle-119}
+
+

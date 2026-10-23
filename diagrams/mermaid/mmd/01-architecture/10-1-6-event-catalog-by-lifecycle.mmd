@@ -1,0 +1,32 @@
+%% Source: 01-architecture.md - 1.6 Event catalog by lifecycle
+flowchart LR
+    subgraph Inbound
+        e1["message.received"] --> e2["message.persisted"]
+        e0["conversation.created"]
+    end
+    subgraph AI
+        e3["ai.turn.requested"] --> e4["ai.turn.completed"]
+        e5["tool.execution.requested"] --> e6["tool.execution.completed"]
+    end
+    subgraph Handoff
+        e7["human.handoff.requested"] --> e8["human.handoff.accepted"]
+        e9["ticket.created"]
+    end
+    subgraph Delivery
+        d1["channel.delivery.requested"] --> d2["channel.delivery.completed"]
+        d1 --> d3["channel.delivery.failed"]
+    end
+    subgraph Knowledge
+        k1["knowledge.source.ingestion.requested"] --> k2["knowledge.source.ingestion.completed"]
+    end
+    subgraph Voice
+        v1["voice.session.started"] --> v2["voice.session.ended"]
+    end
+    subgraph Governance
+        g1["evaluation.run.completed"]
+        g2["usage.recorded"]
+    end
+    e2 --> e3
+    e4 --> d1
+    e4 --> e5
+    e4 --> e7

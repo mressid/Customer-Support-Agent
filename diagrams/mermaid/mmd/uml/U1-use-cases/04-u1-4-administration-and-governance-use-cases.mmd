@@ -1,0 +1,36 @@
+%% Source: uml/U1-use-cases.md - U1.4 Administration and governance use cases
+flowchart LR
+    AD(["Org Administrator"])
+    OP(["Platform Operator"])
+    RV(["Security Reviewer"])
+    subgraph B["Admin and governance boundary"]
+        G1(["Create organization"])
+        G2(["Invite user and assign role"])
+        G3(["Configure website widget"])
+        G4(["Upload knowledge source"])
+        G5(["Configure integration"])
+        G6(["Enable tool for agent"])
+        G7(["Publish agent version"])
+        G8(["Roll back agent version"])
+        G9(["Run evaluation"])
+        G10(["Inspect usage"])
+        G11(["Trace a request"])
+        G12(["Audit tool calls"])
+        G13(["Set retention policy"])
+    end
+    AD --- G1
+    AD --- G2
+    AD --- G3
+    AD --- G4
+    AD --- G5
+    AD --- G6
+    AD --- G7
+    AD --- G8
+    AD --- G10
+    AD --- G13
+    OP --- G11
+    OP --- G10
+    RV --- G12
+    G7 -. include .-> G9
+    G6 -. include .-> G5
+    G8 -. extend .-> G7

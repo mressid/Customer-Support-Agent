@@ -1,0 +1,24 @@
+%% Source: 03-ai-engine.md - 3.8 Failure handling inside a turn
+sequenceDiagram
+    participant C as Conversation
+    participant AI as AI Engine
+    participant LLM as Model adapter
+    participant H as Human Inbox
+
+    C->>AI: new turn
+    AI->>LLM: generate with timeout
+    alt success
+        LLM-->>AI: response
+    else timeout or 5xx
+        AI->>LLM: bounded retry with backoff
+        alt retry succeeds
+            LLM-->>AI: response
+        else fallback model configured
+            AI->>LLM: fallback model
+            LLM-->>AI: response
+        else all failed
+            AI->>C: safe unavailability message, never false success
+            AI->>H: optional handoff with reason provider_down
+        end
+    end
+    AI->>C: persist outcome and failure metrics

@@ -1,0 +1,13 @@
+%% Source: scrum-existing/S5-scrum-mermaid-artifacts.md - 5. User story lifecycle
+stateDiagram-v2
+    [*] --> Candidate
+    Candidate --> Refinement
+    Refinement --> Ready
+    Ready --> Selected
+    Selected --> InProgress
+    InProgress --> Review
+    Review --> InProgress: changes requested
+    Review --> Done: DoD met
+    InProgress --> Blocked
+    Blocked --> InProgress
+    Done --> [*]

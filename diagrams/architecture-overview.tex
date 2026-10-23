@@ -1,0 +1,31 @@
+% Compile with pdflatex or include in an Overleaf document.
+% Requires: \usepackage{tikz}
+%           \usetikzlibrary{arrows.meta,positioning,fit}
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners, align=center, minimum width=4.1cm, minimum height=0.85cm},
+  subbox/.style={draw, rounded corners, align=center, minimum width=3.25cm, minimum height=0.75cm},
+  arr/.style={-{Stealth[length=2.5mm]}, thick},
+  node distance=0.55cm and 0.8cm
+]
+\node[box] (channels) {Customer Channels\\Text, Website Chat, Email, Messaging, Voice};
+\node[box, below=of channels] (conversation) {Conversation Layer\\Identity, Sessions, Messages, Turn Ordering};
+\node[box, below=of conversation] (engine) {AI Conversation Engine\\Context, Policy, Planning, Response};
+\node[subbox, below left=0.8cm and 0.25cm of engine] (knowledge) {Knowledge / RAG};
+\node[subbox, below=0.8cm of engine] (tools) {Tool Execution / Authorization};
+\node[subbox, below right=0.8cm and 0.25cm of engine] (handoff) {Human Inbox / Handoff};
+\node[box, below=1.1cm of tools] (business) {Business Systems and Connectors\\CRM, Orders, Booking, Billing};
+\node[box, right=1.0cm of conversation] (voice) {Voice Subsystem\\Media, STT/TTS, Transcript Sync};
+\node[box, right=1.0cm of engine] (cross) {Cross-Cutting Controls\\Tenant Security, Audit, Telemetry, Evaluation};
+
+\draw[arr] (channels) -- (conversation);
+\draw[arr] (conversation) -- (engine);
+\draw[arr] (engine) -- (knowledge);
+\draw[arr] (engine) -- (tools);
+\draw[arr] (engine) -- (handoff);
+\draw[arr] (tools) -- (business);
+\draw[arr] (channels.east) -- ++(0.4,0) |- (voice.west);
+\draw[arr] (voice.west) -- ++(-0.3,0) |- (conversation.east);
+\draw[arr] (cross.west) -- (engine.east);
+\draw[arr] (cross.west) -- (conversation.east);
+\end{tikzpicture}

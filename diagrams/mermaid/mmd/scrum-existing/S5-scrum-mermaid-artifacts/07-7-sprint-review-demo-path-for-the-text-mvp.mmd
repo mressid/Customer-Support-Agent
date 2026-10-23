@@ -1,0 +1,27 @@
+%% Source: scrum-existing/S5-scrum-mermaid-artifacts.md - 7. Sprint Review demo path for the Text MVP
+sequenceDiagram
+    actor Customer
+    participant Widget as Website Widget
+    participant API as Support API
+    participant Conv as Conversation Module
+    participant AI as AI Engine
+    participant RAG as Knowledge/RAG
+    participant Tool as Tool Service
+    participant Inbox as Human Inbox
+
+    Customer->>Widget: Ask a question
+    Widget->>API: Send message
+    API->>Conv: Persist normalized message
+    Conv->>AI: Request turn
+    AI->>RAG: Retrieve approved sources
+    RAG-->>AI: Relevant passages and source IDs
+    opt Live business data required
+        AI->>Tool: Request allowed read-only tool
+        Tool-->>AI: Authorized result
+    end
+    AI-->>Conv: Final response and metadata
+    Conv-->>Widget: Deliver response
+    alt Cannot resolve / customer asks for human
+        AI->>Inbox: Request handoff with context
+        Inbox-->>Conv: Human takes ownership
+    end

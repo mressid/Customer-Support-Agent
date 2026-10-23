@@ -1,0 +1,12 @@
+%% Source: epics/E05-ai-orchestration.md - US-041 — Follow-up question using conversation context
+flowchart TD
+    A["New customer message"] --> B["Load last N messages of THIS conversation only"]
+    B --> C{"Window within token budget?"}
+    C -- Yes --> E["Use as is"]
+    C -- No --> D["Use stored rolling summary plus last K messages"]
+    D --> D2["Refresh summary asynchronously"]
+    E --> F["Add structured state: verification level, open ticket, last tool results"]
+    D --> F
+    F --> G{"Item belongs to same tenant and customer?"}
+    G -- No --> X["Drop item and log SecurityEvent"]
+    G -- Yes --> H["Final context for model"]

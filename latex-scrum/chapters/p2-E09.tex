@@ -1,0 +1,82 @@
+\chapter{E09 --- Voice MVP}
+
+Goal: real-time browser voice using the same conversation engine. Modules: M07, M08, M09. Deeper voice diagrams: see the voice diagrams.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-080 & As a customer, I can start and end a voice session. & S7 \\
+US-081 & As a customer, I can speak and receive a spoken response. & S7 \\
+US-082 & As a customer, I can interrupt the AI while it speaks. & S8 \\
+US-083 & As a customer, I can switch between text and voice in one conversation. & S8 \\
+US-084 & As a support agent, I can take over a voice conversation or receive its context. & S8 \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E09-voice-mvp/01-epic-overview}{E09: Epic overview}{fig:epics-e09-voice-mvp-01-epic-overview-59}
+
+
+\mmdfigLH{\section{Reuse of the text engine}
+}{epics/E09-voice-mvp/02-reuse-of-the-text-engine}{E09: Reuse of the text engine}{fig:epics-e09-voice-mvp-02-reuse-of-the-text-engine-60}
+
+
+\mmdfigLH{\section{US-080 --- Start and end a voice session}
+
+\begin{storybox}{User story US-080}
+\textbf{Story.} As a customer, I can start and end a voice session.\par
+\textbf{Acceptance.} microphone permission is explicit; session state and failures are visible.
+\end{storybox}
+}{epics/E09-voice-mvp/03-us-080-start-and-end-a-voice-session}{E09: US-080 --- Start and end a voice session}{fig:-voice-mvp-03-us-080-start-and-end-a-voice-session-61}
+
+
+\Needspace{640pt}
+\section{US-081 --- Speak and receive a spoken response}
+
+\begin{storybox}{User story US-081}
+\textbf{Story.} As a customer, I can speak and receive a spoken response.\par
+\textbf{Acceptance.} speech provider is configurable; failures have a fallback path.
+\end{storybox}
+
+\mmdfig{epics/E09-voice-mvp/04-us-081-speak-and-receive-a-spoken-response}{E09: US-081 --- Speak and receive a spoken response}{fig:-mvp-04-us-081-speak-and-receive-a-spoken-response-62}
+
+
+\Needspace{521pt}
+\section{US-082 --- Interrupt the AI while it speaks}
+
+\begin{storybox}{User story US-082}
+\textbf{Story.} As a customer, I can interrupt the AI while it speaks.\par
+\textbf{Acceptance.} obsolete audio is canceled/truncated where supported and not recorded as fully delivered.
+\end{storybox}
+
+\mmdfig{epics/E09-voice-mvp/05-us-082-interrupt-the-ai-while-it-speaks}{E09: US-082 --- Interrupt the AI while it speaks}{fig:ice-mvp-05-us-082-interrupt-the-ai-while-it-speaks-63}
+
+
+\Needspace{508pt}
+\section{US-083 --- Switch between text and voice}
+
+\begin{storybox}{User story US-083}
+\textbf{Story.} As a customer, I can switch between text and voice in one conversation.\par
+\textbf{Acceptance.} finalized transcript and message order remain coherent.
+\end{storybox}
+
+\mmdfig{epics/E09-voice-mvp/06-us-083-switch-between-text-and-voice}{E09: US-083 --- Switch between text and voice}{fig:-voice-mvp-06-us-083-switch-between-text-and-voice-64}
+
+
+\Needspace{640pt}
+\section{US-084 --- Agent takes over a voice conversation or receives its context}
+
+\begin{storybox}{User story US-084}
+\textbf{Story.} As a support agent, I can take over a voice conversation or receive its context.\par
+\textbf{Acceptance.} handoff behavior is explicit for the chosen telephony/media provider.
+\end{storybox}
+
+\mmdfig{epics/E09-voice-mvp/07-us-084-agent-takes-over-a-voice-conversation-or-receives-its}{E09: US-084 --- Agent takes over a voice conversation or receives its context}{fig:nt-takes-over-a-voice-conversation-or-receives-its-65}
+
+

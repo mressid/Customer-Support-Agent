@@ -1,0 +1,9 @@
+%% Source: 03-ai-engine.md - 3.6 Model-provider adapter
+flowchart LR
+    ENG["AI Engine core domain"] --> IF["ModelProvider interface<br/>generate_response, stream_response,<br/>classify, embed, open_realtime_session"]
+    IF --> A1["Adapter: Provider A"]
+    IF --> A2["Adapter: Provider B"]
+    IF --> A3["Adapter: Local or test stub"]
+    A1 --> V1["Vendor API"]
+    A2 --> V2["Vendor API"]
+    IF -. records .-> M["model name and version, latency, usage, errors, no secrets"]

@@ -1,0 +1,18 @@
+%% Source: epics/E07-human-handoff.md - US-060 — Support agent views the unassigned queue
+sequenceDiagram
+    actor A1 as Agent 1
+    actor A2 as Agent 2
+    participant API as Support API
+    participant IN as Inbox service
+    participant DB as Postgres
+
+    A1->>API: GET queue (tenant from token)
+    API->>IN: list unassigned for queues agent belongs to
+    IN->>DB: SELECT with organization filter
+    DB-->>A1: items by priority and wait time
+    A1->>API: claim item 42 (version v1)
+    A2->>API: claim item 42 (version v1)
+    API->>DB: UPDATE where version = v1
+    DB-->>A1: success
+    DB-->>A2: conflict
+    API-->>A2: already claimed, refresh queue

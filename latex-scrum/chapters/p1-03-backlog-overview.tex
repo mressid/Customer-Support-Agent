@@ -1,0 +1,112 @@
+\chapter{Product Backlog Overview}
+
+The Product Backlog is an ordered list of everything needed to reach the Product Goal. It is emergent: this is a starter backlog, not a commitment. IDs are stable references for planning. Story points are team-specific estimates and are shown as TBD until the team estimates them.
+
+\section{Epics}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.070\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.240\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.510\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.080\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.100\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Epic} & \textbf{Title} & \textbf{Goal} & \textbf{Stories} & \textbf{Release} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+E01 & Tenant and access foundation & establish secure organization boundaries. & 3 & R1 \\
+E02 & Conversation and message core & persist and retrieve a reliable conversation timeline. & 4 & R1 \\
+E03 & Website chat channel & provide the first customer-facing channel. & 3 & R1 \\
+E04 & Knowledge ingestion and RAG & ground answers in organization-approved sources. & 4 & R1 \\
+E05 & AI orchestration & coordinate each conversation turn safely. & 4 & R1 \\
+E06 & Safe business tools & let the AI invoke a small allowlisted set of business operations. & 4 & R1 \\
+E07 & Human inbox and handoff & ensure a human can take over with context. & 4 & R1 \\
+E08 & Tickets and case tracking & track support work beyond one interaction. & 2 & R1 \\
+E09 & Voice MVP & support real-time browser voice using the same conversation engine. & 5 & R2 \\
+E10 & Workflow, routing and SLA & automate repeatable support operations. & 3 & R3 \\
+E11 & Integrations and additional channels & add provider connectors without contaminating core domain logic. & 3 & R3 \\
+E12 & Observability, evaluation and usage & operate and improve the platform using evidence. & 4 & R1/R3 \\
+\end{longtable}
+}
+
+\section{Suggested order of work}
+\begin{enumerate}
+\item E01 --- Tenant and access foundation
+\item E02 --- Conversation and message core
+\item E03 --- Website chat channel
+\item E12 --- Observability, evaluation and usage
+\item E04 --- Knowledge ingestion and RAG
+\item E05 --- AI orchestration
+\item E06 --- Safe business tools
+\item E07 --- Human inbox and handoff
+\item E08 --- Tickets and case tracking
+\item E09 --- Voice MVP
+\item E10 --- Workflow, routing and SLA
+\item E11 --- Integrations and additional channels
+\item E12 --- Observability, evaluation and usage
+\end{enumerate}
+Reorder based on user research, risk, technical dependencies and Sprint Review feedback.
+\mmdfigL{scrum-existing/S5-scrum-mermaid-artifacts/02-2-epic-dependency-graph}{Epic dependency graph}{fig:scrum-mermaid-artifacts-02-2-epic-dependency-graph-6}
+
+\mmdfig{07-scrum-release-risks/11-7-10-epic-delivery-map-by-release}{Epic delivery map by release}{fig:release-risks-11-7-10-epic-delivery-map-by-release-7}
+
+\mmdfigL{scrum-existing/S5-scrum-mermaid-artifacts/08-8-module-to-epic-coverage}{Module-to-epic coverage}{fig:rum-mermaid-artifacts-08-8-module-to-epic-coverage-8}
+
+\mmdfig{scrum-existing/S5-scrum-mermaid-artifacts/05-5-user-story-lifecycle}{User story lifecycle}{fig:-scrum-mermaid-artifacts-05-5-user-story-lifecycle-9}
+
+
+\begin{lscapepage}
+\section{Full Product Backlog}
+Sprint column shows the provisional assignment from the Sprint plan; ``Backlog'' means not yet scheduled.
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.070\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.060\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.340\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.350\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{Epic} & \textbf{User story} & \textbf{Acceptance criteria} & \textbf{Sprint} & \textbf{Points} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-001 & E01 & As an organization administrator, I can create/configure an organization so that resources have an owner. & organization ID is generated; default settings exist; audit event is recorded. & S1 & TBD \\
+US-002 & E01 & As an administrator, I can invite users and assign roles. & invitation expires; role is validated server-side; revoked users lose access. & Backlog & TBD \\
+US-003 & E01 & As a developer, I can test tenant isolation. & cross-tenant read/write attempts are denied in automated tests. & S1 & TBD \\
+US-010 & E02 & As a customer, I can start a conversation through website chat. & conversation is tenant/channel scoped; initial event is persisted. & S1 & TBD \\
+US-011 & E02 & As a customer, I can send and receive text messages. & message order is stable; delivery status is represented; errors are recoverable. & S1 & TBD \\
+US-012 & E02 & As a support agent, I can inspect the conversation timeline. & messages, system events, and visibility levels are distinguished. & Backlog & TBD \\
+US-013 & E02 & As a system, I can deduplicate inbound events. & replayed provider event does not create duplicate messages. & S2 & TBD \\
+US-020 & E03 & As an administrator, I can configure a website widget. & widget is associated with the correct organization and agent configuration. & S2 & TBD \\
+US-021 & E03 & As a visitor, I can open chat and receive a session. & session token is scoped, expires, and cannot access other tenants. & S2 & TBD \\
+US-022 & E03 & As a visitor, I can reconnect after a temporary network failure. & existing conversation can be resumed under a valid session policy. & S2 & TBD \\
+US-030 & E04 & As an administrator, I can register and upload a knowledge source. & file limits and type checks are enforced; ingestion state is visible. & S3 & TBD \\
+US-031 & E04 & As a system, I can parse, chunk, embed, and index a document asynchronously. & failed ingestion can be retried; document version is traceable. & S3 & TBD \\
+US-032 & E04 & As an AI agent, I can retrieve relevant chunks for a question. & results are tenant-filtered and include source metadata. & S3 & TBD \\
+US-033 & E04 & As a customer, I receive a grounded answer or a clear fallback. & answer is not represented as sourced when retrieval returns no useful evidence. & S4 & TBD \\
+US-040 & E05 & As a system, I can process a turn through a versioned agent configuration. & model/config version, latency, and outcome are recorded. & S4 & TBD \\
+US-041 & E05 & As a customer, I can ask a follow-up question using conversation context. & relevant recent context is used without exposing another customer's data. & S4 & TBD \\
+US-042 & E05 & As a system, I can handle model timeout or provider failure. & bounded retry/fallback occurs; no false success message is delivered. & S4 & TBD \\
+US-043 & E05 & As an administrator, I can publish and roll back an agent version. & published versions are immutable and audit logged. & S6 & TBD \\
+US-050 & E06 & As an administrator, I can enable a versioned tool for an agent. & tool must be allowlisted and schema-valid. & S5 & TBD \\
+US-051 & E06 & As a customer, I can ask for an order status lookup. & customer verification and tenant scope are checked; result is typed and minimal. & S5 & TBD \\
+US-052 & E06 & As a system, I can safely handle tool timeout and duplicate requests. & idempotency behavior is defined; unknown write outcome is not blindly retried. & Backlog & TBD \\
+US-053 & E06 & As a security reviewer, I can audit tool calls. & actor, tool/version, outcome, timestamp and correlation ID are available with sensitive values redacted. & S5 & TBD \\
+US-060 & E07 & As a support agent, I can view an unassigned queue. & queue is tenant scoped and supports assignment. & S5 & TBD \\
+US-061 & E07 & As a customer, I can request a human. & AI stops responding when handoff policy requires; the customer receives a clear status. & S5 & TBD \\
+US-062 & E07 & As a support agent, I receive a handoff summary. & summary includes transcript, unresolved request and prior tool outcomes permitted by policy. & S5 & TBD \\
+US-063 & E07 & As a support agent, I can resolve the conversation. & resolution and ownership changes are recorded. & Backlog & TBD \\
+US-070 & E08 & As a support agent, I can create a ticket from a conversation. & ticket links to source conversation and has a status history. & S6 & TBD \\
+US-071 & E08 & As a support lead, I can filter tickets by status, priority and assignment. & filters respect permissions and tenant boundaries. & S6 & TBD \\
+US-080 & E09 & As a customer, I can start and end a voice session. & microphone permission is explicit; session state and failures are visible. & S7 & TBD \\
+US-081 & E09 & As a customer, I can speak and receive a spoken response. & speech provider is configurable; failures have a fallback path. & S7 & TBD \\
+US-082 & E09 & As a customer, I can interrupt the AI while it speaks. & obsolete audio is canceled/truncated where supported and not recorded as fully delivered. & S8 & TBD \\
+US-083 & E09 & As a customer, I can switch between text and voice in one conversation. & finalized transcript and message order remain coherent. & S8 & TBD \\
+US-084 & E09 & As a support agent, I can take over a voice conversation or receive its context. & handoff behavior is explicit for the chosen telephony/media provider. & S8 & TBD \\
+US-090 & E10 & As an administrator, I can define a workflow trigger and steps. & workflow version, run state, and failures are visible. & Backlog & TBD \\
+US-091 & E10 & As a support lead, I can define routing rules and SLA targets. & rule priority and fallback behavior are deterministic. & Backlog & TBD \\
+US-092 & E10 & As a system, I can retry a failed workflow step safely. & retry policy is bounded; idempotency is defined per step. & Backlog & TBD \\
+US-100 & E11 & As an administrator, I can configure an integration securely. & credentials are secret references; test status and health are visible. & Backlog & TBD \\
+US-101 & E11 & As a system, I can normalize a provider webhook into a canonical event. & signature verified; replay deduplicated; event processing observable. & Backlog & TBD \\
+US-102 & E11 & As a customer, I can continue support through a second channel. & identity linking follows verification policy; duplicate conversations are avoided where possible. & Backlog & TBD \\
+US-110 & E12 & As an operator, I can trace one request across modules. & correlation IDs connect API, worker, model, retrieval and tool activity. & S6 & TBD \\
+US-111 & E12 & As a product owner, I can see resolution and handoff metrics. & definitions are documented and metrics are tenant-safe. & Backlog & TBD \\
+US-112 & E12 & As a team, we can run AI regression evaluations. & dataset and agent/model version are recorded; critical policy tests gate release. & S6 & TBD \\
+US-113 & E12 & As an administrator, I can inspect usage by agent and channel. & provider usage is reconciled and sensitive data is not exposed in metrics. & Backlog & TBD \\
+\end{longtable}
+}
+
+\end{lscapepage}

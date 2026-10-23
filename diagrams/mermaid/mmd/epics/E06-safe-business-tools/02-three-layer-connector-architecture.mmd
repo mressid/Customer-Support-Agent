@@ -1,0 +1,6 @@
+%% Source: epics/E06-safe-business-tools.md - Three-layer connector architecture
+flowchart LR
+    AI["AI Engine"] --> TD["Tool definition: orders.lookup v1<br/>schema, risk, permission"]
+    TD --> TES["Tool execution service<br/>validate, authorize, idempotency, audit, timeout"]
+    TES --> CA["Connector adapter<br/>auth, mapping, error interpretation"]
+    CA --> API["Commerce API"]

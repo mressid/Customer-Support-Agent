@@ -1,0 +1,40 @@
+%% Source: uml/U2-class-diagrams.md - U2.11 Design patterns applied
+classDiagram
+    class Port {
+        <<interface>>
+    }
+    class Adapter
+    class Strategy {
+        <<interface>>
+    }
+    class State {
+        <<interface>>
+    }
+    class Repository~T~ {
+        <<interface>>
+        +find(ctx, id) T
+        +save(ctx, entity)
+    }
+    class TenantAwareRepository~T~ {
+        -applyTenantFilter(ctx, query)
+    }
+    class OutboxPublisher {
+        +enqueue(event)
+        +relay()
+    }
+    class IdempotencyStore {
+        +seen(key) bool
+        +remember(key, result)
+    }
+    class CircuitBreaker {
+        +allow() bool
+        +recordSuccess()
+        +recordFailure()
+    }
+    Port <|.. Adapter : Adapter pattern for providers
+    Strategy <|.. Adapter : Strategy for STT TTS S2S
+    Repository <|.. TenantAwareRepository : Decorator and Template Method
+    State <|.. Adapter : State for conversation and delivery
+    OutboxPublisher ..> Repository
+    Adapter ..> CircuitBreaker
+    Adapter ..> IdempotencyStore

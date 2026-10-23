@@ -1,0 +1,26 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.1b Text MVP end to end: AI turn and reply
+sequenceDiagram
+    autonumber
+    participant Q as Queue and Outbox
+    participant AI as AI Engine
+    participant CV as Conversation
+    participant KB as Knowledge
+    participant TS as Tool Service
+    participant EX as Commerce API
+    participant CH as Channel Delivery
+    actor C as Customer
+
+    Q->>AI: ai.turn.requested
+    AI->>CV: load context
+    AI->>KB: retrieve (tenant filtered)
+    KB-->>AI: passages with source ids
+    opt live data needed
+        AI->>TS: orders.lookup
+        TS->>EX: authorized call with timeout
+        EX-->>TS: order payload
+        TS-->>AI: minimal typed result
+    end
+    AI->>CV: persist final message, citations, usage
+    CV->>Q: outbox channel.delivery.requested
+    Q->>CH: deliver
+    CH-->>C: reply shown in widget

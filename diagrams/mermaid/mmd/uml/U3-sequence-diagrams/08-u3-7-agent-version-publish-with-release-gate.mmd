@@ -1,0 +1,26 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.7 Agent version publish with release gate
+sequenceDiagram
+    actor Ad as Administrator
+    participant UI as Console
+    participant AG as Agent config
+    participant EV as Evaluation
+    participant GT as Release gate
+    participant DP as Deployment
+    participant AUD as Audit
+
+    Ad->>UI: publish draft
+    UI->>AG: publish(draftId)
+    AG->>AG: validate schemas and allowlist
+    AG->>EV: start EvaluationRun
+    EV->>EV: deterministic and judged checks
+    EV-->>GT: results
+    GT->>GT: critical safety and authz pass?
+    alt gate passed
+        GT-->>AG: allow
+        AG->>AG: create immutable AgentVersion
+        AG->>DP: activate on channel
+        AG->>AUD: agent.version.published
+    else gate failed
+        GT-->>AG: block with report
+        AG-->>UI: failures listed
+    end

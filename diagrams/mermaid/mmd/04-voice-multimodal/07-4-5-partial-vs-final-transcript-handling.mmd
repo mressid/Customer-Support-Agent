@@ -1,0 +1,10 @@
+%% Source: 04-voice-multimodal.md - 4.5 Partial vs final transcript handling
+flowchart TD
+    A["STT event"] --> B{"Partial or final?"}
+    B -- Partial --> C["Update ephemeral caption, overwrite previous partial"]
+    B -- Final --> D{"segment id already processed?"}
+    D -- Yes --> E["Ignore duplicate: same audio never becomes two messages"]
+    D -- No --> F["Assign sequence id, order server-side"]
+    F --> G["Persist TranscriptSegment and message in timeline"]
+    G --> H["Emit turn request"]
+    C --> I["Never durable, never visible to AI"]

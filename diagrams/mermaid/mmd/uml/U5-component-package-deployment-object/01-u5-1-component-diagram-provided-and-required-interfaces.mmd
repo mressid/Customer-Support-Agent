@@ -1,0 +1,35 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.1 Component diagram: provided and required interfaces
+flowchart LR
+    subgraph Core["Modular monolith"]
+        CH["Channel component"]
+        CV["Conversation component"]
+        AI["AI Engine component"]
+        KB["Knowledge component"]
+        TL["Tool component"]
+        HI["Human Inbox component"]
+        TK["Ticket component"]
+        AG["Agent config component"]
+        AC["Access component"]
+    end
+    ICV(("IConversation"))
+    IAI(("IAiTurn"))
+    IKB(("IRetrieval"))
+    ITL(("IToolExecution"))
+    IHI(("IHandoff"))
+    IAUTH(("IAuthorization"))
+    CV -->|provides| ICV
+    AI -->|provides| IAI
+    KB -->|provides| IKB
+    TL -->|provides| ITL
+    HI -->|provides| IHI
+    AC -->|provides| IAUTH
+    CH -.->|requires| ICV
+    CV -.->|requires| IAI
+    AI -.->|requires| IKB
+    AI -.->|requires| ITL
+    AI -.->|requires| IHI
+    HI -.->|requires| ICV
+    HI -.->|requires| TK
+    AI -.->|requires| AG
+    CH -.->|requires| IAUTH
+    TL -.->|requires| IAUTH

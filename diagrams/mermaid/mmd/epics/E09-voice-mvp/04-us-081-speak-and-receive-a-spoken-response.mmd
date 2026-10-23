@@ -1,0 +1,11 @@
+%% Source: epics/E09-voice-mvp.md - US-081 — Speak and receive a spoken response
+flowchart TD
+    A["Customer speaks"] --> B["Speech provider adapter selected by SpeechConfiguration"]
+    B --> C{"STT ok?"}
+    C -- No --> F1["Fallback: ask to repeat or switch to text"]
+    C -- Yes --> D["Final transcript to conversation"]
+    D --> E["AI turn"]
+    E --> G{"TTS ok?"}
+    G -- No --> F2["Fallback: show reply as text, log audio generation failure"]
+    G -- Yes --> H["Stream audio to customer"]
+    H --> I["Emit latency metrics: first audio, turn latency"]

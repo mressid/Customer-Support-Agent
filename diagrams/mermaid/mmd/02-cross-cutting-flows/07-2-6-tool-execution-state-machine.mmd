@@ -1,0 +1,24 @@
+%% Source: 02-cross-cutting-flows.md - 2.6 Tool execution state machine
+stateDiagram-v2
+    [*] --> requested
+    requested --> denied: allowlist, schema or authz fails
+    requested --> awaiting_approval: sensitive action
+    awaiting_approval --> approved
+    awaiting_approval --> rejected
+    awaiting_approval --> expired
+    requested --> running: authorized
+    approved --> running
+    running --> succeeded
+    running --> failed: definitive failure
+    running --> retry_wait: retryable
+    retry_wait --> running
+    running --> unknown_outcome: write timeout
+    unknown_outcome --> succeeded: status lookup
+    unknown_outcome --> failed: status lookup
+    unknown_outcome --> needs_review
+    denied --> [*]
+    rejected --> [*]
+    expired --> [*]
+    succeeded --> [*]
+    failed --> [*]
+    needs_review --> [*]

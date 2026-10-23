@@ -1,0 +1,55 @@
+%% Source: uml/U2-class-diagrams.md - U2.1 Access and tenancy (M18)
+classDiagram
+    class Organization {
+        +UUID id
+        +String name
+        +Settings settings
+        +DateTime createdAt
+    }
+    class User {
+        +UUID id
+        +String email
+        +String displayName
+    }
+    class Membership {
+        +UUID id
+        +MembershipStatus status
+        +revoke()
+    }
+    class Role {
+        +UUID id
+        +String name
+        +hasPermission(p) bool
+    }
+    class Permission {
+        +String code
+    }
+    class Invitation {
+        +UUID id
+        +String email
+        +DateTime expiresAt
+        +InvitationStatus status
+        +accept(user) Membership
+        +revoke()
+    }
+    class ServiceIdentity {
+        +UUID id
+        +String name
+    }
+    class TenantContext {
+        +UUID tenantId
+        +UUID correlationId
+        +Actor actor
+    }
+    class AuthorizationService {
+        +can(ctx, permission, resource) bool
+        +requireTenant(ctx, resource)
+    }
+    Organization "1" --> "*" Membership
+    User "1" --> "*" Membership
+    Role "1" --> "*" Membership
+    Role "*" --> "*" Permission
+    Organization "1" --> "*" Invitation
+    Organization "1" --> "*" ServiceIdentity
+    AuthorizationService ..> TenantContext : uses
+    AuthorizationService ..> Role : checks

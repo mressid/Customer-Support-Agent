@@ -1,0 +1,25 @@
+%% Source: epics/E06-safe-business-tools.md - US-051 — Customer asks for order status
+sequenceDiagram
+    actor C as Customer
+    participant AI as AI Engine
+    participant TS as Tool service
+    participant ID as Customer identity
+    participant CN as Commerce connector
+    participant EXT as Commerce API
+
+    C->>AI: Where is my order ORDER-123?
+    AI->>TS: orders.lookup(order_reference=ORDER-123)
+    TS->>TS: validate schema and allowlist
+    TS->>ID: verification level of this customer
+    alt not verified for order data
+        TS-->>AI: VERIFICATION_REQUIRED
+        AI-->>C: ask for verification step
+    else verified
+        TS->>CN: lookup scoped to tenant and customer
+        CN->>EXT: GET order
+        EXT-->>CN: order payload
+        CN-->>TS: status and estimated_delivery only
+        TS->>TS: check order belongs to this customer
+        TS-->>AI: typed minimal result
+        AI-->>C: grounded status answer
+    end

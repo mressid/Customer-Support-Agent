@@ -1,0 +1,16 @@
+%% Source: 05-data-model.md - 5.8 Voice
+erDiagram
+    CONVERSATION ||--o{ VOICE_SESSION : may_have
+    VOICE_SESSION ||--o{ VOICE_SESSION_EVENT : logs
+    VOICE_SESSION ||--o{ TRANSCRIPT_SEGMENT : produces
+    VOICE_SESSION ||--o{ AUDIO_SEGMENT_REFERENCE : may_store
+    TRANSCRIPT_SEGMENT }o--o| MESSAGE : finalized_into
+    VOICE_SESSION }o--|| SPEECH_CONFIGURATION : uses
+
+    TRANSCRIPT_SEGMENT {
+        uuid id PK
+        uuid voice_session_id FK
+        bigint sequence
+        string state
+        float confidence
+    }

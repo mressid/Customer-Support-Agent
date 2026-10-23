@@ -1,0 +1,46 @@
+% Hand-written front matter (not generated). Edit freely.
+\begin{titlepage}
+  \centering
+  \vspace*{2.5cm}
+  {\Huge\bfseries\color{brand} \ProjectName\par}
+  \vspace{0.6cm}
+  {\LARGE \DocTitle\par}
+  \vspace{0.4cm}
+  {\large\itshape \DocSubtitle\par}
+  \vspace{2.2cm}
+  \begin{tabular}{@{}r@{\hspace{1em}}l@{}}
+    \textbf{Team:} & Amine Essid \\
+    \textbf{Product Owner:} & Amine Essid \\
+    \textbf{Scrum Master:} & Amine Essid \\
+    \textbf{Developers:} & Amine Essid \\
+    \textbf{Organization:} & Amine Essid \\
+    \textbf{Version:} & 1.0.1 \\
+    \textbf{Date:} & \DocDate \\
+  \end{tabular}
+  \vfill
+  {\small Scrum Guide terminology is used throughout: Product Backlog, Sprint Backlog, Increment, Product Goal and Sprint Goal.\par}
+\end{titlepage}
+
+\chapter*{About this document}
+\addcontentsline{toc}{chapter}{About this document}
+\markboth{About this document}{About this document}
+
+This document collects the Scrum artifacts for the \textbf{\ProjectName}: an AI-native customer support platform that handles full conversations over text and voice, answers from approved organizational knowledge, performs explicitly authorized business actions, and hands over to human agents with context.
+
+\paragraph{How it is organized.}
+\begin{itemize}
+  \item \textbf{Part I -- Product and Scrum Framework:} vision and scope, the Scrum charter and events, and an overview of the Product Backlog.
+  \item \textbf{Part II -- Epics and User Stories:} the 12 epics and 38 user stories, each with its acceptance criteria and the diagrams that explain the behavior.
+  \item \textbf{Part III -- Release and Sprint Planning:} release goals and risks, the provisional Sprint plan with one diagram per Sprint, and the Definitions of Ready and Done.
+  \item \textbf{Part IV -- Architecture and Design Reference:} system architecture, module catalog, communication contracts, domain model, AI engine, voice, integrations, security and observability.
+  \item \textbf{Part V -- UML Models:} use case, class, sequence, activity and structural (component, package, deployment, object) diagrams.
+\end{itemize}
+
+\paragraph{Status of the content.}
+The backlog, sprint sequence and estimates are a \emph{planning hypothesis}, not a commitment. Team size, capacity and calendar dates are unknown; story points are team-specific and are left as ``TBD'' in the backlog table. Dates in the Gantt chart are placeholders. Names on the title page are placeholders to be replaced.
+
+\paragraph{Conventions.}
+\code{MUST} means required for correctness or security; \code{SHOULD} means recommended unless a documented reason exists. AI output is treated as untrusted input: authorization and business invariants are enforced by application code.
+
+\paragraph{Diagram sources.}
+All diagrams are Mermaid sources kept in \code{diagrams/mermaid/mmd/} and rendered to PDF by the Mermaid CLI. The Markdown files in \code{diagrams/mermaid/} are the editable originals.

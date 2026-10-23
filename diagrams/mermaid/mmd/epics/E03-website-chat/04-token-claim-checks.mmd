@@ -1,0 +1,9 @@
+%% Source: epics/E03-website-chat.md - Token claim checks
+flowchart TD
+    A["API request with token"] --> B{"Signature valid?"}
+    B -- No --> X["401"]
+    B -- Yes --> C{"Expired?"}
+    C -- Yes --> Y["401: client must reconnect"]
+    C -- No --> D{"Requested conversation matches claim?"}
+    D -- No --> Z["403: cross-conversation or cross-tenant"]
+    D -- Yes --> E["Proceed with tenant from claim"]

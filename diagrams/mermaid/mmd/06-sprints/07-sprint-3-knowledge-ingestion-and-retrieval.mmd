@@ -1,0 +1,11 @@
+%% Source: 06-sprints.md - Sprint 3 — Knowledge ingestion and retrieval
+flowchart TD
+    G3(["Goal: knowledge ingested and retrieved with tenant boundaries"])
+    G3 --> U30["US-030 Source registration and upload"]
+    G3 --> U31["US-031 Async parse, chunk, index"]
+    G3 --> U32["US-032 Retrieval with source metadata"]
+    G3 --> ST["Ingestion status and failure retry"]
+    U30 --> U31 --> U32
+    U31 --> ST
+    U32 --> DEMO["Demo: upload, status, query, source references"]
+    ST --> DEMO

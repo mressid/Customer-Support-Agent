@@ -1,0 +1,19 @@
+%% Source: epics/E03-website-chat.md - US-020 — Administrator configures the website widget
+sequenceDiagram
+    actor Admin
+    participant UI as Admin console
+    participant API as Support API
+    participant CH as Channel service
+    participant AG as Agent config service
+    participant DB as Postgres
+
+    Admin->>UI: create website channel
+    UI->>API: name, allowed origins, theme
+    API->>CH: create ChannelConnection for tenant
+    CH->>DB: save connection with generated public key
+    Admin->>UI: select published agent version
+    UI->>API: bind agent
+    API->>AG: create AgentDeployment (connection, version)
+    AG->>DB: save deployment
+    API-->>UI: embed snippet with public key
+    Note over API: audit event channel.configured

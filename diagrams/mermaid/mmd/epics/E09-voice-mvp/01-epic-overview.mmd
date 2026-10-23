@@ -1,0 +1,9 @@
+%% Source: epics/E09-voice-mvp.md - Epic overview
+flowchart LR
+    E09["E09 Voice MVP"] --> US80["US-080 Start and end session"]
+    E09 --> US81["US-081 Speak and hear response"]
+    E09 --> US82["US-082 Interrupt the AI"]
+    E09 --> US83["US-083 Switch text and voice"]
+    E09 --> US84["US-084 Agent takeover of voice"]
+    US80 --> US81 --> US82
+    US81 --> US83 --> US84

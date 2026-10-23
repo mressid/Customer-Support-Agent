@@ -1,0 +1,8 @@
+%% Source: epics/E05-ai-orchestration.md - Epic overview
+flowchart LR
+    E05["E05 AI orchestration"] --> US40["US-040 Process turn via versioned agent"]
+    E05 --> US41["US-041 Follow-up using context"]
+    E05 --> US42["US-042 Handle provider failure"]
+    E05 --> US43["US-043 Publish and roll back agent version"]
+    US43 --> US40 --> US41
+    US40 --> US42

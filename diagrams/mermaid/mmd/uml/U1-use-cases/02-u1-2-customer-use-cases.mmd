@@ -1,0 +1,30 @@
+%% Source: uml/U1-use-cases.md - U1.2 Customer use cases
+flowchart LR
+    C(["Customer"])
+    subgraph B["Customer-facing boundary"]
+        A1(["Open chat session"])
+        A2(["Send text message"])
+        A3(["Receive grounded answer"])
+        A4(["Look up order status"])
+        A5(["Verify identity"])
+        A6(["Request human agent"])
+        A7(["Start voice session"])
+        A8(["Interrupt assistant"])
+        A9(["Switch text and voice"])
+        A10(["Rate conversation"])
+        A11(["Resume after disconnect"])
+        A12(["Request data access or deletion"])
+    end
+    C --- A1
+    C --- A2
+    C --- A4
+    C --- A6
+    C --- A7
+    C --- A10
+    C --- A12
+    A2 -. include .-> A1
+    A3 -. extend .-> A2
+    A4 -. include .-> A5
+    A8 -. extend .-> A7
+    A9 -. extend .-> A7
+    A11 -. extend .-> A1

@@ -1,0 +1,12 @@
+%% Source: epics/E01-tenant-and-access.md - Role assignment and revocation
+flowchart TD
+    A["Admin invites user with role"] --> B{"Caller has users.invite permission?"}
+    B -- No --> X["403"]
+    B -- Yes --> C{"Role exists in this organization?"}
+    C -- No --> Y["422 invalid role"]
+    C -- Yes --> D["Create invitation with expiry and single-use token"]
+    D --> E["User accepts"] --> F["Create Membership: user, org, role"]
+    F --> G["Session carries org and role claims, re-checked on every request"]
+    H["Admin revokes membership"] --> I["Mark membership revoked, invalidate sessions and tokens"]
+    I --> J["Next request: permission check fails, access lost"]
+    I --> K["Audit event membership.revoked"]

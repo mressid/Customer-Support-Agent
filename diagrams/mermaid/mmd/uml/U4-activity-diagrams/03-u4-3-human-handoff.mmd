@@ -1,0 +1,33 @@
+%% Source: uml/U4-activity-diagrams.md - U4.3 Human handoff
+flowchart TB
+    s((Start)) --> t1
+    subgraph Trigger
+        t1{"Handoff trigger"}
+    end
+    subgraph AI_Engine["AI Engine"]
+        a1["Pause AI replies"]
+        a2["Build bundle and summary"]
+        a3["Tell customer status"]
+    end
+    subgraph Routing
+        r1["Select queue by rules"]
+        r2{"Business hours?"}
+        r3["Start SLA clock"]
+        r4["Offer ticket or callback"]
+    end
+    subgraph Agent
+        g1["Claim item"]
+        g2{"Claim succeeded?"}
+        g3["Read bundle"]
+        g4["Converse and act"]
+        g5{"Return to AI?"}
+        g6["Release to AI"]
+        g7["Resolve"]
+    end
+    t1 -- "customer request, policy, tool failure, low confidence" --> a1 --> a2 --> a3 --> r1 --> r2
+    r2 -- yes --> r3 --> g1 --> g2
+    r2 -- no --> r4 --> e(((End)))
+    g2 -- no --> g1
+    g2 -- yes --> g3 --> g4 --> g5
+    g5 -- yes --> g6 --> e
+    g5 -- no --> g7 --> e

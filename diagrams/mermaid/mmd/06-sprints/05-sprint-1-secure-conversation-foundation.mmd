@@ -1,0 +1,13 @@
+%% Source: 06-sprints.md - Sprint 1 — Secure conversation foundation
+flowchart TD
+    G1(["Goal: tenant-scoped conversation and message created, persisted, retrieved"])
+    G1 --> U1["US-001 Organization foundation"]
+    G1 --> U3["US-003 Tenant isolation test foundation"]
+    G1 --> U10["US-010 Conversation creation"]
+    G1 --> U11["US-011 Text message persistence"]
+    G1 --> C1["Audit and correlation ID conventions"]
+    U1 --> U10 --> U11
+    U1 --> U3
+    U11 --> DEMO["Demo: create, append, fetch timeline, prove cross-tenant denied"]
+    U3 --> DEMO
+    C1 --> DEMO

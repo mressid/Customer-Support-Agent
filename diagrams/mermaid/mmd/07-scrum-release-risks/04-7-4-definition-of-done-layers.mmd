@@ -1,0 +1,34 @@
+%% Source: 07-scrum-release-risks.md - 7.4 Definition of Done layers
+flowchart TB
+    subgraph Base["Base DoD"]
+        b1["Acceptance criteria met"]
+        b2["Code reviewed, module boundaries respected"]
+        b3["Automated tests incl. failure cases"]
+        b4["Tenant isolation and authorization tested"]
+        b5["Validation and error handling"]
+        b6["Migrations reviewed and repeatable"]
+        b7["Safe correlation fields in telemetry, redaction"]
+        b8["Docs and contracts updated"]
+        b9["No unaccepted critical or high defects"]
+        b10["Rollback or feature flag understood"]
+        b11["Product Owner can inspect behavior"]
+    end
+    subgraph AI["AI add-on"]
+        a1["Model and prompt version identifiable"]
+        a2["Tool schemas validated, permissions in code"]
+        a3["Retrieval tenant scoped"]
+        a4["Empty retrieval and uncertainty paths tested"]
+        a5["Regression example added"]
+        a6["No secrets or hidden reasoning in logs"]
+    end
+    subgraph Voice["Voice add-on"]
+        v1["Mic permission and active state clear"]
+        v2["Cleanup on disconnect"]
+        v3["Interruption tested"]
+        v4["Transcript finalization and ordering tested"]
+        v5["Audio and transcript retention per policy"]
+        v6["Latency and failure metrics emitted"]
+    end
+    Base --> DONE(["Done"])
+    AI -->|"if AI-related"| DONE
+    Voice -->|"if voice-related"| DONE

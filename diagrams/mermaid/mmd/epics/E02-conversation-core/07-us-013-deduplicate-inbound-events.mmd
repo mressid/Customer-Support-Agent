@@ -1,0 +1,10 @@
+%% Source: epics/E02-conversation-core.md - US-013 — Deduplicate inbound events
+flowchart TD
+    A["Inbound event arrives"] --> B["Compute key: connection id + provider_event_id"]
+    B --> C["INSERT into inbound inbox with unique constraint"]
+    C --> D{"Unique violation?"}
+    D -- Yes --> E["Return previous result 200: no new message"]
+    D -- No --> F["Process event"]
+    F --> G["Create message"]
+    G --> H["Mark inbox row processed"]
+    F -. crash before mark .-> I["Retry picks up row: message insert is idempotent on provider_event_id"]

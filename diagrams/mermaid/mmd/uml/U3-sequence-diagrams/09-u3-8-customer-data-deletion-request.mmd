@@ -1,0 +1,20 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.8 Customer data deletion request
+sequenceDiagram
+    actor C as Customer
+    participant API as Support API
+    participant ID as Identity service
+    participant PR as Privacy service
+    participant DB as Database
+    participant OS as Object storage
+    participant VI as Vector index
+    participant AUD as Audit
+
+    C->>API: request deletion
+    API->>ID: verify identity
+    ID-->>API: verified
+    API->>PR: create DeletionRequest
+    PR->>DB: delete or redact messages, transcripts
+    PR->>OS: delete attachments, audio refs
+    PR->>VI: delete derived embeddings if any
+    PR->>AUD: record request and completion (no personal data)
+    PR-->>C: confirmation

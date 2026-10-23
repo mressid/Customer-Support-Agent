@@ -1,0 +1,103 @@
+\chapter{Release Goals, Risks and Decision Log}
+
+\section{Release goals}
+
+\subsection{R1 --- Text support MVP}
+
+\textbf{Outcome:} website visitor receives knowledge-grounded answers, one read-only business lookup is available, and human handoff preserves context.
+
+Exit criteria:
+
+\begin{itemize}
+\item tenant isolation tests pass;
+\item inbound messages are deduplicated;
+\item unknown/unsupported questions have safe fallback;
+\item tool calls are allowlisted, authorized, and audited;
+\item human can take over;
+\item core API/worker telemetry is available;
+\item evaluation suite has no unresolved critical policy failure.
+\end{itemize}
+\mmdfig{07-scrum-release-risks/05-release-1-text-mvp}{Release 1 exit criteria}{fig:07-scrum-release-risks-05-release-1-text-mvp-87}
+
+
+\subsection{R2 --- Voice MVP}
+
+\textbf{Outcome:} customer can speak with the same AI engine and see a coherent transcript.
+
+Exit criteria:
+
+\begin{itemize}
+\item session start/stop and cleanup are reliable;
+\item transcript finalization and ordering work;
+\item interruption behavior is tested;
+\item audio/transcript privacy policy is implemented;
+\item latency/cost metrics are visible;
+\item human handoff behavior is validated for the selected provider.
+\end{itemize}
+\mmdfig{07-scrum-release-risks/06-release-2-voice-mvp}{Release 2 exit criteria}{fig:07-scrum-release-risks-06-release-2-voice-mvp-88}
+
+
+\subsection{R3 --- Operational expansion}
+
+\textbf{Outcome:} support teams can scale operations with workflows, routing, additional channels and stronger evaluation.
+
+\section{Initial risks}
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.338\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.257\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.405\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{Risk} & \textbf{Impact} & \textbf{Mitigation} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Prompt injection via customer or retrieved content & Unauthorized or incorrect actions & Tool allowlist, server authorization, untrusted-content boundaries, adversarial tests \\
+Tenant data leakage in retrieval & Severe privacy/security issue & Tenant-scoped indexes/filters, access tests, per-tenant metadata and object controls \\
+LLM latency/cost & Poor customer experience and high cost & Budgets, timeouts, model routing, caching only safe content, measurement \\
+Duplicate webhook or tool execution & Duplicate messages/actions & Durable inbox, idempotency keys, deduplication \\
+Voice interruption/transcript race & Confusing conversation history & Sequence IDs, finalized vs partial states, cancellation semantics \\
+Provider lock-in & Cost and migration risk & Provider adapters, normalized contracts, contract tests \\
+AI gives unsupported answer & Loss of trust & Retrieval evaluation, evidence thresholds, safe fallback and handoff \\
+Scope too broad & Delayed first usable product & Text MVP vertical slice, ordered backlog, defer nonessential channels \\
+\end{longtable}
+}
+
+\mmdfig{07-scrum-release-risks/08-7-7-risk-map}{Risk map}{fig:07-scrum-release-risks-08-7-7-risk-map-89}
+
+
+\section{Architecture decision records to create}
+
+\begin{itemize}
+\item ADR-001: Modular monolith boundaries and package ownership
+\item ADR-002: Relational database and tenant isolation strategy
+\item ADR-003: Queue and outbox/inbox strategy
+\item ADR-004: Knowledge ingestion and vector/search technology
+\item ADR-005: LLM provider abstraction and data policy
+\item ADR-006: Voice strategy: modular STT/TTS versus speech-to-speech
+\item ADR-007: Browser voice transport and telephony provider
+\item ADR-008: Transcript/audio retention and consent
+\item ADR-009: Authentication and customer verification
+\item ADR-010: Tool authorization and approval model
+\end{itemize}
+\mmdfigL{07-scrum-release-risks/09-7-8-adr-dependency-order}{ADR dependency order}{fig:07-scrum-release-risks-09-7-8-adr-dependency-order-90}
+
+
+\section{Decisions not to make prematurely}
+
+\begin{itemize}
+\item One microservice per module
+\item A universal workflow builder before core support works
+\item Multiple speech providers before the first voice use case is validated
+\item Autonomous write access to every customer system
+\item Permanent raw audio retention
+\item Complex subscription/billing before pricing and usage requirements are known
+\end{itemize}
+\mmdfig{07-scrum-release-risks/10-7-9-decisions-to-defer}{Decisions to defer}{fig:07-scrum-release-risks-10-7-9-decisions-to-defer-91}
+
+
+\mmdfig{07-scrum-release-risks/07-7-6-rollout-and-rollback}{Rollout and rollback}{fig:07-scrum-release-risks-07-7-6-rollout-and-rollback-92}
+
+
+\mmdfig{scrum-existing/S5-scrum-mermaid-artifacts/06-6-release-acceptance-flow}{Release acceptance flow}{fig:rum-mermaid-artifacts-06-6-release-acceptance-flow-93}
+
+

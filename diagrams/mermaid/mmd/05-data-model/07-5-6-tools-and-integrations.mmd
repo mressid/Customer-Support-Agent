@@ -1,0 +1,28 @@
+%% Source: 05-data-model.md - 5.6 Tools and integrations
+erDiagram
+    TOOL_DEFINITION ||--o{ TOOL_VERSION : versions
+    TOOL_VERSION ||--o{ TOOL_EXECUTION : executes
+    CONVERSATION ||--o{ TOOL_EXECUTION : invokes
+    TOOL_EXECUTION ||--o| ACTION_APPROVAL : may_need
+    TOOL_VERSION }o--|| CONNECTOR_DEFINITION : backed_by
+    ORGANIZATION ||--o{ INTEGRATION : configures
+    INTEGRATION }o--|| CONNECTOR_DEFINITION : instance_of
+    INTEGRATION ||--|| INTEGRATION_CREDENTIAL_REFERENCE : uses
+    INTEGRATION ||--o{ INTEGRATION_EVENT : emits
+
+    TOOL_VERSION {
+        uuid id PK
+        string name
+        int version
+        json input_schema
+        json output_schema
+        string risk_level
+    }
+    TOOL_EXECUTION {
+        uuid id PK
+        uuid tool_version_id FK
+        string idempotency_key UK
+        string status
+        json redacted_arguments
+        timestamp started_at
+    }

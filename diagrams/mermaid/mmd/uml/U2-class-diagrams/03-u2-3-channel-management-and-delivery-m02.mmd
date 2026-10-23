@@ -1,0 +1,58 @@
+%% Source: uml/U2-class-diagrams.md - U2.3 Channel management and delivery (M02)
+classDiagram
+    class ChannelConnection {
+        +UUID id
+        +String provider
+        +String publicKey
+        +List~String~ allowedOrigins
+        +bool enabled
+    }
+    class InboundEvent {
+        +String providerEventId
+        +ProcessingState state
+        +DateTime receivedAt
+    }
+    class OutboundDelivery {
+        +UUID id
+        +DeliveryState state
+        +int attempts
+        +String providerMessageId
+        +markSent()
+        +markDelivered()
+        +markFailed(reason)
+    }
+    class ChannelAdapter {
+        <<interface>>
+        +verifySignature(req) bool
+        +normalize(req) InboundEnvelope
+        +send(cmd) ProviderResult
+        +parseReceipt(req) DeliveryReceipt
+    }
+    class WebsiteChatAdapter
+    class EmailAdapter
+    class MessagingAdapter
+    class InboundEnvelope {
+        +String eventId
+        +UUID tenantId
+        +String providerEventId
+        +Customer identity
+        +MessageContent message
+        +DateTime occurredAt
+        +UUID correlationId
+    }
+    class WebhookController {
+        +handle(req) HttpResponse
+    }
+    class DeliveryWorker {
+        +dispatch(delivery)
+        +retry(delivery)
+    }
+    ChannelAdapter <|.. WebsiteChatAdapter
+    ChannelAdapter <|.. EmailAdapter
+    ChannelAdapter <|.. MessagingAdapter
+    ChannelConnection "1" --> "*" InboundEvent
+    ChannelConnection "1" --> "*" OutboundDelivery
+    WebhookController ..> ChannelAdapter : uses
+    WebhookController ..> InboundEnvelope : creates
+    DeliveryWorker ..> ChannelAdapter : calls
+    DeliveryWorker ..> OutboundDelivery : updates

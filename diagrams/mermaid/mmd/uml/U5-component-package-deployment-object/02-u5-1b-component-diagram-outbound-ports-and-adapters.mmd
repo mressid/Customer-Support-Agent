@@ -1,0 +1,14 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.1b Component diagram: outbound ports and adapters
+flowchart LR
+    AI["AI Engine"] -.-> PLLM["ModelProvider port"]
+    AI -.-> PSP["SpeechProvider port"]
+    TL["Tool component"] -.-> PCN["Connector port"]
+    TL -.-> PSM["SecretManager port"]
+    KB["Knowledge component"] -.-> PVS["VectorIndex port"]
+    CV["Conversation component"] -.-> PQ["Queue port"]
+    PLLM --> A1["LLM adapters"]
+    PSP --> A2["Speech adapters"]
+    PCN --> A3["Business connectors"]
+    PSM --> A4["Secret manager adapter"]
+    PVS --> A5["Vector store adapter"]
+    PQ --> A6["Queue adapter"]

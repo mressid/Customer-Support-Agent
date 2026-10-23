@@ -1,0 +1,36 @@
+%% Source: uml/U2-class-diagrams.md - U2.4b Agent configuration and versions (M19)
+classDiagram
+    class AgentConfiguration {
+        +UUID id
+        +String name
+        +publish(draft) AgentVersion
+    }
+    class AgentVersion {
+        +UUID id
+        +int number
+        +String instructions
+        +bool immutable
+        +allowsTool(name) bool
+    }
+    class AgentDeployment {
+        +UUID channelConnectionId
+        +activate(version)
+        +rollback()
+    }
+    class AgentPolicy {
+        +String rule
+        +PolicyAction action
+    }
+    class ModelConfiguration {
+        +String model
+        +float temperature
+        +int maxTokens
+    }
+    class ToolVersion
+    class KnowledgeSource
+    AgentConfiguration "1" --> "*" AgentVersion
+    AgentVersion "1" --> "*" AgentDeployment
+    AgentVersion "1" --> "*" AgentPolicy
+    AgentVersion --> ModelConfiguration
+    AgentVersion "*" --> "*" ToolVersion : allowlist
+    AgentVersion "*" --> "*" KnowledgeSource : assigned

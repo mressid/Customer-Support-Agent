@@ -1,0 +1,153 @@
+\chapter{AI Conversation Engine}
+
+\section{Responsibilities}
+
+The engine processes one customer turn and chooses among:
+
+\begin{itemize}
+\item answer from approved knowledge;
+\item ask a clarifying question;
+\item invoke an allowed business tool;
+\item create/update a ticket or workflow request;
+\item refuse or safely redirect a disallowed request;
+\item hand off to a human;
+\item recover from provider or tool failures.
+\end{itemize}
+\section{Recommended turn pipeline}
+
+\begin{enumerate}
+\item Resolve trusted tenant, conversation, customer identity, and active agent version.
+\item Check conversation state: open, closed, human-owned, rate-limited, or otherwise blocked.
+\item Build a minimal context window from recent messages, a safe summary, and relevant structured state.
+\item Classify intent/risk and identify missing information.
+\item Retrieve approved knowledge when useful.
+\item Plan the next step using only the agent's allowed tool registry.
+\item Validate any proposed tool call against a schema and policy.
+\item Execute authorized tool calls and validate returned data.
+\item Generate a customer-facing response using verified results and source context.
+\item Apply output safety and disclosure rules.
+\item Persist final message, citations, tool results, timing, usage, and outcome metadata.
+\item Emit events for delivery, evaluation, and analytics.
+\end{enumerate}
+\section{State machine}
+
+\section{Prompt/context construction}
+
+Use explicit, separately labeled context sections:
+
+\begin{itemize}
+\item system-level behavior and non-negotiable policies;
+\item organization-approved agent instructions;
+\item customer-visible conversation history;
+\item trusted application state;
+\item retrieved source passages with source IDs;
+\item tool descriptions and JSON schemas;
+\item output format requirements.
+\end{itemize}
+Treat customer text, documents, retrieved content, and tool results as untrusted data. Instructions embedded in a retrieved document must not override system policy or tool permissions.
+
+\section{Tool execution policy}
+
+\begin{itemize}
+\item Allowlist tools per agent version and tenant.
+\item Validate argument schema before execution.
+\item Check tenant scope and user/customer authorization.
+\item Require confirmation or human approval for sensitive actions.
+\item Use idempotency keys for non-idempotent external operations where supported.
+\item Apply timeout, retry, and rate-limit policies.
+\item Return minimal, typed results to the model.
+\item Redact secrets and unnecessary personal data.
+\item Record outcome and audit metadata.
+\end{itemize}
+\section{Response policy}
+
+\begin{itemize}
+\item Do not fabricate order status, account data, policies, or actions.
+\item Distinguish retrieved policy from live transactional data.
+\item If evidence is missing or contradictory, ask a question or escalate.
+\item Do not claim an action succeeded until the tool confirms success.
+\item Keep customer-facing responses concise and understandable.
+\item Support language selection and text/audio rendering separately from reasoning.
+\end{itemize}
+\section{Model-provider interface}
+
+Conceptual interface:
+
+\begin{itemize}
+\item \code{generate\_\allowbreak{}response(input, output\_\allowbreak{}schema, options)}
+\item \code{stream\_\allowbreak{}response(input, options)}
+\item \code{classify(input, taxonomy, options)}
+\item \code{embed(texts, model\_\allowbreak{}configuration)}
+\item optional \code{open\_\allowbreak{}realtime\_\allowbreak{}session(configuration)}
+\end{itemize}
+Keep vendor-specific request/response shapes in adapters. Capture model name/version, latency, usage, and provider errors without storing secrets.
+
+\section{AI engine diagrams}
+\Needspace{176pt}
+\subsection{Turn pipeline overview}
+
+\mmdfig{03-ai-engine/01-3-1-turn-pipeline-overview}{Turn pipeline overview}{fig:03-ai-engine-01-3-1-turn-pipeline-overview-143}
+
+
+\mmdfigLH{\subsubsection{Phase 1 --- Prepare (resolve trust, check state, build context)}
+}{03-ai-engine/02-phase-1-prepare-resolve-trust-check-state-build-context}{Turn pipeline overview: Phase 1 --- Prepare (resolve trust, check state, build context)}{fig:-1-prepare-resolve-trust-check-state-build-context-144}
+
+
+\Needspace{640pt}
+\subsubsection{Phase 2 --- Understand and retrieve}
+
+\mmdfig{03-ai-engine/03-phase-2-understand-and-retrieve}{Turn pipeline overview: Phase 2 --- Understand and retrieve}{fig:03-ai-engine-03-phase-2-understand-and-retrieve-145}
+
+
+\Needspace{410pt}
+\subsubsection{Phase 3 --- Plan and act (tool loop)}
+
+\mmdfig{03-ai-engine/04-phase-3-plan-and-act-tool-loop}{Turn pipeline overview: Phase 3 --- Plan and act (tool loop)}{fig:03-ai-engine-04-phase-3-plan-and-act-tool-loop-146}
+
+
+\Needspace{449pt}
+\subsubsection{Phase 4 --- Respond and persist}
+
+\mmdfig{03-ai-engine/05-phase-4-respond-and-persist}{Turn pipeline overview: Phase 4 --- Respond and persist}{fig:03-ai-engine-05-phase-4-respond-and-persist-147}
+
+
+\Needspace{617pt}
+\subsection{Turn state machine}
+
+\mmdfig{03-ai-engine/06-3-2-turn-state-machine}{Turn state machine}{fig:03-ai-engine-06-3-2-turn-state-machine-148}
+
+
+\Needspace{633pt}
+\subsection{Context sections and trust levels}
+
+\mmdfig{03-ai-engine/07-3-3-context-sections-and-trust-levels}{Context sections and trust levels}{fig:ai-engine-07-3-3-context-sections-and-trust-levels-149}
+
+
+\Needspace{389pt}
+\subsection{Escalation decision tree}
+
+\mmdfig{03-ai-engine/08-3-4-escalation-decision-tree}{Escalation decision tree}{fig:03-ai-engine-08-3-4-escalation-decision-tree-150}
+
+
+\Needspace{540pt}
+\subsection{Response policy decision}
+
+\mmdfig{03-ai-engine/09-3-5-response-policy-decision}{Response policy decision}{fig:03-ai-engine-09-3-5-response-policy-decision-151}
+
+
+\Needspace{225pt}
+\subsection{Model-provider adapter}
+
+\mmdfig{03-ai-engine/10-3-6-model-provider-adapter}{Model-provider adapter}{fig:03-ai-engine-10-3-6-model-provider-adapter-152}
+
+
+\Needspace{534pt}
+\subsection{Agent version lifecycle (publish, rollback)}
+
+\mmdfig{03-ai-engine/11-3-7-agent-version-lifecycle-publish-rollback}{Agent version lifecycle (publish, rollback)}{fig:ne-11-3-7-agent-version-lifecycle-publish-rollback-153}
+
+
+\mmdfigLH{\subsection{Failure handling inside a turn}
+}{03-ai-engine/12-3-8-failure-handling-inside-a-turn}{Failure handling inside a turn}{fig:03-ai-engine-12-3-8-failure-handling-inside-a-turn-154}
+
+

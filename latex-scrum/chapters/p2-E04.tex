@@ -1,0 +1,76 @@
+\chapter{E04 --- Knowledge Ingestion and RAG}
+
+Goal: ground answers in organization-approved sources. Module: M05.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-030 & As an administrator, I can register and upload a knowledge source. & S3 \\
+US-031 & As a system, I can parse, chunk, embed, and index a document asynchronously. & S3 \\
+US-032 & As an AI agent, I can retrieve relevant chunks for a question. & S3 \\
+US-033 & As a customer, I receive a grounded answer or a clear fallback. & S4 \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E04-knowledge-and-rag/01-epic-overview}{E04: Epic overview}{fig:epics-e04-knowledge-and-rag-01-epic-overview-29}
+
+
+\Needspace{640pt}
+\section{US-030 --- Register and upload a knowledge source}
+
+\begin{storybox}{User story US-030}
+\textbf{Story.} As an administrator, I can register and upload a knowledge source.\par
+\textbf{Acceptance.} file limits and type checks are enforced; ingestion state is visible.
+\end{storybox}
+
+\mmdfig{epics/E04-knowledge-and-rag/02-us-030-register-and-upload-a-knowledge-source}{E04: US-030 --- Register and upload a knowledge source}{fig:g-02-us-030-register-and-upload-a-knowledge-source-30}
+
+
+\mmdfigLH{\section{US-031 --- Parse, chunk, embed and index asynchronously}
+
+\begin{storybox}{User story US-031}
+\textbf{Story.} As a system, I can parse, chunk, embed, and index a document asynchronously.\par
+\textbf{Acceptance.} failed ingestion can be retried; document version is traceable.
+\end{storybox}
+
+\subsection{Pipeline}
+}{epics/E04-knowledge-and-rag/03-pipeline}{E04: US-031 --- Parse, chunk, embed and index asynchronously: Pipeline}{fig:epics-e04-knowledge-and-rag-03-pipeline-31}
+
+
+\Needspace{622pt}
+\subsection{Ingestion state machine}
+
+\mmdfig{epics/E04-knowledge-and-rag/04-ingestion-state-machine}{E04: US-031 --- Parse, chunk, embed and index asynchronously: Ingestion state machine}{fig:s-e04-knowledge-and-rag-04-ingestion-state-machine-32}
+
+
+\mmdfigLH{\subsection{Deletion and freshness propagation}
+}{epics/E04-knowledge-and-rag/05-deletion-and-freshness-propagation}{E04: US-031 --- Parse, chunk, embed and index asynchronously: Deletion and freshness propagation}{fig:edge-and-rag-05-deletion-and-freshness-propagation-33}
+
+
+\mmdfigLH{\section{US-032 --- Retrieve relevant chunks}
+
+\begin{storybox}{User story US-032}
+\textbf{Story.} As an AI agent, I can retrieve relevant chunks for a question.\par
+\textbf{Acceptance.} results are tenant-filtered and include source metadata.
+\end{storybox}
+}{epics/E04-knowledge-and-rag/06-us-032-retrieve-relevant-chunks}{E04: US-032 --- Retrieve relevant chunks}{fig:owledge-and-rag-06-us-032-retrieve-relevant-chunks-34}
+
+
+\Needspace{640pt}
+\section{US-033 --- Grounded answer or clear fallback}
+
+\begin{storybox}{User story US-033}
+\textbf{Story.} As a customer, I receive a grounded answer or a clear fallback.\par
+\textbf{Acceptance.} answer is not represented as sourced when retrieval returns no useful evidence.
+\end{storybox}
+
+\mmdfig{epics/E04-knowledge-and-rag/07-us-033-grounded-answer-or-clear-fallback}{E04: US-033 --- Grounded answer or clear fallback}{fig:nd-rag-07-us-033-grounded-answer-or-clear-fallback-35}
+
+

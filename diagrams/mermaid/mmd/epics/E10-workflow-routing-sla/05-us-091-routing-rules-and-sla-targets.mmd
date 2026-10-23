@@ -1,0 +1,13 @@
+%% Source: epics/E10-workflow-routing-sla.md - US-091 — Routing rules and SLA targets
+flowchart TD
+    A["Handoff or ticket needs a queue"] --> B["Load rules ordered by priority, then id"]
+    B --> C{"Rule 1 matches? channel, topic, language, tier"}
+    C -- Yes --> Q["Select queue of rule 1"]
+    C -- No --> D{"Rule 2 matches?"}
+    D -- Yes --> Q2["Select queue of rule 2"]
+    D -- No --> E{"More rules?"}
+    E -- Yes --> D
+    E -- No --> F["Fallback default queue"]
+    Q & Q2 & F --> G{"Within business hours schedule?"}
+    G -- Yes --> H["Start SLA clock with response and resolution targets"]
+    G -- No --> I["Queue, clock starts at next open time"]

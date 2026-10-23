@@ -1,0 +1,33 @@
+%% Source: 05-data-model.md - 5.2 Customer and channel
+erDiagram
+    ORGANIZATION ||--o{ CUSTOMER : owns
+    ORGANIZATION ||--o{ CHANNEL_CONNECTION : configures
+    CUSTOMER ||--o{ CUSTOMER_IDENTITY : has
+    CUSTOMER ||--o{ CUSTOMER_CONTACT : has
+    CUSTOMER ||--o{ CUSTOMER_CONSENT : records
+    CHANNEL_CONNECTION ||--o{ CHANNEL_IDENTITY : maps
+    CHANNEL_IDENTITY }o--|| CUSTOMER_IDENTITY : links
+    CHANNEL_CONNECTION ||--o{ INBOUND_EVENT : receives
+    CHANNEL_CONNECTION ||--o{ OUTBOUND_DELIVERY : sends
+
+    CUSTOMER_IDENTITY {
+        uuid id PK
+        uuid customer_id FK
+        string provider
+        string provider_identity_id
+        string verification_level
+    }
+    INBOUND_EVENT {
+        uuid id PK
+        uuid channel_connection_id FK
+        string provider_event_id UK
+        string processing_state
+        timestamp received_at
+    }
+    OUTBOUND_DELIVERY {
+        uuid id PK
+        uuid message_id FK
+        string state
+        int attempts
+        string provider_message_id
+    }

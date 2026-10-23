@@ -1,0 +1,67 @@
+%% Source: uml/U2-class-diagrams.md - U2.8 Voice and speech (M07, M08, M09)
+classDiagram
+    class VoiceSession {
+        +UUID id
+        +VoiceState state
+        +DateTime startedAt
+        +start()
+        +end(reason)
+        +reconnect()
+        +onBargeIn()
+    }
+    class VoiceSessionEvent {
+        +String type
+        +DateTime at
+    }
+    class MediaTransport {
+        <<interface>>
+        +connect(credentials)
+        +sendAudio(frame)
+        +close()
+    }
+    class WebRtcTransport
+    class WebSocketTransport
+    class SpeechProvider {
+        <<interface>>
+        +openStream(cfg) SpeechStream
+    }
+    class SttEngine {
+        <<interface>>
+        +transcribe(stream) Stream~TranscriptEvent~
+    }
+    class TtsEngine {
+        <<interface>>
+        +synthesize(text, voice) Stream~Audio~
+        +cancel()
+    }
+    class SpeechToSpeechEngine {
+        <<interface>>
+        +open(session) RealtimeSession
+    }
+    class SpeechConfiguration {
+        +String language
+        +String voice
+        +Strategy strategy
+    }
+    class TranscriptSegment {
+        +long sequence
+        +SegmentState state
+        +float confidence
+        +String text
+    }
+    class TranscriptSynchronizer {
+        +onPartial(seg)
+        +onFinal(seg) Message
+        +onInterrupted(offset)
+    }
+    VoiceSession "1" --> "*" VoiceSessionEvent
+    VoiceSession "1" --> "*" TranscriptSegment
+    VoiceSession --> SpeechConfiguration
+    VoiceSession ..> MediaTransport
+    MediaTransport <|.. WebRtcTransport
+    MediaTransport <|.. WebSocketTransport
+    SpeechProvider ..> SttEngine
+    SpeechProvider ..> TtsEngine
+    SpeechProvider ..> SpeechToSpeechEngine
+    TranscriptSynchronizer --> TranscriptSegment
+    TranscriptSynchronizer ..> VoiceSession

@@ -1,0 +1,70 @@
+\chapter{E06 --- Safe Business Tools}
+
+Goal: let the AI invoke a small allowlisted set of operations. Modules: M06, M15. Full pipeline: see the cross-cutting flow diagrams sections 2.5 and 2.6.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-050 & As an administrator, I can enable a versioned tool for an agent. & S5 \\
+US-051 & As a customer, I can ask for an order status lookup. & S5 \\
+US-052 & As a system, I can safely handle tool timeout and duplicate requests. & Backlog \\
+US-053 & As a security reviewer, I can audit tool calls. & S5 \\
+\end{longtable}
+}
+
+\Needspace{172pt}
+\section{Epic overview}
+
+\mmdfig{epics/E06-safe-business-tools/01-epic-overview}{E06: Epic overview}{fig:epics-e06-safe-business-tools-01-epic-overview-41}
+
+
+\mmdfigLH{\section{Three-layer connector architecture}
+}{epics/E06-safe-business-tools/02-three-layer-connector-architecture}{E06: Three-layer connector architecture}{fig:siness-tools-02-three-layer-connector-architecture-42}
+
+
+\Needspace{640pt}
+\section{US-050 --- Enable a versioned tool for an agent}
+
+\begin{storybox}{User story US-050}
+\textbf{Story.} As an administrator, I can enable a versioned tool for an agent.\par
+\textbf{Acceptance.} tool must be allowlisted and schema-valid.
+\end{storybox}
+
+\mmdfig{epics/E06-safe-business-tools/03-us-050-enable-a-versioned-tool-for-an-agent}{E06: US-050 --- Enable a versioned tool for an agent}{fig:ols-03-us-050-enable-a-versioned-tool-for-an-agent-43}
+
+
+\mmdfigLH{\section{US-051 --- Customer asks for order status}
+
+\begin{storybox}{User story US-051}
+\textbf{Story.} As a customer, I can ask for an order status lookup.\par
+\textbf{Acceptance.} customer verification and tenant scope are checked; result is typed and minimal.
+\end{storybox}
+}{epics/E06-safe-business-tools/04-us-051-customer-asks-for-order-status}{E06: US-051 --- Customer asks for order status}{fig:ess-tools-04-us-051-customer-asks-for-order-status-44}
+
+
+\Needspace{640pt}
+\section{US-052 --- Handle tool timeout and duplicate requests}
+
+\begin{storybox}{User story US-052}
+\textbf{Story.} As a system, I can safely handle tool timeout and duplicate requests.\par
+\textbf{Acceptance.} idempotency behavior is defined; unknown write outcome is not blindly retried.
+\end{storybox}
+
+\mmdfig{epics/E06-safe-business-tools/05-us-052-handle-tool-timeout-and-duplicate-requests}{E06: US-052 --- Handle tool timeout and duplicate requests}{fig:-us-052-handle-tool-timeout-and-duplicate-requests-45}
+
+
+\mmdfigLH{\section{US-053 --- Audit tool calls}
+
+\begin{storybox}{User story US-053}
+\textbf{Story.} As a security reviewer, I can audit tool calls.\par
+\textbf{Acceptance.} actor, tool/version, outcome, timestamp and correlation ID are available with sensitive values redacted.
+\end{storybox}
+}{epics/E06-safe-business-tools/06-us-053-audit-tool-calls}{E06: US-053 --- Audit tool calls}{fig:e06-safe-business-tools-06-us-053-audit-tool-calls-46}
+
+

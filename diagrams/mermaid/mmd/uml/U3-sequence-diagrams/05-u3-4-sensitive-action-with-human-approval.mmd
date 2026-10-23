@@ -1,0 +1,24 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.4 Sensitive action with human approval
+sequenceDiagram
+    actor C as Customer
+    participant AI as AI Engine
+    participant TS as Tool Service
+    participant APP as Approval service
+    actor H as Human approver
+    participant EX as Business API
+    participant AUD as Audit
+
+    C->>AI: request address change
+    AI->>TS: accounts.update_address (sensitive write)
+    TS->>TS: validate, authorize, risk=sensitive
+    TS->>APP: create ActionApproval pending
+    TS-->>AI: awaiting_approval
+    AI-->>C: "I have asked a colleague to confirm this."
+    APP->>H: notify with redacted details
+    H->>APP: approve
+    APP->>TS: approved
+    TS->>EX: execute with idempotency key
+    EX-->>TS: success
+    TS->>AUD: record actor, approver, outcome
+    TS-->>AI: succeeded
+    AI-->>C: confirm only now

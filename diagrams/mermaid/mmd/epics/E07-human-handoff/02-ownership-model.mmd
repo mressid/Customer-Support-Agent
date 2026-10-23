@@ -1,0 +1,14 @@
+%% Source: epics/E07-human-handoff.md - Ownership model
+stateDiagram-v2
+    [*] --> AiOwned
+    AiOwned --> HandoffRequested: customer asks or policy triggers
+    HandoffRequested --> Queued: bundle prepared
+    Queued --> Claimed: agent claims (optimistic lock)
+    Claimed --> HumanOwned: AI paused
+    HumanOwned --> Released: agent returns to AI
+    Released --> AiOwned
+    HumanOwned --> Resolved
+    Queued --> Queued: reassigned
+    Queued --> Abandoned: customer left
+    Resolved --> [*]
+    Abandoned --> [*]

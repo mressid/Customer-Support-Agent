@@ -1,0 +1,35 @@
+%% Source: 05-data-model.md - 5.3 Conversation
+erDiagram
+    CONVERSATION ||--o{ CONVERSATION_PARTICIPANT : has
+    CONVERSATION ||--o{ CONVERSATION_TURN : contains
+    CONVERSATION ||--o{ MESSAGE : contains
+    CONVERSATION ||--o{ CONVERSATION_EVENT : logs
+    CONVERSATION_TURN ||--o{ MESSAGE : produces
+    MESSAGE ||--o{ MESSAGE_MEDIA_REFERENCE : attaches
+    CONVERSATION_TURN ||--o| AGENT_EXECUTION : handled_by
+
+    CONVERSATION {
+        uuid id PK
+        uuid organization_id FK
+        uuid customer_id FK
+        uuid channel_connection_id FK
+        string status
+        string owner_type
+        int version
+    }
+    MESSAGE {
+        uuid id PK
+        uuid conversation_id FK
+        string kind
+        string direction
+        string visibility
+        bigint sequence
+        text body
+        timestamp created_at
+    }
+    CONVERSATION_TURN {
+        uuid id PK
+        uuid conversation_id FK
+        int turn_number
+        string status
+    }

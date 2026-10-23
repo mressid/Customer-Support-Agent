@@ -1,0 +1,11 @@
+%% Source: epics/E03-website-chat.md - US-022 — Reconnect after temporary network failure
+stateDiagram-v2
+    [*] --> Connected
+    Connected --> Disconnected: network loss
+    Disconnected --> Reconnecting: backoff timer
+    Reconnecting --> Connected: token valid, resume
+    Reconnecting --> Refreshing: token expired but within resume window
+    Refreshing --> Connected: new token for same conversation
+    Reconnecting --> Disconnected: still offline
+    Refreshing --> NewConversation: resume window expired
+    NewConversation --> Connected

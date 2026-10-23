@@ -1,0 +1,16 @@
+%% Source: 02-cross-cutting-flows.md - 2.1 Inbound webhook handling
+flowchart TD
+    A["Provider webhook arrives"] --> B{"Signature and timestamp valid?"}
+    B -- No --> R1["Reject 401 and log SecurityEvent"]
+    B -- Yes --> C["Resolve channel connection from trusted endpoint config"]
+    C --> D{"Body size and schema within limits?"}
+    D -- No --> R2["Reject 413 or 422"]
+    D -- Yes --> E["Persist InboundEvent with provider_event_id"]
+    E --> F{"Duplicate provider_event_id?"}
+    F -- Yes --> G["Return 200 and skip processing"]
+    F -- No --> H["Commit durable acceptance"]
+    H --> I["Return 200 to provider"]
+    I --> J["Async job: normalize to canonical envelope"]
+    J --> K["Conversation service appends message"]
+    K --> L["Record processing state"]
+    J -. failure .-> M["Retry with backoff then dead-letter"]

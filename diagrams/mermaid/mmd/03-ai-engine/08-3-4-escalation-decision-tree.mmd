@@ -1,0 +1,15 @@
+%% Source: 03-ai-engine.md - 3.4 Escalation decision tree
+flowchart LR
+    S["Turn in progress"] --> C
+    subgraph C["Escalate if ANY condition holds"]
+        direction LR
+        a["Customer explicitly asks for a human"]
+        b["Policy requires escalation: sensitive topic, VIP, legal"]
+        c["Evidence missing or contradictory after clarification"]
+        d["Tool failed, retries exhausted or unknown write outcome"]
+        e["Repeated misunderstanding count above limit"]
+        f["AI or retrieval provider outage"]
+    end
+    C -- "any holds" --> H["Handoff"]
+    C -- "none holds" --> OK["AI continues"]
+    H --> R["Record reason code for metrics: escalation rate by reason"]

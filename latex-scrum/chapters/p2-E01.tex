@@ -1,0 +1,66 @@
+\chapter{E01 --- Tenant and Access Foundation}
+
+Goal: establish secure organization boundaries. Modules: M18, M20.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-001 & As an organization administrator, I can create/configure an organization so that resources have an owner. & S1 \\
+US-002 & As an administrator, I can invite users and assign roles. & Backlog \\
+US-003 & As a developer, I can test tenant isolation. & S1 \\
+\end{longtable}
+}
+
+\Needspace{201pt}
+\section{Epic overview}
+
+\mmdfig{epics/E01-tenant-and-access/01-epic-overview}{E01: Epic overview}{fig:epics-e01-tenant-and-access-01-epic-overview-10}
+
+
+\mmdfigLH{\section{US-001 --- Create and configure an organization}
+
+\begin{storybox}{User story US-001}
+\textbf{Story.} As an organization administrator, I can create/configure an organization so that resources have an owner.\par
+\textbf{Acceptance.} organization ID is generated; default settings exist; audit event is recorded.
+\end{storybox}
+}{epics/E01-tenant-and-access/02-us-001-create-and-configure-an-organization}{E01: US-001 --- Create and configure an organization}{fig:ess-02-us-001-create-and-configure-an-organization-11}
+
+
+\Needspace{406pt}
+\section{US-002 --- Invite users and assign roles}
+
+\begin{storybox}{User story US-002}
+\textbf{Story.} As an administrator, I can invite users and assign roles.\par
+\textbf{Acceptance.} invitation expires; role is validated server-side; revoked users lose access.
+\end{storybox}
+
+\subsection{Invitation lifecycle}
+
+\mmdfig{epics/E01-tenant-and-access/03-invitation-lifecycle}{E01: US-002 --- Invite users and assign roles: Invitation lifecycle}{fig:pics-e01-tenant-and-access-03-invitation-lifecycle-12}
+
+
+\Needspace{640pt}
+\subsection{Role assignment and revocation}
+
+\mmdfig{epics/E01-tenant-and-access/04-role-assignment-and-revocation}{E01: US-002 --- Invite users and assign roles: Role assignment and revocation}{fig:enant-and-access-04-role-assignment-and-revocation-13}
+
+
+\mmdfigLH{\section{US-003 --- Test tenant isolation}
+
+\begin{storybox}{User story US-003}
+\textbf{Story.} As a developer, I can test tenant isolation.\par
+\textbf{Acceptance.} cross-tenant read/write attempts are denied in automated tests.
+\end{storybox}
+}{epics/E01-tenant-and-access/05-us-003-test-tenant-isolation}{E01: US-003 --- Test tenant isolation}{fig:-tenant-and-access-05-us-003-test-tenant-isolation-14}
+
+
+\mmdfigLH{\subsection{Where tenant filtering is enforced}
+}{epics/E01-tenant-and-access/06-where-tenant-filtering-is-enforced}{E01: US-003 --- Test tenant isolation: Where tenant filtering is enforced}{fig:t-and-access-06-where-tenant-filtering-is-enforced-15}
+
+

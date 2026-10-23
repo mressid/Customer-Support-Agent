@@ -1,0 +1,19 @@
+%% Source: epics/E08-tickets.md - US-070 — Create a ticket from a conversation
+sequenceDiagram
+    actor Ag as Agent
+    participant API
+    participant TK as Ticket service
+    participant CV as Conversation service
+    participant DB as Postgres
+
+    Ag->>API: create ticket from conversation 42
+    API->>TK: create(title, priority, category, conversation id)
+    TK->>CV: verify conversation in same tenant
+    TK->>DB: BEGIN
+    TK->>DB: insert Ticket status=New
+    TK->>DB: insert link ticket to conversation
+    TK->>DB: insert TicketStatusHistory (null to New)
+    TK->>DB: insert outbox ticket.created
+    TK->>DB: COMMIT
+    TK-->>Ag: ticket id
+    Note over CV: conversation gets system_event ticket linked

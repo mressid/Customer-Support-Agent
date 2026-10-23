@@ -1,0 +1,30 @@
+%% Source: 01-architecture.md - 1.3 MVP deployable components
+flowchart LR
+    subgraph Clients
+        W["support-web-widget"]
+        C["support-agent-console"]
+    end
+    subgraph App["Modular monolith (one codebase)"]
+        A["support-api"]
+        K["support-worker"]
+    end
+    subgraph Data
+        PG[("postgres")]
+        OS[("object-storage")]
+        Q[["queue"]]
+        V[("vector-search")]
+    end
+    T["telemetry: logs, metrics, traces, alerts"]
+
+    W --> A
+    C --> A
+    A --> PG
+    A --> OS
+    A --> V
+    A --> Q
+    Q --> K
+    K --> PG
+    K --> OS
+    K --> V
+    A -.-> T
+    K -.-> T

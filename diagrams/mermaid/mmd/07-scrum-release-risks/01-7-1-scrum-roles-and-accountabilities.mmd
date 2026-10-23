@@ -1,0 +1,9 @@
+%% Source: 07-scrum-release-risks.md - 7.1 Scrum roles and accountabilities
+flowchart LR
+    PO["Product Owner<br/>value, goal, backlog order"] --> PB[("Product Backlog")]
+    SM["Scrum Master<br/>coaching, impediments"] -. coaches .-> DEV
+    DEV["Developers<br/>design, build, test, secure, operate"] --> INC["Increment"]
+    PB --> DEV
+    STK["Stakeholders: support, admins, security, business-system owners"] --> REV["Sprint Review"]
+    INC --> REV
+    REV --> PO

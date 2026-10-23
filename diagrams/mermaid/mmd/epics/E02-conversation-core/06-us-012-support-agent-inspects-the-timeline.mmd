@@ -1,0 +1,12 @@
+%% Source: epics/E02-conversation-core.md - US-012 — Support agent inspects the timeline
+flowchart TD
+    A["Agent opens conversation"] --> B{"Has conversation.read permission in tenant?"}
+    B -- No --> X["403"]
+    B -- Yes --> C["Load ordered items"]
+    C --> D{"Item kind"}
+    D -- "text, file, audio_reference" --> E["Show as customer or assistant bubble"]
+    D -- system_event --> F["Show as inline event: voice started, handoff"]
+    D -- internal_note --> G["Show only to agents with badge: not customer visible"]
+    D -- transcript_segment --> H["Show with modality icon"]
+    E & F & G & H --> I["Timeline view"]
+    I --> J["Customer widget query uses visibility=customer filter"]

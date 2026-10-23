@@ -1,0 +1,14 @@
+%% Source: uml/U3-sequence-diagrams.md - U3.1 Text MVP end to end: intake
+sequenceDiagram
+    autonumber
+    actor C as Customer
+    participant W as Widget
+    participant API as Support API
+    participant CV as Conversation
+    participant Q as Queue and Outbox
+
+    C->>W: type message
+    W->>API: POST message (session token)
+    API->>CV: append inbound (idempotent)
+    CV->>Q: outbox message.persisted, ai.turn.requested
+    API-->>W: 202 accepted

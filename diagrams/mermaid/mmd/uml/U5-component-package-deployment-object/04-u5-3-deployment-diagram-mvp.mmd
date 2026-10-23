@@ -1,0 +1,49 @@
+%% Source: uml/U5-component-package-deployment-object.md - U5.3 Deployment diagram — MVP
+flowchart TB
+    subgraph Browser["Customer browser"]
+        WG["support-web-widget"]
+    end
+    subgraph Staff["Staff browser"]
+        CON["support-agent-console"]
+    end
+    subgraph Edge["Edge node"]
+        GW["API gateway and rate limiting"]
+    end
+    subgraph AppNode["Application node (container)"]
+        API["support-api"]
+        WRK["support-worker"]
+    end
+    subgraph DataNode["Data services"]
+        PG[("postgres")]
+        OS[("object storage")]
+        VS[("vector search")]
+        QU[["queue"]]
+        SM{{"secret manager"}}
+    end
+    subgraph Ext["External providers"]
+        LLM["LLM API"]
+        SPC["Speech API"]
+        BIZ["Business APIs"]
+    end
+    subgraph Obs["Observability stack"]
+        TEL["logs, metrics, traces, alerts"]
+    end
+    WG -- HTTPS WSS --> GW
+    CON -- HTTPS --> GW
+    GW --> API
+    API --> PG
+    API --> QU
+    QU --> WRK
+    WRK --> PG
+    WRK --> OS
+    WRK --> VS
+    API --> VS
+    API --> OS
+    API --> SM
+    WRK --> SM
+    API -- HTTPS --> LLM
+    WRK -- HTTPS --> LLM
+    API -- HTTPS --> BIZ
+    API -- WebRTC or WSS --> SPC
+    API -.-> TEL
+    WRK -.-> TEL

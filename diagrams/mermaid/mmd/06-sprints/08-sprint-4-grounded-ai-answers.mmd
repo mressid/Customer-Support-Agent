@@ -1,0 +1,14 @@
+%% Source: 06-sprints.md - Sprint 4 — Grounded AI answers
+flowchart TD
+    G4(["Goal: chat answers common questions from approved knowledge, handles missing evidence"])
+    G4 --> U40["US-040 Turn orchestration"]
+    G4 --> U33["US-033 Grounded response or fallback"]
+    G4 --> U41["US-041 Follow-up context"]
+    G4 --> U42["US-042 Model failure handling"]
+    G4 --> EV["Minimal evaluation set and usage recording"]
+    U40 --> U33 --> U41
+    U40 --> U42
+    U33 --> DEMO["Demo: grounded FAQ, follow-up, unknown fallback, provider timeout"]
+    U41 --> DEMO
+    U42 --> DEMO
+    EV --> DEMO

@@ -1,0 +1,16 @@
+%% Source: epics/E07-human-handoff.md - US-063 — Support agent resolves the conversation
+sequenceDiagram
+    actor Ag as Agent
+    participant API
+    participant IN as Inbox
+    participant CV as Conversation
+    participant TK as Tickets
+    participant AUD as Audit
+
+    Ag->>API: resolve with outcome and note
+    API->>IN: close assignment
+    IN->>CV: set status Resolved, owner none
+    IN->>TK: link or update ticket if one exists
+    IN->>AUD: ownership change and resolution recorded
+    CV-->>Ag: done
+    Note over CV: new customer message later reopens conversation

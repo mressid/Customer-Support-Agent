@@ -1,0 +1,28 @@
+%% Source: 02-cross-cutting-flows.md - Part B: execution and result handling
+sequenceDiagram
+    participant AI as AI Engine
+    participant TS as Tool Execution Service
+    participant DB as Postgres
+    participant CN as Connector adapter
+    participant EXT as Business API
+
+    AI->>TS: ToolInvocation with idempotency_key
+    TS->>DB: insert ToolExecution status=running
+    Note over TS,DB: no DB transaction held during the external call
+    TS->>CN: execute with timeout
+    CN->>EXT: provider specific request
+    alt success
+        EXT-->>CN: response
+        CN-->>TS: normalized typed result
+        TS->>TS: validate output schema and redact
+        TS->>DB: status=succeeded, audit event
+        TS-->>AI: minimal typed result
+    else timeout on read
+        CN-->>TS: TIMEOUT
+        TS->>DB: status=failed retryable
+        TS-->>AI: error category
+    else timeout on write
+        CN-->>TS: UNKNOWN_OUTCOME
+        TS->>DB: status=unknown, flag for review
+        TS-->>AI: do not claim success
+    end

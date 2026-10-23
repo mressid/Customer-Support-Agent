@@ -1,0 +1,12 @@
+%% Source: 06-sprints.md - Sprint 8 — Voice synchronization and handoff
+flowchart TD
+    G8(["Goal: voice and text share one coherent timeline"])
+    G8 --> U82["US-082 Interruption"]
+    G8 --> U83["US-083 Modality switching"]
+    G8 --> U84["US-084 Voice handoff for chosen provider"]
+    G8 --> QA["Voice quality regression scenarios"]
+    G8 --> DB["Cost and latency dashboard"]
+    U82 --> U83 --> U84
+    U84 --> DEMO["Demo: speak, interrupt, type follow-up, transfer to human"]
+    QA --> DEMO
+    DB --> DEMO

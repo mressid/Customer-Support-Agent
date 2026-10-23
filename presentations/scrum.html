@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scrum plan - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+<link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
+<link rel="stylesheet" href="vendor/reveal/dist/theme/white.css">
+<link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+<!--ICON-SPRITE--><svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><symbol id="i-book-open-check" viewBox="0 0 24 24"><path d="M12 5v16" /> <path d="m16 12 2 2 4-4" /> <path d="M22 6V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2h4.001A2 2 0 0022 17v-1.344" /></symbol><symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8" /> <rect width="16" height="12" x="4" y="8" rx="2" /> <path d="M2 14h2" /> <path d="M20 14h2" /> <path d="M15 13v2" /> <path d="M9 13v2" /></symbol><symbol id="i-brain-circuit" viewBox="0 0 24 24"><path d="M12 13h4" /> <path d="M12 18h6a2 2 0 012 2v1" /> <path d="M12 8h8" /> <path d="M12 9a4.17 4.17 0 01-3 4" /> <path d="M16 8V5a2 2 0 012-2" /> <path d="M6 18a4 4 0 01-2-7.465" /> <path d="M6.004 5.125a4 4 0 00-2.526 5.77" /> <path d="M6.294 6.294A3 3 0 1112 5v13a4 4 0 11-7.967-.518" /> <circle cx="16" cy="13" r="0.5" fill="currentColor" /> <circle cx="18" cy="3" r="0.5" fill="currentColor" /> <circle cx="20" cy="21" r="0.5" fill="currentColor" /> <circle cx="20" cy="8" r="0.5" fill="currentColor" /></symbol><symbol id="i-building-2" viewBox="0 0 24 24"><path d="M10 12h4" /> <path d="M10 8h4" /> <path d="M14 21v-3a2 2 0 0 0-4 0v3" /> <path d="M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2" /> <path d="M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16" /></symbol><symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="m19 9-5 5-4-4-3 3" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m16 9-5.5 5.5L8 12" /></symbol><symbol id="i-circle-pause" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <line x1="10" x2="10" y1="15" y2="9" /> <line x1="14" x2="14" y1="15" y2="9" /></symbol><symbol id="i-code-xml" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4" /> <path d="m6 8-4 4 4 4" /> <path d="m14.5 4-5 16" /></symbol><symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z" /></symbol><symbol id="i-dice-5" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" ry="2" /> <path d="M16 8h.01" /> <path d="M8 8h.01" /> <path d="M8 16h.01" /> <path d="M16 16h.01" /> <path d="M12 12h.01" /></symbol><symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" /> <path d="M14 2v5a1 1 0 0 0 1 1h5" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol><symbol id="i-git-branch" viewBox="0 0 24 24"><path d="M15 6a9 9 0 0 0-9 9V3" /> <circle cx="18" cy="6" r="3" /> <circle cx="6" cy="18" r="3" /></symbol><symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /> <path d="M2 12h20" /></symbol><symbol id="i-hand-helping" viewBox="0 0 24 24"><path d="M11 12h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 14" /> <path d="m7 18 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" /> <path d="m2 13 6 6" /></symbol><symbol id="i-library" viewBox="0 0 24 24"><path d="m16 6 4 14" /> <path d="M12 6v14" /> <path d="M8 8v12" /> <path d="M4 4v16" /></symbol><symbol id="i-life-buoy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m4.93 4.93 4.24 4.24" /> <path d="m14.83 9.17 4.24-4.24" /> <path d="m14.83 14.83 4.24 4.24" /> <path d="m9.17 14.83-4.24 4.24" /> <circle cx="12" cy="12" r="4" /></symbol><symbol id="i-list-checks" viewBox="0 0 24 24"><path d="M13 5h8" /> <path d="M13 12h8" /> <path d="M13 19h8" /> <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /></symbol><symbol id="i-message-square" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" /></symbol><symbol id="i-messages-square" viewBox="0 0 24 24"><path d="M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" /> <path d="M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1" /></symbol><symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 19v3" /> <path d="M19 10v2a7 7 0 0 1-14 0v-2" /> <rect x="9" y="2" width="6" height="13" rx="3" /></symbol><symbol id="i-plug" viewBox="0 0 24 24"><path d="M12 22v-5" /> <path d="M15 8V2" /> <path d="M17 8a1 1 0 0 1 1 1v4a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1z" /> <path d="M9 8V2" /></symbol><symbol id="i-plug-zap" viewBox="0 0 24 24"><path d="M6.3 20.3a2.4 2.4 0 0 0 3.4 0L12 18l-6-6-2.3 2.3a2.4 2.4 0 0 0 0 3.4Z" /> <path d="m2 22 3-3" /> <path d="M7.5 13.5 10 11" /> <path d="M10.5 16.5 13 14" /> <path d="m18 3-4 4h6l-4 4" /></symbol><symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" /> <path d="M13 5v2" /> <path d="M13 17v2" /> <path d="M13 11v2" /></symbol><symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" /></symbol></svg><!--/ICON-SPRITE-->
+<div class="reveal"><div class="slides">
+
+<!-- 1 TITLE -->
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><div class="brandbar"><span class="logo-mark"><svg class="ico" aria-hidden="true"><use href="#i-message-square"/></svg></span><span>AI Customer Support Platform</span></div>
+    <div class="kicker">Scrum artifacts</div>
+    <h1>How we will build the AI Customer Support Platform</h1>
+    <p>Product Goal, backlog, Sprints, and what "done" means. Press <b>→</b> to start.</p>
+  </div>
+  <div class="hint">Space or arrows to move · Esc for overview · S for speaker notes · F for full screen · I for all decks</div>
+  <aside class="notes">Opening. This deck is the Scrum view of the project. A companion deck covers the product itself, and a third covers engineering. Everything here comes from the scrum/ folder of the project docs.</aside>
+</section>
+
+<!-- 2 PRODUCT GOAL -->
+<section data-chapter="Product Goal">
+  <div class="kicker">The one sentence everything serves</div>
+  <h2>Product Goal</h2>
+  <blockquote>A customer can contact an organization through <strong>website chat</strong>, receive <strong>accurate knowledge-grounded answers</strong>, complete at least one <strong>authorized read-only business lookup</strong>, and <strong>reach a human without losing context</strong>.</blockquote>
+  <p class="muted fragment fade-up">The architecture must be ready to add <strong>voice</strong> without duplicating business reasoning.</p>
+  <aside class="notes">The Product Goal is the long-term objective. Each Sprint Goal should move us toward it.</aside>
+</section>
+
+<!-- 3 WHY SCRUM -->
+<section data-chapter="Why Scrum">
+  <div class="kicker">Fit</div>
+  <h2>Why Scrum suits this product</h2>
+  <div class="grid g3">
+    <div class="card brand fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-dice-5"/></svg></div><h3>AI behaviour is uncertain</h3><p>We cannot predict answer quality on paper. Each Sprint ends with a demo and an evaluation run, so we inspect real behaviour.</p></div>
+    <div class="card amber fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-plug"/></svg></div><h3>Vendors drive risk</h3><p>Voice and business integrations depend on provider limits and credentials. Short Sprints and spikes expose that early.</p></div>
+    <div class="card accent fragment fade-up"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg></div><h3>Security is not a phase</h3><p>Tenant isolation, authorization and privacy are inside every Definition of Done, not a final checkpoint.</p></div>
+  </div>
+</section>
+
+<!-- 4 ROLES -->
+<section data-chapter="Team">
+  <div class="kicker">Accountabilities</div>
+  <h2>Three accountabilities, one team</h2>
+  <div class="grid g3">
+    <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-compass"/></svg></div><h3>Product Owner</h3><ul><li>Product value and Product Goal</li><li>Orders the Product Backlog</li><li>Accepts Sprint results</li></ul></div>
+    <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-life-buoy"/></svg></div><h3>Scrum Master</h3><ul><li>Coaches Scrum</li><li>Removes impediments</li><li>Helps the team improve</li></ul></div>
+    <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-code-xml"/></svg></div><h3>Developers</h3><ul><li>Cross-functional team</li><li>Design, build, test, integrate</li><li>Secure and operate the Increment</li></ul></div>
+  </div>
+  <p class="small muted fragment">Stakeholders: support teams, organization admins, customers, security and privacy, business-system owners. Roles may be held by a small team, but the accountabilities stay clear.</p>
+</section>
+
+<!-- 5 WORKFLOW DIAGRAM -->
+<section data-chapter="How work flows" data-transition="fade">
+  <h2>How work flows</h2>
+  <div class="split tight">
+    <ul>
+      <li class="fragment"><b>Refine</b> the Product Backlog all the time</li>
+      <li class="fragment"><b>Plan</b> a Sprint: one Sprint Goal, selected items</li>
+      <li class="fragment"><b>Build</b> until each item meets the Definition of Done</li>
+      <li class="fragment"><b>Review</b> the Increment with stakeholders, feed learning back into the backlog</li>
+      <li class="fragment"><b>Retrospect</b> and carry improvement actions into the next Sprint</li>
+    </ul>
+    <figure class="diagram tall"><img src="assets/scrum-workflow.svg" alt="Scrum workflow"></figure>
+  </div>
+</section>
+
+<!-- 6 CADENCE -->
+<section data-chapter="Events">
+  <div class="kicker">Two-week Sprints</div>
+  <h2>The rhythm of a Sprint</h2>
+  <div class="steps">
+    <div class="step fragment" data-n="1"><b>Sprint Planning</b>Pick a Sprint Goal and backlog items</div>
+    <div class="step fragment" data-n="2"><b>Daily Scrum</b>15 minutes, inspect and adapt</div>
+    <div class="step fragment" data-n="3"><b>Build to Done</b>Design, code, test, secure</div>
+    <div class="step fragment" data-n="4"><b>Sprint Review</b>Demo working software</div>
+    <div class="step fragment" data-n="5"><b>Retrospective</b>One or two real improvements</div>
+  </div>
+  <p class="small muted fragment" style="margin-top:1.4em"><b>Refinement</b> runs all the time: split, clarify, reorder and estimate upcoming work. It is not a formal event.</p>
+  <aside class="notes">Reviews demonstrate working software, not slides. Invite support staff and admins to try realistic scenarios.</aside>
+</section>
+
+<!-- 7 BACKLOG TILES -->
+<section data-chapter="Product Backlog">
+  <div class="kicker">43 user stories</div>
+  <h2>Twelve epics</h2>
+  <div class="grid g4" style="gap:12px">
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-building-2"/></svg></div><div><b>E01 Tenant and access</b><span>3 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-messages-square"/></svg></div><div><b>E02 Conversation core</b><span>4 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-globe"/></svg></div><div><b>E03 Website chat</b><span>3 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-library"/></svg></div><div><b>E04 Knowledge and RAG</b><span>4 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-brain-circuit"/></svg></div><div><b>E05 AI orchestration</b><span>4 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></div><div><b>E06 Safe business tools</b><span>4 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-hand-helping"/></svg></div><div><b>E07 Human handoff</b><span>4 stories</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-ticket"/></svg></div><div><b>E08 Tickets</b><span>2 stories</span></div></div>
+    <div class="tile r2"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></div><div><b>E09 Voice MVP</b><span>5 stories · Release 2</span></div></div>
+    <div class="tile r3"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-git-branch"/></svg></div><div><b>E10 Workflow, routing, SLA</b><span>3 stories · Release 3</span></div></div>
+    <div class="tile r3"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-plug-zap"/></svg></div><div><b>E11 Integrations and channels</b><span>3 stories · Release 3</span></div></div>
+    <div class="tile"><div class="chip sm"><svg class="ico" aria-hidden="true"><use href="#i-chart-line"/></svg></div><div><b>E12 Observability, evaluation, usage</b><span>4 stories</span></div></div>
+  </div>
+  <p class="small muted">Blue = Release 1 (text MVP) · Amber = Release 2 (voice) · Green = Release 3 (operations)</p>
+</section>
+
+<!-- 8 DEPENDENCIES -->
+<section data-chapter="Product Backlog" data-transition="fade">
+  <h2>What depends on what</h2>
+  <figure class="diagram short"><img src="assets/epic-dependency.svg" alt="Epic dependency graph"><figcaption>Tenant and access come first. AI orchestration needs conversation core and knowledge.</figcaption></figure>
+</section>
+
+<!-- 9 ORDER -->
+<section data-chapter="Product Backlog">
+  <div class="kicker">Suggested order, reorder with evidence</div>
+  <h2>What we build first</h2>
+  <div class="grid g2">
+    <ol class="small">
+      <li class="fragment">Tenant and access foundation</li>
+      <li class="fragment">Conversation core</li>
+      <li class="fragment">Website chat</li>
+      <li class="fragment">Minimum observability and security, in parallel</li>
+      <li class="fragment">Knowledge ingestion and RAG</li>
+      <li class="fragment">AI orchestration</li>
+    </ol>
+    <ol class="small" start="7">
+      <li class="fragment">One safe read-only business tool</li>
+      <li class="fragment">Human handoff</li>
+      <li class="fragment">Ticket basics</li>
+      <li class="fragment">Voice</li>
+      <li class="fragment">Workflows, routing, SLA</li>
+      <li class="fragment">More connectors and channels, advanced evaluation</li>
+    </ol>
+  </div>
+  <p class="small muted">Order changes with user research, risk, technical dependencies and Sprint Review feedback.</p>
+</section>
+
+<!-- 10 RELEASES -->
+<section data-chapter="Releases">
+  <div class="kicker">Three releases</div>
+  <h2>Where the Sprints lead</h2>
+  <div class="grid g3">
+    <div class="card brand fragment fade-up"><span class="pill">Release 1</span><h3>Text support MVP</h3><p>Tenant foundation, website chat, grounded answers, one read-only tool, human handoff, tickets, audit and telemetry.</p></div>
+    <div class="card amber fragment fade-up"><span class="pill amber">Release 2</span><h3>Voice MVP</h3><p>Real-time browser voice on the same engine, speech processing, transcript sync, interruption and voice handoff.</p></div>
+    <div class="card accent fragment fade-up"><span class="pill green">Release 3</span><h3>Operations expansion</h3><p>More channels, workflow automation, routing and SLA, connectors, stronger evaluation, usage controls.</p></div>
+  </div>
+</section>
+
+<!-- 11 DIVIDER SPRINTS -->
+<section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-blue-02.svg" data-background-size="cover">
+  <div class="hero"><div class="kicker">Part two</div><h1>The Sprint plan</h1><p>Nine Sprints, each ending with a usable Increment and a demo.</p></div>
+</section>
+
+<!-- 12 SPRINT STRIP -->
+<section data-chapter="Sprint plan">
+  <div class="kicker">A planning hypothesis, reforecast after Sprint 1</div>
+  <h2>Nine Sprints at a glance</h2>
+  <div class="steps" style="font-size:.9em">
+    <div class="step opt fragment" data-n="0"><b>Enable</b>build, test, deploy safely</div>
+    <div class="step fragment" data-n="1"><b>Foundation</b>tenant-scoped conversation</div>
+    <div class="step fragment" data-n="2"><b>Chat slice</b>reliable website chat</div>
+    <div class="step fragment" data-n="3"><b>Knowledge</b>ingest and retrieve</div>
+    <div class="step fragment" data-n="4"><b>AI answers</b>grounded, with fallback</div>
+    <div class="step fragment" data-n="5"><b>Tool + handoff</b>lookup and human</div>
+    <div class="step rel fragment" data-n="6"><b>Harden</b>tickets, gates → R1</div>
+    <div class="step v fragment" data-n="7"><b>Voice slice</b>one spoken turn</div>
+    <div class="step v fragment" data-n="8"><b>Voice sync</b>interrupt, switch → R2</div>
+  </div>
+  <p class="small muted" style="margin-top:1.6em">Sprint 0 only if needed, and never a permanent phase. Security, observability and tests ship inside every Sprint.</p>
+</section>
+
+<!-- 13 SPRINTS 1-2 -->
+<section data-chapter="Sprint plan">
+  <h2>Sprints 1 and 2 · Secure foundation and website chat</h2>
+  <div class="grid g2">
+    <div class="card brand fragment fade-up"><span class="pill">Sprint 1</span><p class="fragment"><b>Goal:</b> a tenant-scoped conversation and message can be created, persisted and retrieved.</p><ul><li class="fragment">US-001 Organization foundation</li><li class="fragment">US-003 Tenant isolation tests</li><li class="fragment">US-010 Conversation creation</li><li class="fragment">US-011 Message persistence</li></ul><p class="muted fragment"><b>Demo:</b> create, append, fetch timeline, prove cross-tenant access is denied.</p></div>
+    <div class="card brand fragment fade-up"><span class="pill">Sprint 2</span><p class="fragment"><b>Goal:</b> a visitor exchanges text messages with the backend reliably.</p><ul><li class="fragment">US-020 Widget configuration</li><li class="fragment">US-021 Chat session</li><li class="fragment">US-022 Reconnect and resume</li><li class="fragment">US-013 Inbound deduplication</li></ul><p class="muted fragment"><b>Demo:</b> send a message, see it persisted and returned, replay a duplicate, drop the network.</p></div>
+  </div>
+</section>
+
+<!-- 14 SPRINTS 3-4 -->
+<section data-chapter="Sprint plan">
+  <h2>Sprints 3 and 4 · Knowledge and grounded answers</h2>
+  <div class="grid g2">
+    <div class="card brand fragment fade-up"><span class="pill">Sprint 3</span><p class="fragment"><b>Goal:</b> organization knowledge is ingested and retrieved within tenant boundaries.</p><ul><li class="fragment">US-030 Source registration and upload</li><li class="fragment">US-031 Async parse, chunk and index</li><li class="fragment">US-032 Retrieval with source metadata</li><li class="fragment">Ingestion status and retry</li></ul><p class="muted fragment"><b>Demo:</b> upload a document, watch status, query it, see source references.</p></div>
+    <div class="card brand fragment fade-up"><span class="pill">Sprint 4</span><p class="fragment"><b>Goal:</b> chat answers common questions from approved knowledge and handles missing evidence safely.</p><ul><li class="fragment">US-040 Turn orchestration</li><li class="fragment">US-033 Grounded answer or fallback</li><li class="fragment">US-041 Follow-up context</li><li class="fragment">US-042 Model failure handling</li><li class="fragment">Minimal evaluation set and usage recording</li></ul><p class="muted fragment"><b>Demo:</b> grounded FAQ, follow-up, unknown fallback, provider timeout.</p></div>
+  </div>
+</section>
+
+<!-- 15 SPRINTS 5-6 -->
+<section data-chapter="Sprint plan">
+  <h2>Sprints 5 and 6 · Tool, handoff, release hardening</h2>
+  <div class="grid g2">
+    <div class="card brand fragment fade-up"><span class="pill">Sprint 5</span><p class="fragment"><b>Goal:</b> one authorized read-only lookup, and transfer to a human.</p><ul><li class="fragment">US-050 Tool registry and allowlist</li><li class="fragment">US-051 Order lookup</li><li class="fragment">US-053 Tool-call audit</li><li class="fragment">US-060 Inbox queue</li><li class="fragment">US-061 Customer-requested handoff</li><li class="fragment">US-062 Handoff summary</li></ul><p class="muted fragment"><b>Demo:</b> tool success, denial and failure, takeover with context.</p></div>
+    <div class="card accent fragment fade-up"><span class="pill green">Sprint 6 → Release 1</span><p class="fragment"><b>Goal:</b> unresolved work is tracked and the MVP meets release gates.</p><ul><li class="fragment">US-070 Ticket creation</li><li class="fragment">US-071 Ticket filtering</li><li class="fragment">US-043 Agent publish and rollback</li><li class="fragment">US-110 End-to-end tracing</li><li class="fragment">US-112 First regression evaluation</li><li class="fragment">Security, load, backup and runbooks</li></ul><p class="muted fragment"><b>Demo:</b> conversation becomes a ticket; metrics, audit, test report, rollback.</p></div>
+  </div>
+</section>
+
+<!-- 16 SPRINTS 7-8 -->
+<section data-chapter="Sprint plan">
+  <h2>Sprints 7 and 8 · Voice</h2>
+  <div class="grid g2">
+    <div class="card amber fragment fade-up"><span class="pill amber">Sprint 7</span><p class="fragment"><b>Goal:</b> validate the voice architecture and complete one browser voice turn.</p><ul><li class="fragment">Choose speech strategy and provider</li><li class="fragment">US-080 Start and end a session</li><li class="fragment">US-081 Speak and hear a reply</li><li class="fragment">Voice telemetry and fallback</li><li class="fragment">Security and consent review</li></ul><p class="muted fragment"><b>Demo:</b> speak, hear a reply, transcript linked to the conversation.</p></div>
+    <div class="card amber fragment fade-up"><span class="pill amber">Sprint 8 → Release 2</span><p class="fragment"><b>Goal:</b> voice and text share one coherent timeline.</p><ul><li class="fragment">US-082 Interruption</li><li class="fragment">US-083 Switch between text and voice</li><li class="fragment">US-084 Voice handoff for the chosen provider</li><li class="fragment">Voice quality regression scenarios</li><li class="fragment">Cost and latency dashboard</li></ul><p class="muted fragment"><b>Demo:</b> speak, interrupt, type a follow-up, transfer to human.</p></div>
+  </div>
+</section>
+
+<!-- 17 GANTT -->
+<section data-chapter="Sprint plan" data-transition="fade">
+  <h2>Timeline <span class="pill amber">placeholder dates</span></h2>
+  <figure class="diagram short"><img src="assets/gantt.svg" alt="Provisional Gantt"><figcaption>Replace the start date with the team's real Sprint 0 or Sprint 1 start. Capacity is unknown, so the sprint count may change.</figcaption></figure>
+</section>
+
+<!-- 18 DIVIDER QUALITY -->
+<section class="on-dark" data-transition="convex" data-background-image="assets/bg/bg-green-03.svg" data-background-size="cover">
+  <div class="hero"><div class="kicker">Part three</div><h1>Quality: ready, done, safe to ship</h1><p>The agreements that keep the Increment trustworthy.</p></div>
+</section>
+
+<!-- 19 READY -->
+<section data-chapter="Definition of Ready">
+  <div class="kicker">Team agreement, not a gate for discovery work</div>
+  <h2>Definition of Ready</h2>
+  <ul class="check small">
+    <li class="fragment">The user or business outcome is clear</li>
+    <li class="fragment">Acceptance criteria are testable</li>
+    <li class="fragment">Dependencies and provider assumptions are identified</li>
+    <li class="fragment">UX, API and data behaviour are understood, security and privacy considered</li>
+    <li class="fragment">Small enough for one Sprint, and estimated</li>
+    <li class="fragment">Credentials, test data and environments are available or planned</li>
+  </ul>
+</section>
+
+<!-- 20 DONE -->
+<section data-chapter="Definition of Done">
+  <div class="kicker">Three layers</div>
+  <h2>Definition of Done</h2>
+  <div class="grid g3">
+    <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-list-checks"/></svg></div><h3>Every item</h3><ul><li>Acceptance criteria met</li><li>Reviewed, module boundaries kept</li><li>Tests incl. failure cases</li><li>Tenant isolation and authz tested</li><li>Safe, redacted telemetry</li><li>Docs and contracts updated</li><li>Rollback or flag understood</li></ul></div>
+    <div class="card accent"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-bot"/></svg></div><h3>AI items add</h3><ul><li>Model and prompt version identifiable</li><li>Tool permissions enforced in code</li><li>Retrieval tenant scoped</li><li>Empty and uncertain paths tested</li><li>Regression example added</li><li>No secrets or hidden reasoning in logs</li></ul></div>
+    <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-mic"/></svg></div><h3>Voice items add</h3><ul><li>Mic permission and active state clear</li><li>Cleanup on disconnect</li><li>Interruption tested</li><li>Transcript order tested</li><li>Retention per policy</li><li>Latency and failure metrics</li></ul></div>
+  </div>
+</section>
+
+<!-- 21 LIFECYCLE -->
+<section data-chapter="Definition of Done" data-transition="fade">
+  <h2>A story's life</h2>
+  <div class="split tight">
+    <ul>
+      <li class="fragment"><b>Candidate → Refinement → Ready:</b> clarified until it meets the Definition of Ready</li>
+      <li class="fragment"><b>Selected:</b> pulled into a Sprint at planning</li>
+      <li class="fragment"><b>In progress ↔ Review:</b> changes requested send it back</li>
+      <li class="fragment"><b>Blocked:</b> visible, and returns to In progress when freed</li>
+      <li class="fragment"><b>Done:</b> only when the Definition of Done is met</li>
+    </ul>
+    <figure class="diagram tall"><img src="assets/story-lifecycle.svg" alt="User story lifecycle"></figure>
+  </div>
+</section>
+
+<!-- 22 RELEASE GATES -->
+<section data-chapter="Release gates">
+  <div class="kicker">Exit criteria</div>
+  <h2>When a release may ship</h2>
+  <div class="grid g2">
+    <div class="card brand"><span class="pill">Release 1</span><ul class="check"><li>Tenant isolation tests pass</li><li>Inbound messages deduplicated</li><li>Safe fallback for unknown questions</li><li>Tools allowlisted, authorized, audited</li><li>A human can take over</li><li>API and worker telemetry available</li><li>No open critical evaluation failure</li></ul></div>
+    <div class="card amber"><span class="pill amber">Release 2</span><ul class="check"><li>Session start, stop, cleanup reliable</li><li>Transcript finalization and ordering</li><li>Interruption behaviour tested</li><li>Audio and transcript privacy implemented</li><li>Latency and cost metrics visible</li><li>Handoff validated for the chosen provider</li></ul></div>
+  </div>
+</section>
+
+<!-- 23 ROLLOUT -->
+<section data-chapter="Release gates" data-transition="fade">
+  <h2>Roll out safely, roll back fast</h2>
+  <figure class="diagram short"><img src="assets/rollout.svg" alt="Rollout and rollback"><figcaption>Feature flag, canary tenants, then a gradual increase. Unhealthy means disable the flag or roll back the agent version.</figcaption></figure>
+</section>
+
+<!-- 24 RISKS -->
+<section data-chapter="Risks">
+  <div class="kicker">Top risks and what we do about them</div>
+  <h2>Risks and mitigations</h2>
+  <table>
+    <tr><th>Risk</th><th>Mitigation</th></tr>
+    <tr class="fragment"><td>Prompt injection</td><td>Tool allowlist, server-side authorization, untrusted-content boundaries, adversarial tests</td></tr>
+    <tr class="fragment"><td>Tenant data leakage</td><td>Tenant-scoped indexes and filters, cross-tenant tests in CI</td></tr>
+    <tr class="fragment"><td>LLM latency and cost</td><td>Budgets, timeouts, model routing, measurement</td></tr>
+    <tr class="fragment"><td>Duplicate webhook or tool call</td><td>Durable inbox, idempotency keys, deduplication</td></tr>
+    <tr class="fragment"><td>Voice interruption races</td><td>Sequence ids, partial vs final, cancellation semantics</td></tr>
+    <tr class="fragment"><td>Unsupported AI answer</td><td>Evidence thresholds, safe fallback, handoff</td></tr>
+    <tr class="fragment"><td>Provider lock-in, scope too broad</td><td>Adapters and contract tests; text-MVP vertical slice first</td></tr>
+  </table>
+</section>
+
+<!-- 25 DECISIONS -->
+<section data-chapter="Decisions">
+  <div class="kicker">Decide the right things at the right time</div>
+  <h2>Decide now, defer on purpose</h2>
+  <div class="grid g2">
+    <div class="card brand"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-file-text"/></svg></div><h3>Architecture decisions to write (ADRs)</h3><ul class="small"><li>Modular monolith boundaries</li><li>Database and tenant isolation</li><li>Queue, outbox and inbox</li><li>Vector and search technology</li><li>LLM abstraction and data policy</li><li>Voice strategy, transport, retention</li><li>Authentication and customer verification</li><li>Tool authorization and approval</li></ul></div>
+    <div class="card amber"><div class="chip"><svg class="ico" aria-hidden="true"><use href="#i-circle-pause"/></svg></div><h3>Do not decide yet</h3><ul class="cross small"><li>One microservice per module</li><li>A universal workflow builder</li><li>Several speech providers at once</li><li>Autonomous write access to every system</li><li>Permanent raw audio retention</li><li>Complex billing before usage is known</li></ul></div>
+  </div>
+</section>
+
+<!-- 26 MEASURES -->
+<section data-chapter="Success measures">
+  <div class="kicker">Resolution quality, not only speed</div>
+  <h2>How we know it works</h2>
+  <div class="grid g4">
+    <div class="card stat"><div class="chip lg"><svg class="ico" aria-hidden="true"><use href="#i-circle-check"/></svg></div><h3>Correct</h3><p class="muted">Answer rate on a curated evaluation set</p></div>
+    <div class="card stat"><div class="chip lg"><svg class="ico" aria-hidden="true"><use href="#i-book-open-check"/></svg></div><h3>Grounded</h3><p class="muted">Source support rate</p></div>
+    <div class="card stat"><div class="chip lg"><svg class="ico" aria-hidden="true"><use href="#i-target"/></svg></div><h3>Resolved</h3><p class="muted">Task completion, escalation rate by reason</p></div>
+    <div class="card stat"><div class="chip lg"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></div><h3>Fast and safe</h3><p class="muted">p50 and p95 latency, tool success, availability</p></div>
+  </div>
+  <p class="small muted">Plus customer satisfaction and cost per resolved conversation.</p>
+</section>
+
+<!-- 27 OPEN ITEMS -->
+<section data-chapter="Next steps">
+  <div class="kicker">What we need to start</div>
+  <h2>Open items</h2>
+  <ul class="small">
+    <li class="fragment"><b>People:</b> name the Product Owner and Scrum Master, confirm team size and capacity</li>
+    <li class="fragment"><b>Calendar:</b> pick the first Sprint start date and Sprint length (default 2 weeks)</li>
+    <li class="fragment"><b>Estimates:</b> size the 43 stories in team-specific points</li>
+    <li class="fragment"><b>Access:</b> LLM, speech and a commerce or order API with test credentials</li>
+    <li class="fragment"><b>Backlog gaps:</b> schedule US-002, US-012, US-052, US-063 (needed for Release 1 but not yet in a Sprint)</li>
+  </ul>
+</section>
+
+<!-- 28 CLOSE -->
+<section class="on-dark" data-transition="zoom" data-background-image="assets/bg/bg-title-none.svg" data-background-size="cover">
+  <div class="hero"><h1>Questions?</h1><p>Next decks: <b>product.html</b> for what we are building, <b>engineering.html</b> for how.</p></div>
+</section>
+
+</div></div>
+<script src="vendor/reveal/dist/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/zoom/zoom.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="js/deck.js"></script>
+</body>
+</html>

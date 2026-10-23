@@ -1,0 +1,7 @@
+{"theme":"neutral",
+ "themeVariables":{"fontFamily":"Helvetica, Arial, sans-serif","fontSize":"14px"},
+ "flowchart":{"htmlLabels":true,"useMaxWidth":false,"nodeSpacing":28,"rankSpacing":32,"padding":6,"wrappingWidth":170,"curve":"basis"},
+ "sequence":{"useMaxWidth":false,"actorMargin":36,"messageMargin":26,"width":120,"height":40,"boxMargin":6,"noteMargin":8,"mirrorActors":false},
+ "state":{"useMaxWidth":false,"nodeSpacing":28,"rankSpacing":32},
+ "er":{"useMaxWidth":false,"minEntityWidth":90,"minEntityHeight":50,"entityPadding":10},
+ "class":{"useMaxWidth":false,"padding":8}}

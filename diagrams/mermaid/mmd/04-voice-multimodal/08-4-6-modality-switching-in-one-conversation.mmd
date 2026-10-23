@@ -1,0 +1,13 @@
+%% Source: 04-voice-multimodal.md - 4.6 Modality switching in one conversation
+stateDiagram-v2
+    [*] --> TextMode
+    TextMode --> VoiceMode: customer starts voice (event voice.session.started)
+    VoiceMode --> TextMode: customer ends voice (event voice.session.ended)
+    VoiceMode --> VoiceMode: reconnect same session
+    TextMode --> HumanOwned: handoff
+    VoiceMode --> HumanOwned: handoff with provider transfer reference
+    HumanOwned --> TextMode: resolved or returned to AI
+    note right of VoiceMode
+        Engine consumes normalized text and trusted state.
+        It does not care if text was typed or transcribed.
+    end note

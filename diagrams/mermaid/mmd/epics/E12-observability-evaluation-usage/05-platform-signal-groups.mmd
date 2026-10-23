@@ -1,0 +1,24 @@
+%% Source: epics/E12-observability-evaluation-usage.md - Platform signal groups
+flowchart TB
+    subgraph API_Platform["API and platform"]
+        a1["request rate, errors, latency"]
+        a2["queue depth, oldest job age"]
+        a3["DB pool, slow queries"]
+    end
+    subgraph Conversation_Delivery["Conversation and delivery"]
+        c1["inbound latency"]
+        c2["delivery success and failure"]
+        c3["duplicate events"]
+    end
+    subgraph AI_RAG["AI and RAG"]
+        r1["model latency, tokens, cost"]
+        r2["empty retrieval rate"]
+        r3["tool proposal and success rate"]
+        r4["groundedness reviews"]
+    end
+    subgraph Voice
+        v1["time to first audio"]
+        v2["interruptions"]
+        v3["dropped sessions"]
+    end
+    API_Platform & Conversation_Delivery & AI_RAG & Voice --> ALR["Alerts and dashboards"]

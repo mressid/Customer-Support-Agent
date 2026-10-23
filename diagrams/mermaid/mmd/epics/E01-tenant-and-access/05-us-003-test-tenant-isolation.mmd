@@ -1,0 +1,15 @@
+%% Source: epics/E01-tenant-and-access.md - US-003 — Test tenant isolation
+flowchart TD
+    S["CI test suite: tenant isolation"] --> F["Fixture: tenant A and tenant B with data"]
+    F --> L["Authenticate as tenant A"]
+    L --> T1["Read B conversation by id"]
+    L --> T2["Write message into B conversation"]
+    L --> T3["Search vector index: B documents"]
+    L --> T4["Fetch B object storage key"]
+    L --> T5["Read B cache key"]
+    L --> T6["Enqueue or consume B job"]
+    L --> T7["Query B analytics"]
+    L --> T8["Spoof tenant_id in payload"]
+    T1 & T2 & T3 & T4 & T5 & T6 & T7 & T8 --> A{"All denied or empty?"}
+    A -- Yes --> P["Pass"]
+    A -- No --> FAIL["Fail build: SecurityEvent"]

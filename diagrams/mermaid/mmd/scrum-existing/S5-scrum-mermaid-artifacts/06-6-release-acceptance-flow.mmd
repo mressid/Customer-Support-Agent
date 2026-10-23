@@ -1,0 +1,14 @@
+%% Source: scrum-existing/S5-scrum-mermaid-artifacts.md - 6. Release acceptance flow
+flowchart TD
+    A[Feature implemented] --> B[Unit and integration tests]
+    B --> C[Tenant and authorization tests]
+    C --> D[AI regression/evaluation]
+    D --> E[Latency, cost, and failure-path checks]
+    E --> F{Release criteria met?}
+    F -- No --> G[Fix, document, or defer]
+    G --> A
+    F -- Yes --> H[Versioned release]
+    H --> I[Monitor rollout]
+    I --> J{Healthy?}
+    J -- Yes --> K[Continue rollout]
+    J -- No --> L[Rollback / disable feature]

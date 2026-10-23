@@ -1,0 +1,18 @@
+%% Source: 02-cross-cutting-flows.md - 2.11 Security test matrix
+flowchart LR
+    ST["Security test checklist"] --> A["Cross-tenant read/write"]
+    ST --> B["Unauthorized tool invocation"]
+    ST --> C["Prompt injection: user input and retrieved docs"]
+    ST --> D["Webhook signature failure and replay"]
+    ST --> E["Duplicate webhook delivery"]
+    ST --> F["Tool timeout with unknown write outcome"]
+    ST --> G["Secret leakage in logs and traces"]
+    ST --> H["Unauthorized transcript or audio access"]
+    ST --> I["Rate limit and abuse"]
+    A --> CI["Run in CI: blocks merge"]
+    B --> CI
+    D --> CI
+    E --> CI
+    G --> CI
+    C --> EV["Run in AI evaluation: blocks agent release"]
+    F --> EV

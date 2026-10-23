@@ -1,0 +1,78 @@
+\chapter{E02 --- Conversation and Message Core}
+
+Goal: persist and retrieve a reliable conversation timeline. Modules: M01, M02, M03.
+
+\section*{Stories in this epic}
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{\dimexpr0.090\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.780\linewidth-2\tabcolsep\relax}>{\raggedright\arraybackslash}p{\dimexpr0.130\linewidth-2\tabcolsep\relax}@{}}
+\toprule
+\textbf{ID} & \textbf{User story} & \textbf{Sprint} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+US-010 & As a customer, I can start a conversation through website chat. & S1 \\
+US-011 & As a customer, I can send and receive text messages. & S1 \\
+US-012 & As a support agent, I can inspect the conversation timeline. & Backlog \\
+US-013 & As a system, I can deduplicate inbound events. & S2 \\
+\end{longtable}
+}
+
+\mmdfigLH{\section{Epic overview}
+}{epics/E02-conversation-core/01-epic-overview}{E02: Epic overview}{fig:epics-e02-conversation-core-01-epic-overview-16}
+
+
+\Needspace{456pt}
+\section{Conversation lifecycle (used by all stories)}
+
+\mmdfig{epics/E02-conversation-core/02-conversation-lifecycle-used-by-all-stories}{E02: Conversation lifecycle (used by all stories)}{fig:core-02-conversation-lifecycle-used-by-all-stories-17}
+
+
+\mmdfigLH{\section{US-010 --- Start a conversation through website chat}
+
+\begin{storybox}{User story US-010}
+\textbf{Story.} As a customer, I can start a conversation through website chat.\par
+\textbf{Acceptance.} conversation is tenant/channel scoped; initial event is persisted.
+\end{storybox}
+}{epics/E02-conversation-core/03-us-010-start-a-conversation-through-website-chat}{E02: US-010 --- Start a conversation through website chat}{fig:3-us-010-start-a-conversation-through-website-chat-18}
+
+
+\mmdfigLH{\section{US-011 --- Send and receive text messages}
+
+\begin{storybox}{User story US-011}
+\textbf{Story.} As a customer, I can send and receive text messages.\par
+\textbf{Acceptance.} message order is stable; delivery status is represented; errors are recoverable.
+\end{storybox}
+
+\subsection{Ordering and persistence}
+}{epics/E02-conversation-core/04-ordering-and-persistence}{E02: US-011 --- Send and receive text messages: Ordering and persistence}{fig:-e02-conversation-core-04-ordering-and-persistence-19}
+
+
+\Needspace{348pt}
+\subsection{Message delivery status as seen by the customer}
+
+\mmdfig{epics/E02-conversation-core/05-message-delivery-status-as-seen-by-the-customer}{E02: US-011 --- Send and receive text messages: Message delivery status as seen by the customer}{fig:05-message-delivery-status-as-seen-by-the-customer-20}
+
+
+\Needspace{597pt}
+\section{US-012 --- Support agent inspects the timeline}
+
+\begin{storybox}{User story US-012}
+\textbf{Story.} As a support agent, I can inspect the conversation timeline.\par
+\textbf{Acceptance.} messages, system events, and visibility levels are distinguished.
+\end{storybox}
+
+\mmdfig{epics/E02-conversation-core/06-us-012-support-agent-inspects-the-timeline}{E02: US-012 --- Support agent inspects the timeline}{fig:core-06-us-012-support-agent-inspects-the-timeline-21}
+
+
+\Needspace{640pt}
+\section{US-013 --- Deduplicate inbound events}
+
+\begin{storybox}{User story US-013}
+\textbf{Story.} As a system, I can deduplicate inbound events.\par
+\textbf{Acceptance.} replayed provider event does not create duplicate messages.
+\end{storybox}
+
+\mmdfig{epics/E02-conversation-core/07-us-013-deduplicate-inbound-events}{E02: US-013 --- Deduplicate inbound events}{fig:ersation-core-07-us-013-deduplicate-inbound-events-22}
+
+

@@ -1,0 +1,18 @@
+%% Source: epics/E05-ai-orchestration.md - US-040 — Process a turn through a versioned agent configuration
+sequenceDiagram
+    participant CV as Conversation
+    participant W as Worker
+    participant AI as AI Engine
+    participant AG as Agent config
+    participant LLM as Model adapter
+    participant DB as Postgres
+
+    CV->>W: ai.turn.requested
+    W->>AI: run turn(conversation, turn id)
+    AI->>AG: get active AgentVersion for channel
+    AG-->>AI: immutable version: instructions, tools, model config
+    AI->>DB: insert AgentExecution status=running
+    AI->>LLM: generate with version config
+    LLM-->>AI: response, usage, latency
+    AI->>DB: update AgentExecution: model, version id, latency, outcome
+    AI->>CV: final response and metadata

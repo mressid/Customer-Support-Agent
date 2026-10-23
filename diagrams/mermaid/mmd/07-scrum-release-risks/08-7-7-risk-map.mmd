@@ -1,0 +1,15 @@
+%% Source: 07-scrum-release-risks.md - 7.7 Risk map
+flowchart LR
+    R1["Prompt injection"] --> M1["Tool allowlist, server authz, untrusted-content boundary, adversarial tests"]
+    R2["Tenant leakage in retrieval"] --> M2["Tenant-scoped indexes and filters, access tests, per-tenant object controls"]
+    R3["LLM latency and cost"] --> M3["Budgets, timeouts, model routing, safe caching, measurement"]
+    R4["Duplicate webhook or tool execution"] --> M4["Durable inbox, idempotency keys, dedupe"]
+    R5["Voice interruption and transcript race"] --> M5["Sequence ids, partial vs final, cancellation semantics"]
+    R6["Provider lock-in"] --> M6["Adapters, normalized contracts, contract tests"]
+    R7["Unsupported AI answer"] --> M7["Retrieval eval, evidence thresholds, fallback and handoff"]
+    R8["Scope too broad"] --> M8["Text MVP vertical slice, ordered backlog, defer channels"]
+    M1 --> S1["E06 US-050 US-053, E12 US-112"]
+    M2 --> S2["E01 US-003, E04 US-032"]
+    M4 --> S4["E02 US-013, E06 US-052"]
+    M5 --> S5["E09 US-082 US-083"]
+    M7 --> S7["E04 US-033, E07 US-061"]

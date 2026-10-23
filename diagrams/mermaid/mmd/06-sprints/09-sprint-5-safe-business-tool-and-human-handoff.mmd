@@ -1,0 +1,13 @@
+%% Source: 06-sprints.md - Sprint 5 — Safe business tool and human handoff
+flowchart TD
+    G5(["Goal: one authorized read-only lookup and transfer to human"])
+    G5 --> U50["US-050 Tool registry and allowlist"]
+    G5 --> U51["US-051 Order lookup"]
+    G5 --> U53["US-053 Audit tool calls"]
+    G5 --> U60["US-060 Inbox queue"]
+    G5 --> U61["US-061 Customer-requested handoff"]
+    G5 --> U62["US-062 Handoff summary"]
+    U50 --> U51 --> U53
+    U60 --> U61 --> U62
+    U53 --> DEMO["Demo: tool success, denial and failure, human takeover with context"]
+    U62 --> DEMO

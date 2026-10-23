@@ -1,0 +1,14 @@
+%% Source: epics/E02-conversation-core.md - Conversation lifecycle (used by all stories)
+stateDiagram-v2
+    [*] --> Open
+    Open --> AiHandling: turn requested
+    AiHandling --> Open: turn completed
+    Open --> HandoffPending: escalation
+    AiHandling --> HandoffPending: escalation
+    HandoffPending --> HumanOwned: agent claims
+    HumanOwned --> Open: returned to AI
+    HumanOwned --> Resolved: agent resolves
+    Open --> Resolved: customer satisfied or idle timeout
+    Resolved --> Open: reopen on new message
+    Resolved --> Closed: retention window passed
+    Closed --> [*]

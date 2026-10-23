@@ -1,0 +1,31 @@
+%% Source: 05-data-model.md - 5.1 Organizations, users and access
+erDiagram
+    ORGANIZATION ||--o{ MEMBERSHIP : has
+    USER ||--o{ MEMBERSHIP : joins
+    ROLE ||--o{ MEMBERSHIP : assigned
+    ROLE ||--o{ ROLE_PERMISSION : grants
+    PERMISSION ||--o{ ROLE_PERMISSION : in
+    ORGANIZATION ||--o{ INVITATION : issues
+    ORGANIZATION ||--o{ SERVICE_IDENTITY : owns
+
+    ORGANIZATION {
+        uuid id PK
+        string name
+        json settings
+        timestamp created_at
+    }
+    MEMBERSHIP {
+        uuid id PK
+        uuid organization_id FK
+        uuid user_id FK
+        uuid role_id FK
+        string status
+    }
+    INVITATION {
+        uuid id PK
+        uuid organization_id FK
+        string email
+        uuid role_id FK
+        timestamp expires_at
+        string status
+    }

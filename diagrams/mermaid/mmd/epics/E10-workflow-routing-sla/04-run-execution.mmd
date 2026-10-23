@@ -1,0 +1,12 @@
+%% Source: epics/E10-workflow-routing-sla.md - Run execution
+flowchart TD
+    EV["Trigger event, e.g. ticket.created"] --> M{"Conditions match?"}
+    M -- No --> END1["No run"]
+    M -- Yes --> R["Create WorkflowRun pinned to version"]
+    R --> S["Execute step N"]
+    S --> O{"Result"}
+    O -- success --> NX{"More steps?"}
+    NX -- Yes --> S
+    NX -- No --> DONE["Run succeeded"]
+    O -- "wait: approval or timer" --> WT["Suspend, persist state"] --> S
+    O -- "failure" --> RT["Go to US-092 retry logic"]

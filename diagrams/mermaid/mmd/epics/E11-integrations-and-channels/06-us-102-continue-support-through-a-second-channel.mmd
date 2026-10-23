@@ -1,0 +1,13 @@
+%% Source: epics/E11-integrations-and-channels.md - US-102 — Continue support through a second channel
+flowchart TD
+    A["Message on channel B from identity X"] --> B{"ChannelIdentity X known?"}
+    B -- Yes --> C["Resolve existing Customer"]
+    B -- No --> D{"Identity can be linked by verified proof? OTP, signed-in link"}
+    D -- Yes --> E["Link CustomerIdentity to existing Customer, record consent"]
+    D -- No --> F["Create separate customer, no access to protected data"]
+    E --> C
+    C --> G{"Open conversation within policy window?"}
+    G -- Yes --> H["Attach channel B to existing conversation"]
+    G -- No --> I["Start new conversation, optionally link to previous summary"]
+    F --> I
+    Note1["Phone number or email alone is not proof of account ownership"] -.-> D

@@ -1,0 +1,9 @@
+%% Source: 01-architecture.md - C. Support operations (M10–M14)
+flowchart LR
+    M04["M04 AI Engine"] -->|handoff request| M10["M10 Human Inbox"]
+    M10 --> M11["M11 Tickets"]
+    M13["M13 Routing / SLA"] --> M10
+    M12["M12 Workflows"] --> M13
+    M12 --> M14["M14 Notifications"]
+    M11 -->|status events| M14
+    M10 -->|ownership events| M01["M01 Conversation"]
