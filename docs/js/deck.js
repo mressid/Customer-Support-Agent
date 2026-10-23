@@ -86,6 +86,17 @@
   document.body.appendChild(r);
 })();
 
+// Link to the feedback page, left of the "Spec" button.
+(function () {
+  var r = document.createElement('a');
+  r.id = 'feedback-link'; r.href = 'feedback.html'; r.target = '_blank'; r.rel = 'noopener';
+  r.title = 'Send feedback by e-mail';
+  r.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></svg>' +
+    '<span>Feedback</span>';
+  document.body.appendChild(r);
+})();
+
 // Light / dark theme: toggle button, "D" key, follows the system until the user chooses.
 (function () {
   var KEY = 'deck-theme', root = document.documentElement;

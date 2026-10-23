@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>try{var t=localStorage.getItem("deck-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+<title>Feedback - AI Customer Support Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  @font-face { font-family:"Inter"; font-weight:400; font-display:swap; src:url("vendor/fonts/inter-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:600; font-display:swap; src:url("vendor/fonts/inter-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:700; font-display:swap; src:url("vendor/fonts/inter-latin-700-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Inter"; font-weight:800; font-display:swap; src:url("vendor/fonts/inter-latin-800-normal.woff2") format("woff2"); }
+  :root { --navy:#0a2540; --blue:#1b4f86; --blue-100:#e6f0fb; --green:#13724e; --green-100:#e0f4ea; --red:#a3322a; --red-100:#fbe5e2; --ink:#14202e; --muted:#66758a; --line:#d5deea; --card:#fff; --field:#f6f9fd; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; font-family:"Inter","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased;
+    background: radial-gradient(900px 500px at 90% -10%, rgba(53,133,212,.5), transparent 60%), radial-gradient(800px 500px at 0% 110%, rgba(27,154,104,.35), transparent 60%), linear-gradient(135deg,#06182a 0%,#0e3560 62%,#0f4f63 100%); }
+  main { position:relative; max-width:760px; margin:0 auto; padding:64px 24px 56px; }
+  a.back { color:#cfe0f2; text-decoration:none; font-weight:600; font-size:14px; }
+  a.back:hover { color:#fff; }
+  h1 { color:#fff; font-size:clamp(32px,5vw,50px); line-height:1.05; margin:.4em 0 .2em; letter-spacing:-.03em; font-weight:800; }
+  h1::after { content:""; display:block; width:76px; height:5px; border-radius:5px; margin-top:.35em; background:linear-gradient(90deg,#72d6b0,#4a9be3); }
+  p.lead { color:#d3e1f1; font-size:17px; line-height:1.55; margin:16px 0 28px; max-width:36em; }
+  form { background:var(--card); border:1px solid rgba(255,255,255,.65); border-radius:20px; padding:28px 28px 24px; display:grid; gap:18px; }
+  .row { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:640px) { .row { grid-template-columns:1fr; } form { padding:22px 18px; } }
+  label, legend { font-size:13px; font-weight:700; letter-spacing:.02em; color:var(--navy); display:block; margin-bottom:6px; padding:0; }
+  .hint { font-weight:400; color:var(--muted); }
+  input[type=text], input[type=email], select, textarea { width:100%; font:400 16px/1.4 "Inter","Segoe UI",system-ui,sans-serif; color:var(--ink); background:var(--field); border:1px solid var(--line); border-radius:12px; padding:11px 13px; }
+  textarea { min-height:150px; resize:vertical; }
+  input:focus, select:focus, textarea:focus { outline:3px solid rgba(74,155,227,.45); border-color:#4a9be3; }
+  fieldset { border:0; margin:0; padding:0; }
+  .stars { display:flex; gap:6px; flex-direction:row-reverse; justify-content:flex-end; }
+  .stars input { position:absolute; opacity:0; pointer-events:none; }
+  .stars label { margin:0; font-size:30px; line-height:1; color:#c3cedc; cursor:pointer; letter-spacing:0; }
+  .stars input:checked ~ label, .stars label:hover, .stars label:hover ~ label { color:#e9a23b; }
+  .stars input:focus-visible + label { outline:3px solid rgba(74,155,227,.6); border-radius:6px; }
+  .count { text-align:right; font-size:12px; color:var(--muted); margin-top:4px; }
+  button.send { justify-self:start; font:700 15px/1 "Inter","Segoe UI",system-ui,sans-serif; color:#fff; background:linear-gradient(135deg,#256bb0,#1b9a68); border:0; border-radius:999px; padding:14px 28px; cursor:pointer; }
+  button.send:hover { filter:brightness(1.08); } button.send:disabled { opacity:.6; cursor:progress; }
+  .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+  .note a { color:#4a9be3; font-weight:600; }
+  .note { font-size:13px; color:var(--muted); line-height:1.5; }
+  .status { display:none; border-radius:14px; padding:14px 16px; font-size:15px; line-height:1.5; }
+  .status.ok { display:block; background:var(--green-100); color:var(--green); }
+  .status.err { display:block; background:var(--red-100); color:var(--red); }
+  .status a { color:inherit; font-weight:700; }
+  #theme-toggle { position:absolute; top:22px; right:24px; display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.3); background:rgba(255,255,255,.1); color:#fff; font:600 13px/1 "Inter","Segoe UI",system-ui,sans-serif; cursor:pointer; }
+  #theme-toggle:hover, #theme-toggle:focus-visible { background:rgba(255,255,255,.2); outline:none; }
+  html[data-theme="dark"] { --card:#0f1c2e; --field:#0a1626; --line:#243a56; --ink:#e4ecf6; --muted:#8ea3bb; --navy:#f1f6fc; --green-100:rgba(56,189,136,.16); --green:#6fd9ad; --red-100:rgba(231,100,90,.16); --red:#f59288; }
+  html[data-theme="dark"] form { border-color:#243a56; }
+  html[data-theme="dark"] .stars label { color:#3a4d68; }
+  html[data-theme="dark"] .stars input:checked ~ label, html[data-theme="dark"] .stars label:hover, html[data-theme="dark"] .stars label:hover ~ label { color:#f2b469; }
+  html[data-theme="dark"] body { background: radial-gradient(900px 500px at 90% -10%, rgba(53,133,212,.35), transparent 60%), radial-gradient(800px 500px at 0% 110%, rgba(27,154,104,.22), transparent 60%), linear-gradient(135deg,#050f1b 0%,#09213d 62%,#0a3342 100%); }
+</style>
+</head>
+<body>
+<main>
+  <button id="theme-toggle" type="button"></button>
+  <a class="back" href="index.html">&larr; All presentations</a>
+  <h1>Send feedback</h1>
+  <p class="lead">Spotted a mistake, have a question or an idea? Tell us what you think about the decks, the functional specification or the video. Your message goes straight to the project owner by e-mail.</p>
+
+  <form id="fb" novalidate>
+    <div class="row">
+      <div><label for="name">Name <span class="hint">(optional)</span></label><input id="name" name="name" type="text" maxlength="80" autocomplete="name"></div>
+      <div><label for="email">Your e-mail <span class="hint">(optional, so we can reply)</span></label><input id="email" name="email" type="email" maxlength="120" autocomplete="email"></div>
+    </div>
+    <div class="row">
+      <div><label for="type">Type</label>
+        <select id="type" name="type"><option>Suggestion</option><option>Mistake or bug</option><option>Question</option><option>Praise</option><option>Other</option></select></div>
+      <div><label for="about">About</label>
+        <select id="about" name="about"><option>General</option><option>Scrum plan deck</option><option>Product deck</option><option>Engineering deck</option><option>Technologies deck</option><option>Full report</option><option>Functional specification</option><option>Project video</option></select></div>
+    </div>
+    <fieldset>
+      <legend>How useful was it? <span class="hint">(optional)</span></legend>
+      <div class="stars" role="radiogroup" aria-label="Rating from 1 to 5">
+        <input type="radio" id="r5" name="rating" value="5"><label for="r5" title="5 - excellent">&#9733;</label>
+        <input type="radio" id="r4" name="rating" value="4"><label for="r4" title="4 - good">&#9733;</label>
+        <input type="radio" id="r3" name="rating" value="3"><label for="r3" title="3 - okay">&#9733;</label>
+        <input type="radio" id="r2" name="rating" value="2"><label for="r2" title="2 - weak">&#9733;</label>
+        <input type="radio" id="r1" name="rating" value="1"><label for="r1" title="1 - poor">&#9733;</label>
+      </div>
+    </fieldset>
+    <div><label for="message">Your message</label><textarea id="message" name="message" maxlength="2000" required></textarea><div class="count"><span id="cnt">0</span> / 2000</div></div>
+    <div class="hp" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <button class="send" id="send" type="submit">Send feedback</button>
+    <p class="note">Messages are delivered by e-mail through the form service FormSubmit (formsubmit.co) to the site owner. Do not include passwords or personal data you would not put in an e-mail. If the form does not work, write to <a id="mailto" href="mailto:mr.essid@mail.com">mr.essid@mail.com</a>.</p>
+  </form>
+</main>
+<script>
+(function () {
+  var TO = 'mr.essid@mail.com', ENDPOINT = 'https://formsubmit.co/ajax/' + TO;
+  var form = document.getElementById('fb'), btn = document.getElementById('send'), box = document.getElementById('status');
+  var msg = document.getElementById('message'), cnt = document.getElementById('cnt');
+  msg.addEventListener('input', function () { cnt.textContent = msg.value.length; });
+  var pre = new URLSearchParams(location.search).get('about');
+  if (pre) { var s = document.getElementById('about'); for (var i = 0; i < s.options.length; i++) if (s.options[i].text === pre) s.selectedIndex = i; }
+
+  function show(kind, html) { box.className = 'status ' + kind; box.innerHTML = html; }
+  function mailtoHref(d) {
+    var body = 'Type: ' + d.type + '\nAbout: ' + d.about + '\nRating: ' + (d.rating || '-') + '\nName: ' + (d.name || '-') + '\nE-mail: ' + (d.email || '-') + '\n\n' + d.message;
+    return 'mailto:' + TO + '?subject=' + encodeURIComponent('Feedback: ' + d.about) + '&body=' + encodeURIComponent(body);
+  }
+  function lastSent() { try { return +localStorage.getItem('fb-last') || 0; } catch (e) { return 0; } }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = new FormData(form);
+    if (f.get('_honey')) return;                               // spam bot: silently ignore
+    var d = { name: (f.get('name') || '').trim(), email: (f.get('email') || '').trim(), type: f.get('type'), about: f.get('about'), rating: f.get('rating') || '', message: (f.get('message') || '').trim() };
+    if (d.message.length < 5) { show('err', 'Please write a short message first.'); msg.focus(); return; }
+    if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { show('err', 'That e-mail address does not look right. Fix it or leave the field empty.'); return; }
+    if (Date.now() - lastSent() < 30000) { show('err', 'Please wait a few seconds before sending another message.'); return; }
+    btn.disabled = true; btn.textContent = 'Sending...';
+    var payload = { _subject: 'Feedback (' + d.type + '): ' + d.about, _template: 'table', _captcha: 'false',
+      type: d.type, about: d.about, rating: d.rating || 'not given', name: d.name || 'not given', message: d.message, page: document.referrer || location.href };
+    if (d.email) { payload.email = d.email; payload._replyto = d.email; }
+    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || j.success === 'false' || j.success === false) throw new Error(j.message || r.status); return j; }); })
+      .then(function () { try { localStorage.setItem('fb-last', Date.now()); } catch (e) {} form.reset(); cnt.textContent = '0'; show('ok', 'Thank you! Your feedback was sent.'); })
+      .catch(function () { show('err', 'Sorry, the message could not be sent from here. <a href="' + mailtoHref(d) + '">Send it with your e-mail app instead</a>.'); })
+      .then(function () { btn.disabled = false; btn.textContent = 'Send feedback'; });
+  });
+
+  // light / dark theme, same behaviour as the other pages
+  var KEY = 'deck-theme', root = document.documentElement, tb = document.getElementById('theme-toggle');
+  var MOON = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
+  var SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>';
+  function cur() { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+  function render() { var d = cur() === 'dark'; tb.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (d ? SUN : MOON) + '</svg><span>' + (d ? 'Light' : 'Dark') + '</span>'; }
+  tb.addEventListener('click', function () { var n = cur() === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', n); try { localStorage.setItem(KEY, n); } catch (e) {} render(); });
+  render();
+})();
+</script>
+</body>
+</html>
