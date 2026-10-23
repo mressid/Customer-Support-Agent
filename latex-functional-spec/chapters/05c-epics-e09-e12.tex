@@ -1,0 +1,55 @@
+\section{E09 -- Voice MVP}
+\textbf{Goal:} support real-time browser voice using the same conversation engine. \textbf{Modules:} M07, M08, M09.
+
+\begin{reqtable}
+\req{FR-VOX-01}{A customer MUST be able to start and end a voice session; microphone permission is explicit; session state and failures are visible.}{M}{R2}{US-080}
+\req{FR-VOX-02}{A customer MUST be able to speak and receive a spoken response; the speech provider is configurable and failures have a fallback path.}{M}{R2}{US-081}
+\req{FR-VOX-03}{A customer MUST be able to interrupt the AI while it speaks; obsolete audio is cancelled or truncated where supported and is not recorded as fully delivered.}{M}{R2}{US-082}
+\req{FR-VOX-04}{Partial transcripts MUST be provisional; only finalized speech creates a durable turn input; the same audio segment MUST NOT become two independent messages.}{M}{R2}{US-083, M09}
+\req{FR-VOX-05}{A customer MUST be able to switch between text and voice in one conversation; the finalized transcript and message order remain coherent.}{M}{R2}{US-083}
+\req{FR-VOX-06}{A support agent MUST be able to take over a voice conversation or receive its context; the handoff behaviour is explicit for the chosen telephony or media provider.}{M}{R2}{US-084}
+\req{FR-VOX-07}{The system MUST NOT store raw audio by default; audio and transcript retention are defined separately and communicated to the customer.}{M}{R2}{M07, RG-PRV-03}
+\req{FR-VOX-08}{The system SHOULD enforce a maximum session duration and per-tenant voice quotas.}{S}{R2}{M07, M20}
+\req{FR-VOX-09}{The system SHOULD support a modular STT $\rightarrow$ AI $\rightarrow$ TTS pipeline first, behind an abstraction that can later host a speech-to-speech provider.}{S}{R2}{M08}
+\end{reqtable}
+\accept{An interrupted response is not marked as delivered; turn order is preserved across typed and spoken messages; a dropped session is cleaned up and reported.}
+
+\section{E10 -- Workflow, routing and SLA}
+\textbf{Goal:} automate repeatable support operations. \textbf{Modules:} M12, M13, M14.
+
+\begin{reqtable}
+\req{FR-WKF-01}{An administrator MUST be able to define a workflow trigger and steps; workflow version, run state and failures are visible.}{S}{R3}{US-090}
+\req{FR-WKF-02}{A support lead MUST be able to define routing rules and SLA targets; rule priority and fallback behaviour are deterministic.}{S}{R3}{US-091}
+\req{FR-WKF-03}{A failed workflow step MUST be retried safely: the retry policy is bounded and idempotency is defined per step.}{S}{R3}{US-092}
+\req{FR-WKF-04}{The system SHOULD send notifications and follow-ups from templates, with preferences, delivery state and retry; notification delivery is separate from conversational responses.}{C}{R3}{M14}
+\req{FR-WKF-05}{Business-critical procedures MUST be enforced by deterministic workflows; the AI may classify or propose but the workflow enforces the procedure.}{S}{R3}{M12}
+\req{FR-WKF-06}{Business hours and escalation policies SHOULD be configurable per organization.}{C}{R3}{M13}
+\end{reqtable}
+\accept{Two rules matching the same conversation always resolve in the same order; a failing step retries within its budget and then lands in a review queue.}
+
+\section{E11 -- Integrations and additional channels}
+\textbf{Goal:} add provider connectors without contaminating core domain logic. \textbf{Modules:} M15, M02, M03.
+
+\begin{reqtable}
+\req{FR-INT-01}{An administrator MUST be able to configure an integration securely: credentials are secret references and the test status and health are visible.}{S}{R3}{US-100}
+\req{FR-INT-02}{The system MUST normalize a provider webhook into a canonical event: the signature is verified, replays are deduplicated and processing is observable.}{S}{R3}{US-101}
+\req{FR-INT-03}{A customer MUST be able to continue support through a second channel; identity linking follows the verification policy and duplicate conversations are avoided where possible.}{S}{R3}{US-102}
+\req{FR-INT-04}{A phone number or e-mail address MUST NOT, by itself, be treated as proof that a person is authorized to access a protected account.}{M}{R1}{M03, RG-IDN-01}
+\req{FR-INT-05}{The system SHOULD record customer consent and contact preferences.}{S}{R3}{M03}
+\req{FR-INT-06}{Webhook intake MUST enforce body-size and schema limits and respond with success only after durable acceptance.}{S}{R3}{M02, M15}
+\end{reqtable}
+\accept{An unsigned or replayed webhook is rejected or deduplicated; the same customer reaching out on two channels is linked only after the required verification.}
+
+\section{E12 -- Observability, evaluation and usage}
+\textbf{Goal:} operate and improve the platform using evidence. \textbf{Modules:} M16, M17, M20.
+
+\begin{reqtable}
+\req{FR-OBS-01}{An operator MUST be able to trace one request across modules: correlation IDs connect API, worker, model, retrieval and tool activity.}{M}{R1}{US-110}
+\req{FR-OBS-02}{A product owner MUST see resolution and handoff metrics; definitions are documented and metrics are tenant-safe.}{S}{R1}{US-111}
+\req{FR-OBS-03}{The team MUST be able to run AI regression evaluations; the dataset and agent/model version are recorded and critical policy tests gate the release.}{M}{R1}{US-112}
+\req{FR-OBS-04}{An administrator MUST be able to inspect usage by agent and channel; provider usage is reconciled and sensitive data is not exposed in metrics.}{S}{R3}{US-113}
+\req{FR-OBS-05}{The system MUST keep an immutable audit record of governance-relevant events (publication, role changes, tool calls, handoffs).}{M}{R1}{M20}
+\req{FR-OBS-06}{The system SHOULD collect customer feedback after a conversation and link it to the conversation outcome.}{S}{R3}{M16}
+\req{FR-OBS-07}{Voice metrics SHOULD be available: time to first audio, turn latency, interruption rate, reconnect and drop rates.}{S}{R2}{M16, M07}
+\end{reqtable}
+\accept{A single trace ID retrieves the activity of one customer message end to end; a release is blocked when a critical safety test fails; metrics contain no message text or personal data in labels.}

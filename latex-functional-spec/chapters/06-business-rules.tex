@@ -1,0 +1,66 @@
+\chapter{Business rules}\label{chap:rules}
+
+The following rules apply across epics. Each requirement in Chapter~\ref{chap:specs} that refers to a rule inherits its constraint.
+
+\section{Tenant isolation and access}
+\begin{rgtable}
+\rg{RG-TEN-01}{The tenant is resolved from the authenticated identity or from trusted channel configuration; a tenant ID in a customer payload is never trusted.}{M18, M02}
+\rg{RG-TEN-02}{Tenant filters apply to SQL, search and vector retrieval, object storage, cache keys, jobs, events and analytics.}{All}
+\rg{RG-TEN-03}{Cross-tenant access tests run in continuous integration; credentials follow least privilege.}{M18, M20}
+\rg{RG-ACC-01}{Every protected operation checks permissions on the server; the UI alone is never a control.}{M18}
+\rg{RG-ACC-02}{Authorization is re-checked at execution time, not only when the AI proposes a tool call.}{M06}
+\end{rgtable}
+
+\section{Identity and verification}
+\begin{rgtable}
+\rg{RG-IDN-01}{A phone number or e-mail address is not proof of authority to access a protected account.}{M03}
+\rg{RG-IDN-02}{The customer's identity is verified before protected order or account details are exposed.}{M03, M06}
+\rg{RG-IDN-03}{Identity linking across channels follows the verification policy; duplicate conversations are avoided where possible.}{M03, M02}
+\end{rgtable}
+
+\section{Conversation and AI behaviour}
+\begin{rgtable}
+\rg{RG-CNV-01}{A conversation is the durable record; channel sessions are delivery mechanisms.}{M01}
+\rg{RG-CNV-02}{Streaming tokens or audio are not equivalent to a committed final message; only finalized content is persisted as a message.}{M01, M09}
+\rg{RG-CNV-03}{Durable state is committed before acknowledging a webhook or inbound message when loss would be unacceptable.}{M02}
+\rg{RG-GRD-01}{The AI does not fabricate order status, account data, policies or actions.}{M04}
+\rg{RG-GRD-02}{If evidence is missing or contradictory, the AI asks a question or escalates; it distinguishes retrieved policy from live transactional data.}{M04, M05}
+\rg{RG-GRD-03}{Customer text, documents, retrieved passages and tool results are untrusted data. Instructions embedded in a retrieved document cannot override system policy or tool permissions.}{M04}
+\rg{RG-GRD-04}{An answer is represented as sourced only when retrieval returned supporting evidence.}{M04, M05}
+\rg{RG-GRD-05}{The AI does not claim an action succeeded until the tool confirms success.}{M04, M06}
+\end{rgtable}
+
+\section{Tool execution}
+\begin{rgtable}
+\rg{RG-TOL-01}{Tools are allowlisted per agent version and tenant; tool permissions live outside the model prompt.}{M06, M19}
+\rg{RG-TOL-02}{Arguments are validated against the input schema before execution; results are validated and returned to the model in minimal, typed form.}{M06}
+\rg{RG-TOL-03}{Non-idempotent external operations use idempotency keys where supported; an unknown write outcome triggers a status lookup or human review, not a blind retry.}{M06}
+\rg{RG-TOL-04}{Sensitive or irreversible actions require confirmation or human approval.}{M06, M10}
+\rg{RG-TOL-05}{Credentials are never exposed to the model; the AI has no unrestricted HTTP access.}{M06, M15}
+\end{rgtable}
+
+\section{Human handoff}
+\begin{rgtable}
+\rg{RG-HUM-01}{A customer can always request a human; when policy requires, the AI stops responding and the customer sees a clear status.}{M10, M04}
+\rg{RG-HUM-02}{Escalation triggers include: explicit request, missing or conflicting evidence, repeated tool failure, high-risk request, provider outage.}{M04, M13}
+\rg{RG-HUM-03}{The handoff bundle contains transcript, concise summary, customer intent, citations used, tool outcomes, ticket and SLA state; it does not expose restricted account data silently.}{M10}
+\rg{RG-HUM-04}{Resolution and every ownership change are recorded with actor and time.}{M10, M01}
+\end{rgtable}
+
+\section{Privacy, retention and voice}
+\begin{rgtable}
+\rg{RG-PRV-01}{Personal and sensitive data are classified; retention is defined separately for messages, transcripts, raw audio, uploaded files, logs and audit events.}{M20}
+\rg{RG-PRV-02}{Unnecessary personal data are kept out of prompts and evaluation datasets; tests use synthetic or redacted data.}{M04, M17}
+\rg{RG-PRV-03}{Raw audio is not stored by default; the customer is told when voice is active and whether recording or transcription is retained.}{M07, M08}
+\rg{RG-PRV-04}{Access and deletion workflows are supported where applicable under the law and customer policy.}{M20, M03}
+\rg{RG-VOX-01}{Partial transcription is provisional; finalized speech creates a durable turn input.}{M09}
+\rg{RG-VOX-02}{An interrupted assistant utterance is cancelled or truncated and not persisted as fully delivered.}{M07, M09}
+\end{rgtable}
+
+\section{Reliability}
+\begin{rgtable}
+\rg{RG-REL-01}{Inbound events are stored in a durable inbox; important events use a transactional outbox.}{M02, M20}
+\rg{RG-REL-02}{External calls have timeouts, bounded retries with backoff and jitter, and idempotency where possible; exhausted retries reach a dead-letter or review queue.}{All}
+\rg{RG-REL-03}{No database transaction is held open while waiting for a model or external provider.}{M04}
+\rg{RG-REL-04}{If retrieval is down, the system does not pretend a grounded answer was produced: it asks or hands off. If the AI provider is down, it states temporary unavailability or routes to a human.}{M04, M10}
+\end{rgtable}

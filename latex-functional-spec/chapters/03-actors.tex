@@ -1,0 +1,52 @@
+\chapter{Actors and use cases}
+
+\section{Human actors}
+\begin{table}[htbp]
+\centering\caption{Human actors}\label{tab:actors}
+\begin{tabular}{@{}p{3.8cm}p{12.2cm}@{}}
+\toprule \textbf{Actor} & \textbf{Role and goals} \\ \midrule
+\textbf{Customer} & Asks a question or requests an action through a supported channel (web chat, then voice); wants a correct answer or a human. \\
+\textbf{Support agent} & Reviews, takes over and resolves conversations or tickets; receives the handoff context. \\
+\textbf{Support lead} & Manages queues, policies, reporting and quality; filters and follows tickets. \\
+\textbf{Organization administrator} & Configures channels, knowledge, AI agents, integrations and access; invites users and assigns roles. \\
+\textbf{Platform operator} & Monitors reliability, cost, abuse and platform health. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{System actors}
+\begin{table}[htbp]
+\centering\caption{External systems and technical actors}\label{tab:systems}
+\begin{tabular}{@{}p{4.6cm}p{11.4cm}@{}}
+\toprule \textbf{System} & \textbf{Interaction} \\ \midrule
+Model provider (LLM) & Generation, classification, embeddings, through an adapter. \\
+Speech provider (STT/TTS or speech-to-speech) & Transcription and speech synthesis (R2). \\
+Channel providers & Webhooks and outbound delivery (e-mail, messaging; R3). \\
+Business systems (commerce, CRM, etc.) & Tool calls through connectors, with limited permissions. \\
+Secret manager & Reference and rotation of credentials. \\
+Telemetry stack & Logs, metrics, traces, alerts. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Use cases}
+The following figures show the use cases per actor family. Each use case is detailed in Chapter~\ref{chap:specs} as requirements and in Appendix~\ref{app:scenarios} as scenarios.
+
+\figpdf[0.62]{uc-systeme.pdf}{System-level use cases}{fig:uc-sys}
+\figpdf[0.7]{uc-client.pdf}{Customer use cases}{fig:uc-client}
+\figpdf[0.7]{uc-agent.pdf}{Support agent and support lead use cases}{fig:uc-agent}
+\figpdf[0.7]{uc-admin.pdf}{Administration and governance use cases}{fig:uc-admin}
+
+\section{Actor to epic summary}
+\begin{table}[htbp]
+\centering\caption{Epics mainly used by each actor}\label{tab:actor-epic}
+\begin{tabular}{@{}p{4cm}p{12cm}@{}}
+\toprule \textbf{Actor} & \textbf{Epics concerned} \\ \midrule
+Customer & E02, E03, E04 (answers), E05, E06 (order status), E07 (human request), E09 (voice), E11 (second channel) \\
+Support agent & E02 (timeline), E07 (queue, handoff, resolution), E08 (tickets), E09 (voice takeover) \\
+Support lead & E08 (filters), E10 (routing, SLA), E12 (metrics) \\
+Administrator & E01, E03 (widget), E04 (sources), E05 (agent versions), E06 (tools), E11, E12 (usage) \\
+Operator & E12, non-functional reliability and security requirements \\
+\bottomrule
+\end{tabular}
+\end{table}

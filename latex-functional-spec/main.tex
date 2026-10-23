@@ -1,0 +1,42 @@
+% ===============================================================
+% AI Customer Support Platform - Functional Specification Document
+% (Cahier des charges fonctionnel)
+% Build: pdflatex main.tex (twice) or latexmk -pdf main.tex
+% Overleaf: main document = main.tex, compiler pdfLaTeX.
+% ===============================================================
+\documentclass[11pt,a4paper]{report}
+\input{preamble}
+
+\newcommand{\ProjectName}{AI Customer Support Platform}
+\newcommand{\DocTitle}{Functional Specification}
+\newcommand{\DocSubtitle}{Functional requirements for an AI-native customer support platform\\ (text and voice conversations)}
+\newcommand{\DocVersion}{1.0}
+\newcommand{\DocDate}{\today}
+\newcommand{\Author}{Amine Essid}
+
+\begin{document}
+\input{chapters/00-cover}
+
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+\input{chapters/01-introduction}
+\input{chapters/02-overview}
+\input{chapters/03-actors}
+\input{chapters/04-functional-view}
+\input{chapters/05-specifications}
+\input{chapters/06-business-rules}
+\input{chapters/07-data}
+\input{chapters/08-interfaces}
+\input{chapters/09-nfr}
+\input{chapters/10-planning}
+\input{chapters/11-acceptance}
+
+\appendix
+\input{chapters/12-appendices}
+
+\end{document}

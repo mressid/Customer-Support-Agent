@@ -1,0 +1,130 @@
+\chapter{Glossary}\label{app:glossary}
+\begin{description}
+  \item[ADR] Architecture Decision Record.
+  \item[Agent (AI agent)] a versioned configuration of instructions, knowledge assignments, allowed tools and policies.
+  \item[Agent (support agent)] a human member of the support team.
+  \item[Barge-in] the customer interrupting the AI while it is speaking.
+  \item[Chunk] a segment of a document prepared for embedding and retrieval.
+  \item[Connector] a provider-specific adapter that calls an external business system.
+  \item[Correlation ID] an identifier that links all activity caused by one request across modules.
+  \item[Embedding] a numeric representation of text used for semantic retrieval.
+  \item[Grounding] basing an answer on retrieved, approved evidence.
+  \item[Handoff] transfer of a conversation from the AI to a human, with context.
+  \item[Idempotency key] a value that lets a retried command be applied at most once.
+  \item[Inbox / outbox] durable stores for received events and for events to publish reliably.
+  \item[Increment] a usable, potentially releasable result of a Sprint.
+  \item[MoSCoW] Must, Should, Could, Won't prioritization.
+  \item[MVP] minimum viable product; here release R1.
+  \item[RAG] retrieval-augmented generation.
+  \item[SLA] service-level agreement: response and resolution targets.
+  \item[STT / TTS] speech-to-text and text-to-speech.
+  \item[Tenant] a customer organization; the data-isolation boundary.
+  \item[Tool] an allowlisted, schema-defined business operation the AI may request.
+  \item[Turn] the processing of one customer message.
+  \item[Webhook] an HTTP callback sent by a provider to the platform.
+\end{description}
+
+\chapter{Detailed scenarios}\label{app:scenarios}
+
+\section{Scenario 1 -- Grounded answer on website chat}
+\begin{tabular}{@{}p{3.2cm}p{12.8cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Actors & Customer, AI engine. \\
+Preconditions & The organization has an agent version published, a widget configured and at least one ingested knowledge source. \\
+Trigger & The customer opens the widget and asks a question. \\
+Main flow & 1. A scoped session starts and a conversation is created. 2. The message is persisted and deduplicated. 3. The engine checks state, builds context and retrieves tenant-filtered passages. 4. It answers using the evidence and cites the sources. 5. The answer, sources, timing and usage are persisted and delivered. \\
+Alternative flows & \emph{No useful evidence:} the engine asks a clarification or gives a clear fallback and offers a human; it does not present the answer as sourced. \emph{Model timeout:} bounded retry, then fallback message or handoff. \\
+Postconditions & Conversation timeline updated; audit and trace recorded. \\
+Requirements & FR-CNV-01/02, FR-KB-05/06, FR-IA-01..04. \\
+\bottomrule
+\end{tabular}
+
+\section{Scenario 2 -- Order status lookup}
+\begin{tabular}{@{}p{3.2cm}p{12.8cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Actors & Customer, AI engine, tool execution service, commerce system. \\
+Preconditions & The \code{orders.lookup} tool (read-only) is enabled for the agent; the customer can be verified. \\
+Trigger & The customer asks where their order is. \\
+Main flow & 1. The engine proposes \code{orders.lookup} with an order reference. 2. The system validates the schema, tenant scope and customer verification. 3. The connector queries the commerce system. 4. A typed, minimal result returns. 5. The engine answers from the verified result. 6. The call is audited with sensitive values redacted. \\
+Alternative flows & \emph{Verification fails:} no data is exposed; the engine asks for verification or offers a human. \emph{Timeout or unknown outcome:} no blind retry; the customer is told the status is unavailable, or the case is handed off. \\
+Postconditions & Audit record with actor, tool version, outcome, timestamp and correlation ID. \\
+Requirements & FR-OUT-01..06, RG-IDN-02, RG-TOL-01..03. \\
+\bottomrule
+\end{tabular}
+
+\section{Scenario 3 -- Customer requests a human}
+\begin{tabular}{@{}p{3.2cm}p{12.8cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Actors & Customer, AI engine, support agent. \\
+Preconditions & A conversation is open. \\
+Trigger & The customer asks for a human, or policy triggers escalation. \\
+Main flow & 1. The conversation moves to a pending-handoff state and the AI stops responding. 2. The customer sees a clear status. 3. The conversation enters the tenant's unassigned queue with the handoff summary. 4. An agent claims it and takes ownership. 5. The agent replies, optionally creates a ticket, then resolves. \\
+Alternative flows & \emph{No agent available:} the customer is told so and a ticket is created for follow-up. \\
+Postconditions & Ownership changes and resolution recorded; transcript preserved. \\
+Requirements & FR-HUM-01..07, FR-TKT-01. \\
+\bottomrule
+\end{tabular}
+
+\section{Scenario 4 -- Knowledge document ingestion}
+\begin{tabular}{@{}p{3.2cm}p{12.8cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Actors & Administrator, ingestion worker. \\
+Trigger & The administrator uploads a document. \\
+Main flow & 1. Size and content type are validated. 2. A source and a document version are registered with state \emph{pending}. 3. The worker parses, chunks, embeds and indexes. 4. The state moves to \emph{succeeded}; the document is retrievable with source metadata. \\
+Alternative flows & \emph{Ingestion fails:} the state shows the failure and the job can be retried. \emph{Document deleted:} the deletion propagates to the index. \\
+Requirements & FR-KB-01..04. \\
+\bottomrule
+\end{tabular}
+
+\section{Scenario 5 -- Voice turn with interruption (R2)}
+\begin{tabular}{@{}p{3.2cm}p{12.8cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Actors & Customer, speech provider, AI engine. \\
+Trigger & The customer starts a voice session and speaks. \\
+Main flow & 1. Microphone permission is requested explicitly. 2. Partial transcripts are shown as provisional. 3. The final transcript creates a durable turn input. 4. The engine answers; speech is synthesized and played. 5. If the customer interrupts, the obsolete audio is cancelled or truncated and not recorded as fully delivered. 6. The customer may switch to text; the timeline stays coherent. \\
+Postconditions & Finalized transcript and events linked to the conversation; no raw audio kept by default. \\
+Requirements & FR-VOX-01..07, RG-VOX-01/02. \\
+\bottomrule
+\end{tabular}
+
+\chapter{Traceability matrix}\label{app:trace}
+Every user story of the Product Backlog is traced to at least one functional requirement.
+\begin{longtable}{@{}p{1.8cm}p{1.4cm}p{10.8cm}p{1.6cm}@{}}
+\caption{User story to requirement traceability}\label{tab:trace}\\
+\toprule \textbf{Story} & \textbf{Epic} & \textbf{Functional requirements} & \textbf{Release} \\ \midrule \endfirsthead
+\toprule \textbf{Story} & \textbf{Epic} & \textbf{Functional requirements} & \textbf{Release} \\ \midrule \endhead
+\bottomrule \endlastfoot
+\input{chapters/trace-rows}
+\end{longtable}
+
+\chapter{Project video}\label{app:video}
+A short motion-graphics video with a British voice-over introduces the platform: the customer message, grounded answers (RAG), safe tool calls, prompt-injection handling, tenant isolation, human handoff, voice and the modular monolith. It lasts 1 minute 45 seconds and is published with the presentations.
+
+\begin{figure}[htbp]
+  \centering
+  \href{https://cs-agent.messid.tech/assets/ai-customer-support-video.mp4}{\includegraphics[width=0.85\linewidth]{figures/video-poster.jpg}}
+  \caption{Poster frame of the project video (click to open the video).}\label{fig:video}
+\end{figure}
+
+\begin{itemize}
+  \item \textbf{Watch online:} \url{https://cs-agent.messid.tech/assets/ai-customer-support-video.mp4}
+  \item \textbf{Presentations page:} \url{https://cs-agent.messid.tech/} (link ``Project video'').
+  \item \textbf{File in the repository:} \code{docs/assets/ai-customer-support-video.mp4} (H.264, 1920$\times$1080, 30 fps).
+\end{itemize}
+
+\chapter{Open items}\label{app:open}
+\begin{table}[htbp]
+\centering\caption{Items to be decided or measured}\label{tab:open}
+\begin{tabular}{@{}p{4.4cm}p{11.6cm}@{}}
+\toprule \textbf{Item} & \textbf{To be decided} \\ \midrule
+Numeric targets & Latency, availability, recovery, volumes, success-measure thresholds (Table~\ref{tab:kpi}). \\
+Team and calendar & Team size, capacity, Sprint dates (the Gantt dates are placeholders). \\
+Customer verification & Method used before exposing order or account data (ADR-009). \\
+Voice strategy & Modular STT/TTS versus speech-to-speech; provider and telephony (ADR-006, ADR-007). \\
+Retention periods & Messages, transcripts, audio, logs, audit (ADR-008). \\
+Languages and accessibility & Supported customer languages and accessibility level of the widget. \\
+Business tool & Which commerce system backs \code{orders.lookup} in the MVP. \\
+Names on the cover & Reviewers and approvers of this document. \\
+\bottomrule
+\end{tabular}
+\end{table}

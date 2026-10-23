@@ -1,0 +1,112 @@
+\chapter{Planning, constraints and risks}\label{chap:planning}
+
+\section{Releases}
+\begin{table}[htbp]
+\centering\caption{Release goals}\label{tab:releases}
+\begin{tabular}{@{}p{1.2cm}p{4cm}p{10.8cm}@{}}
+\toprule \textbf{Rel.} & \textbf{Name} & \textbf{Expected outcome} \\ \midrule
+R1 & Text support MVP & A website visitor receives knowledge-grounded answers, one read-only business lookup is available, and human handoff preserves context. \\
+R2 & Voice MVP & A customer can speak with the same AI engine and see a coherent transcript. \\
+R3 & Operational expansion & Support teams can scale operations with workflows, routing, additional channels and stronger evaluation. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\figpdf[0.55]{epics-releases.pdf}{Epic delivery map by release}{fig:epic-release}
+
+\subsection{R1 exit criteria}
+\begin{itemize}
+  \item tenant-isolation tests pass;
+  \item inbound messages are deduplicated;
+  \item unknown or unsupported questions have a safe fallback;
+  \item tool calls are allowlisted, authorized and audited;
+  \item a human can take over;
+  \item core API and worker telemetry is available;
+  \item the evaluation suite has no unresolved critical policy failure.
+\end{itemize}
+
+\subsection{R2 exit criteria}
+\begin{itemize}
+  \item session start, stop and cleanup are reliable;
+  \item transcript finalization and ordering work;
+  \item interruption behaviour is tested;
+  \item the audio and transcript privacy policy is implemented;
+  \item latency and cost metrics are visible;
+  \item human handoff behaviour is validated for the selected provider.
+\end{itemize}
+
+\section{MoSCoW summary}
+\begin{table}[htbp]
+\centering\caption{Requirements by release and priority}\label{tab:moscow}
+\begin{tabular}{@{}lcccc@{}}
+\toprule \textbf{Epic} & \textbf{Must} & \textbf{Should} & \textbf{Could} & \textbf{Release} \\ \midrule
+E01 Tenant and access foundation & 6 & 1 & 0 & R1 \\
+E02 Conversation and message core & 6 & 2 & 0 & R1 \\
+E03 Website chat channel & 3 & 2 & 0 & R1 \\
+E04 Knowledge ingestion and RAG & 6 & 3 & 0 & R1 \\
+E05 AI orchestration & 8 & 1 & 0 & R1 \\
+E06 Safe business tools & 6 & 2 & 0 & R1--R3 \\
+E07 Human inbox and handoff & 6 & 1 & 0 & R1 \\
+E08 Tickets and case tracking & 2 & 1 & 1 & R1 \\
+E09 Voice MVP & 7 & 2 & 0 & R2 \\
+E10 Workflow, routing and SLA & 0 & 4 & 2 & R3 \\
+E11 Integrations and additional channels & 1 & 5 & 0 & R1--R3 \\
+E12 Observability, evaluation and usage & 3 & 4 & 0 & R1--R2--R3 \\
+\midrule
+\textbf{Total} & \textbf{54} & \textbf{28} & \textbf{3} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+The counts include the functional requirements of Chapter~\ref{chap:specs} only; non-functional requirements are tracked in Chapter~\ref{chap:nfr}.
+
+\section{Provisional Sprint plan}
+Sprints are assumed to last two weeks. The sequence is a planning hypothesis, to be re-forecast after the first Sprint using actual capacity.
+
+\figpdf[0.5]{sprints.pdf}{Sprint sequence and goals}{fig:sprints}
+
+\begin{longtable}{@{}p{2.4cm}p{6.8cm}p{6.8cm}@{}}
+\caption{Provisional Sprints and related requirements}\label{tab:sprints}\\
+\toprule \textbf{Sprint} & \textbf{Goal} & \textbf{Stories and main requirements} \\ \midrule \endfirsthead
+\toprule \textbf{Sprint} & \textbf{Goal} & \textbf{Stories and main requirements} \\ \midrule \endhead
+\bottomrule \endlastfoot
+Sprint 0 (if needed) & Make the team able to build, test and release safely. & Repository and module structure, CI, local environment, migrations, initial threat model, ADRs, minimal deployment and secret handling, Definition of Done. \\
+Sprint 1 & A tenant-scoped conversation and message can be created, persisted and retrieved. & US-001, US-003, US-010, US-011; FR-ACC-01, FR-ACC-06, FR-CNV-01, FR-CNV-02. \\
+Sprint 2 & A visitor can exchange text messages with the backend reliably. & US-020, US-021, US-022, US-013; FR-WEB-01..03, FR-CNV-05. \\
+Sprint 3 & Organization knowledge can be ingested and retrieved with tenant boundaries. & US-030, US-031, US-032; FR-KB-01..05. \\
+Sprint 4 & Website chat answers common questions from approved knowledge and handles missing evidence safely. & US-040, US-033, US-041, US-042; FR-IA-01..04, FR-KB-06. \\
+Sprint 5 & The AI performs one authorized read-only lookup and hands off unresolved conversations. & US-050, US-051, US-053, US-060, US-061, US-062; FR-OUT-01..05, FR-HUM-01..04. \\
+Sprint 6 & Support staff track unresolved work and the MVP meets release gates. & US-070, US-071, US-043, US-110, US-112; FR-TKT-01..02, FR-IA-05, FR-OBS-01, FR-OBS-03. \\
+Sprint 7 & Validate the voice architecture and complete a minimal browser voice turn. & US-080, US-081; FR-VOX-01..02, voice telemetry, consent review. \\
+Sprint 8 & Voice and text share a coherent conversation timeline. & US-082, US-083, US-084; FR-VOX-03..06. \\
+Later & Additional channels, workflow, routing, SLA, evaluation, usage plans. & E10, E11, US-113; FR-WKF, FR-INT, FR-OBS-04. \\
+\end{longtable}
+
+\section{Constraints}
+\begin{itemize}
+  \item \textbf{Architecture:} modular monolith first; the core domain does not depend on any specific provider.
+  \item \textbf{Security:} AI output is untrusted; authorization is enforced in code.
+  \item \textbf{Privacy:} no raw audio or sensitive data retained without need, consent and policy.
+  \item \textbf{Organization:} small team; capacity and calendar unknown; dates are placeholders.
+  \item \textbf{Dependencies:} voice and integration work depend on vendor capabilities and credentials.
+\end{itemize}
+
+\section{Initial risks}
+\begin{longtable}{@{}p{3.6cm}p{3.7cm}p{8.7cm}@{}}
+\caption{Risks and mitigations}\label{tab:risks}\\
+\toprule \textbf{Risk} & \textbf{Impact} & \textbf{Mitigation} \\ \midrule \endfirsthead
+\toprule \textbf{Risk} & \textbf{Impact} & \textbf{Mitigation} \\ \midrule \endhead
+\bottomrule \endlastfoot
+Prompt injection via customer or retrieved content & Unauthorized or incorrect actions & Tool allowlist, server authorization, untrusted-content boundaries, adversarial tests. \\
+Tenant data leakage in retrieval & Severe privacy and security issue & Tenant-scoped indexes and filters, access tests, per-tenant metadata and object controls. \\
+LLM latency and cost & Poor customer experience, high cost & Budgets, timeouts, model routing, caching only safe content, measurement. \\
+Duplicate webhook or tool execution & Duplicate messages or actions & Durable inbox, idempotency keys, deduplication. \\
+Voice interruption and transcript race & Confusing conversation history & Sequence IDs, finalized versus partial states, cancellation semantics. \\
+Provider lock-in & Cost and migration risk & Provider adapters, normalized contracts, contract tests. \\
+Unsupported AI answer & Loss of trust & Retrieval evaluation, evidence thresholds, safe fallback and handoff. \\
+Scope too broad & Delayed first usable product & Text MVP vertical slice, ordered backlog, defer non-essential channels. \\
+\end{longtable}
+
+\section{Decisions to record and to defer}
+\textbf{Architecture decision records to create:} ADR-001 modular monolith boundaries; ADR-002 relational database and tenant isolation; ADR-003 queue and outbox/inbox; ADR-004 knowledge ingestion and vector search; ADR-005 LLM provider abstraction and data policy; ADR-006 voice strategy (modular STT/TTS versus speech-to-speech); ADR-007 browser voice transport and telephony; ADR-008 transcript and audio retention and consent; ADR-009 authentication and customer verification; ADR-010 tool authorization and approval.
+
+\textbf{Decisions not to make prematurely:} one microservice per module; a universal workflow builder before core support works; several speech providers before the first voice use case is validated; autonomous write access to every customer system; permanent raw audio retention; complex billing before pricing and usage are known.

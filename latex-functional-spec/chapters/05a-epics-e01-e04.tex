@@ -1,0 +1,56 @@
+\section{E01 -- Tenant and access foundation}
+\textbf{Goal:} establish secure organization boundaries. \textbf{Modules:} M18, M20. \textbf{Actors:} administrator, developer or security tester.
+
+\begin{reqtable}
+\req{FR-ACC-01}{The system MUST allow an organization to be created and configured: an organization ID is generated, default settings exist and an audit event is recorded.}{M}{R1}{US-001, M18}
+\req{FR-ACC-02}{An administrator MUST be able to invite users; the invitation expires after a defined period and cannot be used afterwards.}{M}{R1}{US-002, M18}
+\req{FR-ACC-03}{An administrator MUST be able to assign roles; the role is validated server-side and a revoked user loses access immediately.}{M}{R1}{US-002, M18}
+\req{FR-ACC-04}{The tenant MUST be resolved from an authenticated identity or a trusted channel configuration, never from a tenant ID supplied in an arbitrary payload.}{M}{R1}{M18, RG-TEN-01}
+\req{FR-ACC-05}{Organization administrator, support agent, customer and service identities MUST be distinct, each with its own permissions.}{M}{R1}{M18}
+\req{FR-ACC-06}{Automated tests MUST demonstrate that any cross-tenant read or write attempt is denied.}{M}{R1}{US-003}
+\req{FR-ACC-07}{Each organization SHOULD be able to configure its channels, default AI agent and handoff policies from a single configuration.}{S}{R1}{US-001, M19}
+\end{reqtable}
+\accept{Organization creation records an ID, defaults and an audit event; an expired invitation is refused; an invalid role is rejected by the server; cross-tenant access is denied in CI.}
+
+\section{E02 -- Conversation and message core}
+\textbf{Goal:} persist and retrieve a reliable conversation timeline. \textbf{Modules:} M01, M02, M03.
+
+\begin{reqtable}
+\req{FR-CNV-01}{A customer MUST be able to start a conversation through website chat; it is scoped to the tenant and channel and its initial event is persisted.}{M}{R1}{US-010}
+\req{FR-CNV-02}{A customer MUST be able to send and receive text messages; message order is stable.}{M}{R1}{US-011}
+\req{FR-CNV-03}{The delivery state of each outbound message (pending, delivered, failed) MUST be represented; errors MUST be recoverable.}{M}{R1}{US-011, M02}
+\req{FR-CNV-04}{A support agent MUST be able to inspect the timeline; messages, system events and visibility levels are distinguished.}{M}{R1}{US-012}
+\req{FR-CNV-05}{A replayed inbound provider event MUST NOT create a duplicate message.}{M}{R1}{US-013}
+\req{FR-CNV-06}{A conversation MUST follow an explicit lifecycle: open, human-owned, closed, reopened.}{M}{R1}{M01}
+\req{FR-CNV-07}{The system MUST support internal notes that are not visible to the customer, with an explicit visibility field.}{S}{R1}{M01, M10}
+\req{FR-CNV-08}{Message kinds MUST be explicit (text, image/file/audio reference, system event, internal note, transcript segment) with dedicated direction and visibility fields.}{S}{R1}{M01}
+\end{reqtable}
+\accept{The timeline is identical when re-read; the same provider event delivered twice produces a single message; an internal note is never returned to the customer.}
+
+\section{E03 -- Website chat channel}
+\textbf{Goal:} provide the first customer-facing channel. \textbf{Modules:} M02, M19.
+
+\begin{reqtable}
+\req{FR-WEB-01}{An administrator MUST be able to configure a website widget associated with the correct organization and agent configuration.}{M}{R1}{US-020}
+\req{FR-WEB-02}{A visitor MUST be able to open the chat and receive a session whose token is scoped, expires and cannot access another tenant.}{M}{R1}{US-021}
+\req{FR-WEB-03}{A visitor MUST be able to resume their conversation after a temporary network failure under a valid session policy.}{M}{R1}{US-022}
+\req{FR-WEB-04}{The widget SHOULD display connection, sending and error states, and who is handling the conversation (AI or human).}{S}{R1}{M02}
+\req{FR-WEB-05}{The system SHOULD rate-limit messages per session to curb abuse.}{S}{R1}{M20}
+\end{reqtable}
+\accept{An expired session token is refused; resuming after a disconnection restores the history; an attempt to access another tenant is denied.}
+
+\section{E04 -- Knowledge ingestion and RAG}
+\textbf{Goal:} ground answers in organization-approved sources. \textbf{Modules:} M05.
+
+\begin{reqtable}
+\req{FR-KB-01}{An administrator MUST be able to register and upload a source; size limits are enforced and the actual content type (not only the extension) is checked.}{M}{R1}{US-030}
+\req{FR-KB-02}{The ingestion state of each source MUST be visible (pending, running, succeeded, failed).}{M}{R1}{US-030}
+\req{FR-KB-03}{The system MUST parse, chunk, embed and index a document asynchronously; a failed ingestion can be retried.}{M}{R1}{US-031}
+\req{FR-KB-04}{Each document MUST be versioned; deleting a source MUST propagate to the index.}{M}{R1}{US-031, M05}
+\req{FR-KB-05}{An AI agent MUST be able to retrieve relevant chunks; results are tenant-filtered and carry source metadata.}{M}{R1}{US-032}
+\req{FR-KB-06}{The customer MUST receive a grounded answer or a clear fallback; an answer is never represented as sourced when retrieval returned no useful evidence.}{M}{R1}{US-033}
+\req{FR-KB-07}{Answers SHOULD indicate the sources used (citations) where supported.}{S}{R1}{M05}
+\req{FR-KB-08}{The system SHOULD detect stale or conflicting sources and trigger a clarification or an escalation.}{S}{R1}{M05, M04}
+\req{FR-KB-09}{Uploaded files SHOULD be malware-scanned where feasible; private objects remain non-public.}{S}{R1}{M05, M20}
+\end{reqtable}
+\accept{An uploaded document shows its status and then becomes queryable with source references; a question outside the knowledge gets an explicit fallback with no invented citation; a deleted document is no longer retrievable.}

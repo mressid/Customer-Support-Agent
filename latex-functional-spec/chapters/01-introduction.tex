@@ -1,0 +1,90 @@
+\chapter{Introduction}
+
+\section{Purpose of this document}
+This functional specification formalizes the functional needs of the \textbf{\ProjectName}: an AI-native customer support platform that conducts complete conversations over text and voice, answers from the organization's approved knowledge, performs explicitly authorized business actions, and hands the conversation to a human agent without losing context.
+
+It is the shared reference between the Product Owner, the development team, customer-support representatives and security owners. It is the basis for acceptance (Chapter~\ref{chap:acceptance}) and feeds the Scrum Product Backlog.
+
+\section{Scope of the document}
+The document covers:
+\begin{itemize}
+  \item the context, objectives and scope of the product;
+  \item the actors and their use cases;
+  \item detailed functional requirements for the 12 epics and 20 logical modules;
+  \item cross-cutting business rules and the high-level data model;
+  \item user interfaces and interfaces with external systems;
+  \item non-functional requirements (security, privacy, reliability, performance, observability, etc.);
+  \item release planning, risks, constraints and the acceptance strategy.
+\end{itemize}
+Detailed architecture, technology choices and UML diagrams are described in the other project deliverables (see Section~\ref{sec:refs}).
+
+\section{Intended audience}
+\begin{tabular}{@{}p{4.3cm}p{11.7cm}@{}}
+\toprule \textbf{Reader} & \textbf{Expected use} \\ \midrule
+Product Owner & Validate the need, order the backlog, arbitrate priorities. \\
+Developers & Understand expected behaviours and the rules to implement. \\
+Support staff / agents & Check that handling and handoff journeys fit their work. \\
+Security and privacy & Validate tenant isolation, access management and retention. \\
+Supervisor / client & Validate scope, deliverables and acceptance criteria. \\
+\bottomrule
+\end{tabular}
+
+\section{Writing conventions}
+\subsection{Requirement levels}
+\begin{itemize}
+  \item \textbf{MUST}: mandatory for correctness or security.
+  \item \textbf{SHOULD}: recommended unless a documented reason exists.
+  \item \textbf{MAY}: optional.
+\end{itemize}
+
+\subsection{MoSCoW priorities}
+Each requirement carries a MoSCoW priority.
+\begin{center}
+\begin{tabular}{@{}cll@{}}
+\toprule \textbf{Code} & \textbf{Meaning} & \textbf{Interpretation} \\ \midrule
+M & Must have & Essential for the targeted release. \\
+S & Should have & Important, workable around in the short term. \\
+C & Could have & Desirable if capacity allows. \\
+W & Won't have (now) & Deferred beyond the stated release, already identified. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Releases}
+\textbf{R1}: text MVP; \textbf{R2}: voice MVP; \textbf{R3}: operational expansion (see Chapter~\ref{chap:planning}).
+
+\subsection{Identifiers}
+\begin{center}
+\begin{tabular}{@{}lp{11cm}@{}}
+\toprule \textbf{Prefix} & \textbf{Meaning} \\ \midrule
+\code{FR-xxx-nn} & Functional requirement (\code{ACC} access, \code{CNV} conversation, \code{WEB} web chat, \code{KB} knowledge, \code{IA} orchestration, \code{OUT} tools, \code{HUM} human handoff, \code{TKT} tickets, \code{VOX} voice, \code{WKF} workflows, \code{INT} integrations, \code{OBS} observability). \\
+\code{RG-xxx-nn} & Cross-cutting business rule. \\
+\code{NFR-xxx-nn} & Non-functional requirement. \\
+\code{US-nnn} & User story from the Product Backlog. \\
+\code{Mnn} & Logical module (M01 to M20). \\
+\code{Enn} & Epic (E01 to E12). \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Reference documents}\label{sec:refs}
+\begin{itemize}
+  \item Product vision and scope (\code{01-product-vision}).
+  \item Module catalog (\code{02}), architecture (\code{03}), module communication (\code{04}), domain model (\code{05}).
+  \item AI conversation engine (\code{06}), voice and multimodal (\code{07}), integrations and tools (\code{08}).
+  \item Security, privacy and reliability (\code{09}), observability and evaluation (\code{10}).
+  \item Technology stack (\code{11}--\code{13}) and Scrum artifacts (\code{scrum/}).
+  \item Project video with voice-over (Appendix~\ref{app:video}), a 1 min 45 s introduction to the platform.
+\end{itemize}
+Diagrams in this document come from the design documentation.
+
+\section{Minimal glossary}
+A full glossary is given in Appendix~\ref{app:glossary}. The essential terms are:
+\begin{description}
+  \item[Tenant] a customer organization of the platform; the data-isolation boundary.
+  \item[Conversation] the durable record of an interaction; channel sessions are only the delivery mechanism.
+  \item[Turn] the processing of one customer message by the AI engine.
+  \item[RAG] retrieval-augmented generation from approved knowledge.
+  \item[Tool] a business operation the AI may \emph{request} and that application code authorizes and executes.
+  \item[Handoff] transfer of the conversation from the AI to a human agent together with its context.
+\end{description}

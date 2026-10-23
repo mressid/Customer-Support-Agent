@@ -20,3 +20,6 @@ Thumbs.db
 # dependencies and temp
 node_modules/
 *.err
+
+# motion-graphics video project (sources, renders, audio)
+video/

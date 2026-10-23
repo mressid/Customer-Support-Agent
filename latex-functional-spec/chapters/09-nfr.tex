@@ -1,0 +1,64 @@
+\chapter{Non-functional requirements}\label{chap:nfr}
+
+Numeric targets are \textbf{TBD}: they are set after a measured baseline and agreed with stakeholders. Qualitative requirements below are mandatory unless stated otherwise.
+
+\section{Security}
+\begin{reqtable}
+\req{NFR-SEC-01}{Tenant isolation MUST be enforced in application authorization and data access (SQL, search, objects, caches, jobs, events, analytics), not only in the UI.}{M}{R1}{RG-TEN-*}
+\req{NFR-SEC-02}{Provider credentials MUST be stored in a secret manager or protected encrypted store and referenced by identifier; secrets MUST be redacted from logs and traces and support rotation and revocation.}{M}{R1}{M15, M20}
+\req{NFR-SEC-03}{Customer text, uploads, retrieved passages and tool results MUST be treated as untrusted; tool permissions MUST live outside the prompt; arguments MUST be validated.}{M}{R1}{RG-GRD-03}
+\req{NFR-SEC-04}{Uploads MUST be limited in size and type, validated on content, kept private by default, and served through short-lived signed URLs when needed.}{M}{R1}{FR-KB-01}
+\req{NFR-SEC-05}{Webhooks MUST verify signature and timestamp, resist replay, and be deduplicated.}{M}{R3}{FR-INT-02}
+\req{NFR-SEC-06}{The system SHOULD apply rate limits and abuse controls at the edge and per session.}{S}{R1}{FR-WEB-05}
+\req{NFR-SEC-07}{The security test matrix (Section~\ref{sec:sectests}) MUST pass before each release.}{M}{R1}{Chap. 11}
+\end{reqtable}
+
+\section{Privacy and compliance}
+\begin{reqtable}
+\req{NFR-PRV-01}{Personal and sensitive data MUST be classified; retention MUST be defined separately for messages, transcripts, raw audio, uploads, logs and audit events.}{M}{R1}{RG-PRV-01}
+\req{NFR-PRV-02}{Access to transcripts and recordings MUST be limited by role.}{M}{R1}{M18, M20}
+\req{NFR-PRV-03}{The system MUST support access and deletion workflows where applicable under law and customer policy.}{S}{R1}{RG-PRV-04}
+\req{NFR-PRV-04}{Voice use MUST be preceded by explicit microphone permission and a clear notice of any retention.}{M}{R2}{FR-VOX-01, FR-VOX-07}
+\req{NFR-PRV-05}{Synthetic or redacted data SHOULD be used for tests and evaluation datasets.}{S}{R1}{RG-PRV-02}
+\end{reqtable}
+
+\section{Reliability and availability}
+\begin{reqtable}
+\req{NFR-REL-01}{Inbound events MUST be recorded in a durable inbox and important events published through a transactional outbox.}{M}{R1}{RG-REL-01}
+\req{NFR-REL-02}{External calls MUST use timeouts, bounded retries with exponential backoff and jitter, idempotency keys, and circuit breakers.}{M}{R1}{RG-REL-02}
+\req{NFR-REL-03}{The system MUST degrade gracefully: it never fakes a grounded answer when retrieval is down, and routes to a human or communicates unavailability when the model provider is down.}{M}{R1}{RG-REL-04}
+\req{NFR-REL-04}{Health checks and dependency readiness MUST be exposed; exhausted retries MUST reach a review queue.}{M}{R1}{M20}
+\req{NFR-REL-05}{Availability, message-delivery success and recovery objectives are \textbf{TBD}; backup and restore MUST be exercised before the R1 release.}{M}{R1}{Sprint 6}
+\end{reqtable}
+
+\section{Performance}
+\begin{reqtable}
+\req{NFR-PERF-01}{Median and p95 text response latency MUST be measured end to end; targets are TBD.}{M}{R1}{FR-OBS-02}
+\req{NFR-PERF-02}{Voice latency (time to first audio, end-of-speech to response start, total turn latency) MUST be measured; targets are TBD.}{M}{R2}{FR-OBS-07}
+\req{NFR-PERF-03}{Model, retrieval and tool budgets (timeouts, token and cost caps) MUST be defined per agent version.}{S}{R1}{M04, M19}
+\req{NFR-PERF-04}{Ingestion MUST run asynchronously so that uploads never block customer conversations.}{M}{R1}{FR-KB-03}
+\end{reqtable}
+
+\section{Observability}
+\begin{reqtable}
+\req{NFR-OBS-01}{Every request and job MUST carry a trace ID and tenant context; correlation IDs connect API, worker, model, retrieval and tool activity.}{M}{R1}{FR-OBS-01}
+\req{NFR-OBS-02}{Metric labels MUST avoid sensitive and high-cardinality values (message text, e-mail, phone, tokens).}{M}{R1}{Chap. 8}
+\req{NFR-OBS-03}{Operational signals MUST cover API, queues, workers, database, conversation delivery, AI and RAG, and voice.}{M}{R1}{M16, M20}
+\end{reqtable}
+
+\section{Quality of AI responses}
+\begin{reqtable}
+\req{NFR-AIQ-01}{A curated evaluation set MUST cover FAQ, ambiguity, missing information, stale or conflicting documents, prompt injection, restricted data, tool success and failure, provider timeout, human request, language switching, and voice interruption.}{M}{R1}{FR-OBS-03}
+\req{NFR-AIQ-02}{Evaluation MUST score correctness, groundedness, clarification, tool choice and arguments, authorization compliance, handoff decisions, tone, latency and cost.}{M}{R1}{M17}
+\req{NFR-AIQ-03}{Deterministic assertions MUST be used for permissions, schemas and state transitions; model-based judges are only one signal, never the sole release gate.}{M}{R1}{M17}
+\req{NFR-AIQ-04}{A new prompt, model or agent version MUST NOT be published until critical safety and tool-authorization tests pass, latency and cost are measured, a rollback path is known and a versioned release record exists.}{M}{R1}{FR-IA-05}
+\end{reqtable}
+
+\section{Maintainability, portability and usability}
+\begin{reqtable}
+\req{NFR-MNT-01}{The platform MUST be a modular monolith with strict module boundaries; services are extracted only when justified.}{M}{R1}{ADR-001}
+\req{NFR-MNT-02}{Model, speech, channel and integration providers MUST be reachable only through adapters, verified by contract tests.}{M}{R1}{RG, M04, M15}
+\req{NFR-MNT-03}{Database migrations MUST be reviewed and repeatable; public API contracts MUST be documented and versioned.}{M}{R1}{DoD}
+\req{NFR-USA-01}{The widget SHOULD be usable on desktop and mobile browsers; accessibility and supported languages are to be specified with the client (TBD).}{S}{R1}{M02}
+\req{NFR-USA-02}{Customer-facing responses SHOULD be concise and understandable; text and audio rendering are separate from reasoning.}{S}{R1}{M04}
+\end{reqtable}

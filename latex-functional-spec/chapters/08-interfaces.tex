@@ -1,0 +1,119 @@
+\chapter{Interfaces}
+
+\section{User interfaces}
+Three user-facing applications and an operations view are specified functionally here. Visual design is outside the scope of this document.
+
+\subsection{Customer website widget (E03, E09)}
+\begin{table}[htbp]
+\centering\caption{Widget functions}\label{tab:widget}
+\begin{tabular}{@{}p{4.2cm}p{11.8cm}@{}}
+\toprule \textbf{Function} & \textbf{Behaviour} \\ \midrule
+Open and close chat & Opens a scoped session; shows the welcome state configured by the organization. \\
+Conversation view & Chronological messages with delivery states; distinguishes AI, human agent and system events. \\
+Message composer & Text input with send, error and retry states. \\
+Request a human & Always-available action; displays the resulting status (waiting, connected). \\
+Reconnection & Restores the conversation after a temporary network failure. \\
+Voice controls (R2) & Explicit microphone permission, start and end, active-state indicator, interruption, switch back to text. \\
+Source display & Shows the sources used in a grounded answer where supported. \\
+Consent notice & States whether voice is recorded or transcribed and how long it is retained. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Agent console (E02, E07, E08, E09)}
+\begin{table}[htbp]
+\centering\caption{Agent console functions}\label{tab:console}
+\begin{tabular}{@{}p{4.2cm}p{11.8cm}@{}}
+\toprule \textbf{Function} & \textbf{Behaviour} \\ \midrule
+Unassigned queue & Tenant-scoped list of conversations awaiting a human, with assignment. \\
+Conversation timeline & Messages, system events and internal notes with distinct visibility. \\
+Handoff summary panel & Transcript, unresolved request, prior tool outcomes, escalation reason. \\
+Take over / release & Pauses or resumes the AI and records ownership changes. \\
+Reply and internal notes & Human replies to the customer; internal notes hidden from the customer. \\
+Ticket actions & Create a ticket from the conversation; follow its status history. \\
+Resolve & Resolves the conversation and records the outcome. \\
+Ticket list & Filters by status, priority and assignment for support leads. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Administration console (E01, E03--E06, E10--E12)}
+\begin{table}[htbp]
+\centering\caption{Administration console functions}\label{tab:admin}
+\begin{tabular}{@{}p{4.2cm}p{11.8cm}@{}}
+\toprule \textbf{Function} & \textbf{Behaviour} \\ \midrule
+Organization settings & Creation, defaults, channel configuration. \\
+Users and roles & Invitations with expiry, role assignment, revocation. \\
+Widget configuration & Link a widget to an organization and an agent configuration. \\
+Knowledge sources & Register and upload sources, view ingestion status, retry, delete. \\
+Agent versions & Edit instructions, assign knowledge and tool allowlist, publish and roll back. \\
+Tools & Enable versioned tools for an agent; view schemas and risk levels. \\
+Integrations & Configure credentials as secret references, run connection tests, view health. \\
+Workflows, routing, SLA (R3) & Define triggers, steps, rules and targets; view run states. \\
+Usage and metrics & Usage by agent and channel; resolution and handoff metrics. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Operations view (E12)}
+Operators see request, error and latency rates, queue depth and oldest-job age, worker failures and retries, dependency health, model and retrieval signals, and voice signals. They can follow a single trace ID across modules.
+
+\section{External interfaces}
+\subsection{Model provider}
+Conceptual interface kept behind an adapter:
+\begin{itemize}
+  \item \code{generate_response(input, output_schema, options)}
+  \item \code{stream_response(input, options)}
+  \item \code{classify(input, taxonomy, options)}
+  \item \code{embed(texts, model_configuration)}
+  \item optional \code{open_realtime_session(configuration)}
+\end{itemize}
+Vendor-specific request and response shapes stay in adapters. Model name and version, latency, usage and provider errors are captured without storing secrets.
+
+\subsection{Speech provider (R2)}
+Two strategies are supported behind a common abstraction. \textbf{Option A}: modular pipeline audio $\rightarrow$ STT $\rightarrow$ conversation engine $\rightarrow$ TTS $\rightarrow$ audio (explicit transcript, modular provider choice, more latency). \textbf{Option B}: speech-to-speech with a real-time multimodal model (potentially more natural, but more provider coupling). One strategy is started first, chosen on latency, language, cost and observability.
+
+\subsection{Channel providers and webhooks}
+Webhook handling follows eight steps:
+\begin{enumerate}
+  \item verify the provider signature and timestamp;
+  \item resolve the channel or integration from trusted endpoint configuration;
+  \item enforce body-size and schema limits;
+  \item persist the event ID and the payload or minimal normalized data;
+  \item return success only after durable acceptance;
+  \item process asynchronously;
+  \item deduplicate provider retries;
+  \item record processing state and failure reason without leaking secrets.
+\end{enumerate}
+
+\subsection{Business tools and connectors}
+Tool integration has three layers: the \emph{tool definition} (what the AI may request), the \emph{tool execution service} (validation, authorization, idempotency, audit, timeout, result normalization) and the \emph{connector adapter} (provider-specific authentication and mapping). The AI never receives raw credentials.
+
+\begin{table}[htbp]
+\centering\caption{Fields of a tool definition}\label{tab:toolfields}
+\begin{tabular}{@{}p{4.5cm}p{11.5cm}@{}}
+\toprule \textbf{Field} & \textbf{Description} \\ \midrule
+Stable name and description & For example \code{orders.lookup}. \\
+Version & Immutable once published. \\
+Input and output schemas & JSON schemas with \code{additionalProperties} disallowed. \\
+Allowed scope & Agents and tenants permitted to use the tool. \\
+Required permission & Checked by code at execution. \\
+Risk level & Read-only, reversible write, or sensitive write. \\
+Confirmation / approval & Whether customer confirmation or human approval is required. \\
+Timeout and retry policy & Bounded; safe-to-retry only. \\
+Idempotency behaviour & How duplicates are handled. \\
+Audit and redaction policy & Which fields are redacted. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Example contract for the MVP read-only tool (illustrative, not a claim about any commerce provider):
+\begin{encadre}{\code{orders.lookup}, version 1, risk: read-only}
+\textbf{Input:} \code{order_reference} (string, 3 to 80 characters), required, no additional properties.\\
+\textbf{Output:} \code{status} (string) and \code{estimated_delivery} (string or null), both required, no additional properties.
+\end{encadre}
+
+\noindent Connector failures are mapped to the categories: \code{AUTHENTICATION_FAILED}, \code{AUTHORIZATION_DENIED}, \code{NOT_FOUND}, \code{VALIDATION_FAILED}, \code{RATE_LIMITED}, \code{TIMEOUT}, \code{PROVIDER_UNAVAILABLE}, \code{CONFLICT}, \code{UNKNOWN_OUTCOME}. Only safe-to-retry failures are retried.
+
+\section{Internal event contracts}
+Modules communicate through synchronous interfaces and asynchronous events. Every event and request carries \code{trace_id}, \code{correlation_id}, \code{causation_id}, \code{tenant_id}, and where relevant \code{conversation_id}, \code{turn_id}, \code{tool_execution_id} and \code{provider_request_id}. Message text, e-mail, phone numbers and tokens never appear in metric labels.

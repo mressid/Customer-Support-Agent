@@ -1,0 +1,137 @@
+\chapter{Project overview}
+
+\section{Context and problem statement}
+Customer-support teams face growing volumes of repetitive requests, expectations of instant answers and a multiplication of channels (website, voice, e-mail, messaging). Classic chatbots handle open questions poorly, do not always rely on trustworthy sources, and cannot act safely on business systems. A fully human service, on the other hand, is costly and slow for simple requests.
+
+The project targets a platform that:
+\begin{itemize}
+  \item conducts \textbf{complete, context-aware conversations}, first by text then by voice;
+  \item answers from \textbf{approved knowledge} and acknowledges uncertainty;
+  \item executes only \textbf{authorized, audited and controlled actions}, enforced by application code;
+  \item guarantees a \textbf{human escape hatch}: the customer can always reach a person;
+  \item strictly isolates the data of each organization.
+\end{itemize}
+
+\section{Vision and product principles}
+\begin{encadre}{Vision}
+Build an AI-native customer support platform that can conduct complete, context-aware customer conversations over text and voice, answer using trusted business knowledge, perform explicitly authorized actions, and transfer to human agents when appropriate.
+\end{encadre}
+
+Eight principles shape the requirements:
+\begin{enumerate}
+  \item \textbf{Conversation-first}: a conversation is the durable interaction record; channel sessions are delivery mechanisms.
+  \item \textbf{Modality-independent intelligence}: text and voice share the same orchestration and authorization model.
+  \item \textbf{Grounded answers}: use approved knowledge and business data, and be transparent about uncertainty.
+  \item \textbf{Safe action execution}: models \emph{propose}; application services \emph{authorize and execute}.
+  \item \textbf{Human escape hatch}: customers can request a human, and policy can escalate automatically.
+  \item \textbf{Tenant isolation by default}: data, search, tools, events and analytics.
+  \item \textbf{Observable and testable}: every important AI decision, tool execution, handoff and failure is measurable.
+  \item \textbf{Provider portability}: model, speech, channel and integration providers are accessed through adapters.
+\end{enumerate}
+
+\section{Objectives}
+\subsection{Product outcomes}
+\begin{itemize}
+  \item Reduce time to a correct answer.
+  \item Resolve repetitive requests without removing access to human support.
+  \item Preserve context across text, voice and channel changes where identity can be safely linked.
+  \item Make AI actions auditable and permission-controlled.
+  \item Let organizations configure knowledge, tools, policies and escalation behaviour.
+  \item Measure \emph{resolution quality}, not only response speed.
+\end{itemize}
+
+\subsection{First milestone objective (MVP)}
+A website assistant can, end to end:
+\begin{enumerate}
+  \item accept a customer text message;
+  \item maintain a conversation;
+  \item retrieve relevant organization knowledge;
+  \item invoke one safe, read-only business tool;
+  \item answer with source-grounded information;
+  \item escalate to a human while preserving context;
+  \item emit audit and observability events.
+\end{enumerate}
+Voice \emph{reuses} the same conversation engine and tool authorization model (release R2).
+
+\subsection{Success measures}
+\begin{table}[htbp]
+\centering\caption{Product success measures}\label{tab:kpi}
+\begin{tabular}{@{}p{4.8cm}p{7.2cm}p{3.6cm}@{}}
+\toprule \textbf{Measure} & \textbf{Definition in principle} & \textbf{Target} \\ \midrule
+Correct answer rate & Share of answers judged correct on a curated evaluation set. & TBD \\
+Groundedness rate & Share of claims supported by a source. & TBD \\
+Task completion rate & Share of requests carried to completion (including via a tool). & TBD \\
+Human escalation rate & Handoffs relative to volume, segmented by reason. & TBD \\
+Median and p95 latency & Response time, for text then for voice. & TBD \\
+Tool success rate & Successful calls over authorized calls. & TBD \\
+Customer satisfaction & Customer feedback collected after a conversation. & TBD \\
+Cost per resolved conversation & Provider and operating cost. & TBD \\
+Availability and delivery & Service availability and message-delivery success. & TBD \\
+\bottomrule
+\end{tabular}
+\end{table}
+Targets are to be set with stakeholders after a first baseline measurement.
+
+\section{Scope}
+\subsection{Included in the MVP (R1)}
+\begin{itemize}
+  \item Organization, user and access foundation.
+  \item Website text chat.
+  \item Conversation lifecycle and message persistence.
+  \item Basic customer identity.
+  \item Knowledge source ingestion and retrieval (RAG).
+  \item AI response orchestration.
+  \item One read-only business tool (order lookup).
+  \item Human inbox and handoff.
+  \item Basic ticket creation.
+  \item Audit, logs, metrics, traces and usage tracking.
+\end{itemize}
+
+\subsection{Later phases}
+\begin{itemize}
+  \item \textbf{R2}: real-time browser voice, STT/TTS or speech-to-speech depending on the provider, transcript synchronization.
+  \item \textbf{R3}: e-mail and external messaging channels, workflow builder, advanced routing and SLA, more connectors, write-capable tools, advanced analytics, evaluation, billing and enterprise governance.
+\end{itemize}
+
+\subsection{Explicit non-goals for the first milestone}
+\begin{itemize}
+  \item Replacing all existing CRM and helpdesk systems.
+  \item Arbitrary autonomous changes to customer accounts.
+  \item Unreviewed financial transactions.
+  \item Supporting every channel and provider at launch.
+  \item Training a foundation model.
+  \item Splitting every module into a microservice.
+\end{itemize}
+
+\section{Stakeholders}
+\begin{table}[htbp]
+\centering\caption{Stakeholders}\label{tab:stakeholders}
+\begin{tabular}{@{}p{4.1cm}p{11.9cm}@{}}
+\toprule \textbf{Stakeholder} & \textbf{Main expectations} \\ \midrule
+End customers & Fast and correct answers, access to a human, protected data. \\
+Support agents & Conversation takeover with context, a clear work queue, efficient tools. \\
+Support leads & Control of queues, policies, quality and SLAs. \\
+Organization administrators & Configuration of channels, knowledge, AI agents, integrations and access. \\
+Platform operators & Reliability, cost, abuse control and system health. \\
+Security and privacy & Tenant isolation, data minimization, auditability. \\
+Business-system owners & Controlled, limited access to their APIs. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{General assumptions and constraints}
+\subsection{Assumptions}
+\begin{itemize}
+  \item A small team initially builds a \textbf{modular monolith}; services are extracted only when scaling, fault isolation or deployment cadence justify it.
+  \item Product design, infrastructure, security and automated tests are part of delivery, not later phases.
+  \item Story points are team-specific estimates, not time conversions.
+  \item Sprints are assumed to last two weeks; the sequence is provisional.
+\end{itemize}
+
+\subsection{Constraints}
+\begin{itemize}
+  \item AI model output is \textbf{untrusted input}: authorization and business invariants are enforced by application code.
+  \item The core domain depends on no specific model or messaging provider; provider details live in adapters.
+  \item No raw audio or sensitive customer data is stored without a clear product need, consent or legal basis, access policy and retention policy.
+  \item Every request or job carries a trace identifier and tenant context.
+\end{itemize}

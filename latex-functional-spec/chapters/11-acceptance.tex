@@ -1,0 +1,66 @@
+\chapter{Acceptance and validation}\label{chap:acceptance}
+
+\section{Acceptance principles}
+\begin{itemize}
+  \item A requirement is accepted when its acceptance criteria (Chapter~\ref{chap:specs}) are demonstrated and the relevant release exit criteria (Chapter~\ref{chap:planning}) are met.
+  \item Each Sprint ends with a Sprint Review where the Product Owner inspects a working Increment, not only design documents.
+  \item Acceptance is evidence-based: automated tests, an evaluation run, a trace, or a demonstration on a test tenant with synthetic data.
+\end{itemize}
+
+\section{Definition of Ready}
+A backlog item is ready for Sprint Planning when: the user or business outcome is clear; acceptance criteria are testable; dependencies and provider assumptions are identified; UX, API and data behaviour are sufficiently understood; security and privacy implications have been considered; the item fits in one Sprint; an estimate or sizing approach exists; and the required credentials, test data and environments are available or planned.
+
+\section{Definition of Done}
+An item is Done only when:
+\begin{itemize}
+  \item the implementation meets its acceptance criteria;
+  \item code is reviewed and respects module boundaries;
+  \item automated tests cover relevant behaviour and failure cases;
+  \item tenant isolation and authorization are tested where relevant;
+  \item input validation and error handling are implemented;
+  \item database migrations are reviewed and repeatable;
+  \item logs, metrics and traces include safe correlation fields and redact sensitive values;
+  \item documentation and API contracts are updated;
+  \item no known critical or high-severity defect remains without explicit risk acceptance;
+  \item deployment, rollback or feature-flag behaviour is understood;
+  \item the Product Owner can inspect the completed behaviour.
+\end{itemize}
+
+\subsection{AI-specific checks}
+Model and prompt or configuration versions are identifiable; tool schemas are validated; tool permissions are enforced in code; retrieval is tenant-scoped; failure, empty-retrieval and uncertainty paths are tested; a regression example is added for important behaviour; and no secrets or hidden reasoning are persisted in logs.
+
+\subsection{Voice-specific checks}
+Microphone permission and active state are clear; session cleanup works on disconnect; interruption and cancellation are tested; transcript finalization and ordering are tested; audio and transcript retention follow policy; latency and failure metrics are emitted.
+
+\section{Security test matrix}\label{sec:sectests}
+\begin{table}[htbp]
+\centering\caption{Security and robustness scenarios to pass before a release}\label{tab:sectests}
+\begin{tabular}{@{}p{6.4cm}p{9.6cm}@{}}
+\toprule \textbf{Scenario} & \textbf{Expected result} \\ \midrule
+Cross-tenant read and write & Denied; no data returned. \\
+Unauthorized tool invocation & Refused; audited. \\
+Prompt injection through user input and retrieved documents & Policy and tool permissions unchanged. \\
+Webhook signature failure and replay & Rejected or deduplicated. \\
+Duplicate webhook delivery & One message only. \\
+Tool timeout with unknown write outcome & No blind retry; status check or human review. \\
+Secret leakage in logs and traces & No secret present. \\
+Unauthorized access to transcripts or audio & Denied. \\
+Rate-limit and abuse scenarios & Throttled; service remains available. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Acceptance per release}
+\begin{table}[htbp]
+\centering\caption{Acceptance activities per release}\label{tab:acc-release}
+\begin{tabular}{@{}p{1.2cm}p{14.8cm}@{}}
+\toprule \textbf{Rel.} & \textbf{Evidence required} \\ \midrule
+R1 & Passing tenant-isolation and security matrix; end-to-end demo (question $\rightarrow$ grounded answer $\rightarrow$ order lookup $\rightarrow$ handoff with context); evaluation report without critical failure; audit, trace and metrics shown; rollback path demonstrated. \\
+R2 & Voice demo (speak, interrupt, type a follow-up, hand off); transcript ordering tests; privacy and consent review; latency and cost dashboard; voice regression scenarios. \\
+R3 & Workflow, routing and SLA determinism tests; second-channel identity-linking tests; usage reconciliation; advanced evaluation gates. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Validation of requirements}
+Requirements are reviewed with the stakeholders listed in Table~\ref{tab:stakeholders}. Each change is traced in the revision history. Open items marked TBD are listed in Appendix~\ref{app:open}.

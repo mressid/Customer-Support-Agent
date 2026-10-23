@@ -1,0 +1,55 @@
+\section{E05 -- AI orchestration}
+\textbf{Goal:} coordinate each conversation turn safely. \textbf{Modules:} M04, M19.
+
+\begin{reqtable}
+\req{FR-IA-01}{The system MUST process each turn through a versioned agent configuration; the model/configuration version, latency and outcome are recorded.}{M}{R1}{US-040}
+\req{FR-IA-02}{At each turn the engine MUST choose among: answer from knowledge, clarify, invoke a tool, create/update a ticket, refuse, hand off to a human.}{M}{R1}{M04}
+\req{FR-IA-03}{The customer MUST be able to ask a follow-up question: relevant recent context is used without exposing another customer's data.}{M}{R1}{US-041}
+\req{FR-IA-04}{On a model timeout or provider failure the system MUST apply a bounded retry or fallback, and MUST NEVER deliver a false success message.}{M}{R1}{US-042}
+\req{FR-IA-05}{An administrator MUST be able to publish and roll back an agent version; a published version is immutable and audit-logged.}{M}{R1}{US-043}
+\req{FR-IA-06}{Customer messages, uploaded files, retrieved passages, web pages and tool results MUST be treated as data, never as authoritative instructions.}{M}{R1}{M04, RG-GRD-03}
+\req{FR-IA-07}{The system MUST record concise decision metadata (tools called, sources, outcome) and MUST NOT store hidden reasoning.}{M}{R1}{M04}
+\req{FR-IA-08}{The engine SHOULD detect the customer's language and reply in it; language selection is separate from reasoning.}{S}{R1}{M04}
+\req{FR-IA-09}{The conversation state (open, human-owned, blocked, rate-limited) MUST be checked before any AI processing.}{M}{R1}{M04, M01}
+\end{reqtable}
+\accept{Each turn records agent version, duration and outcome; a simulated model failure produces a fallback message or a handoff, never a falsely displayed success; an instruction injected in a retrieved document changes neither policy nor tool permissions.}
+
+\section{E06 -- Safe business tools}
+\textbf{Goal:} let the AI invoke a small allowlisted set of business operations. \textbf{Modules:} M06, M15.
+
+\begin{reqtable}
+\req{FR-OUT-01}{An administrator MUST be able to enable a versioned tool for an agent; the tool must be allowlisted and its schema valid.}{M}{R1}{US-050}
+\req{FR-OUT-02}{A customer MUST be able to ask for an order status (read-only tool); customer verification and tenant scope are checked; the result is typed and minimal.}{M}{R1}{US-051}
+\req{FR-OUT-03}{Every argument proposed by the model MUST be validated against a schema, and authorization MUST be re-checked at execution time.}{M}{R1}{US-051, M06}
+\req{FR-OUT-04}{On timeout or duplicate requests, idempotency behaviour MUST be defined; an unknown write outcome is not blindly retried.}{M}{R1}{US-052}
+\req{FR-OUT-05}{Every tool call MUST be audited: actor, tool and version, outcome, timestamp, correlation ID, sensitive values redacted.}{M}{R1}{US-053}
+\req{FR-OUT-06}{The system MUST NOT claim that an action succeeded before the tool confirms success.}{M}{R1}{M04, M06}
+\req{FR-OUT-07}{Sensitive or irreversible actions SHOULD require customer confirmation or human approval.}{S}{R3}{M06}
+\req{FR-OUT-08}{Connector failures SHOULD be normalized into categories (authentication, authorization, not found, validation, rate limited, timeout, provider unavailable, conflict, unknown outcome).}{S}{R1}{M06, M15}
+\end{reqtable}
+\accept{An order status is returned only to a verified customer of the right tenant; a duplicated call does not produce two executions; the audit trail allows the call to be reconstructed without exposing secrets.}
+
+\section{E07 -- Human inbox and handoff}
+\textbf{Goal:} ensure a human can take over with context. \textbf{Modules:} M10, M13.
+
+\begin{reqtable}
+\req{FR-HUM-01}{A support agent MUST be able to view an unassigned queue, scoped to the tenant, with assignment.}{M}{R1}{US-060}
+\req{FR-HUM-02}{A customer MUST be able to request a human; the AI stops responding when the handoff policy requires it and the customer receives a clear status.}{M}{R1}{US-061}
+\req{FR-HUM-03}{The system MUST escalate automatically according to policy (missing or conflicting evidence, repeated tool failure, sensitive request, provider outage).}{M}{R1}{M04, M13}
+\req{FR-HUM-04}{The agent MUST receive a handoff summary: transcript, unresolved request, prior tool outcomes permitted by policy, escalation reason.}{M}{R1}{US-062}
+\req{FR-HUM-05}{An agent MUST be able to resolve the conversation; resolution and ownership changes are recorded.}{M}{R1}{US-063}
+\req{FR-HUM-06}{The AI SHOULD be pausable and resumable on a human-owned conversation.}{S}{R1}{M10}
+\req{FR-HUM-07}{The handoff summary MUST NOT silently expose restricted account data.}{M}{R1}{M10, RG-HUM-03}
+\end{reqtable}
+\accept{The queue shows only the tenant's conversations; after ``I want a human'' no AI reply is emitted; the summary contains the transcript and the pending request.}
+
+\section{E08 -- Tickets and case tracking}
+\textbf{Goal:} track support work beyond one interaction. \textbf{Modules:} M11.
+
+\begin{reqtable}
+\req{FR-TKT-01}{A support agent MUST be able to create a ticket from a conversation; the ticket links to the source conversation and has a status history.}{M}{R1}{US-070}
+\req{FR-TKT-02}{A support lead MUST be able to filter tickets by status, priority and assignment, respecting permissions and tenant boundaries.}{M}{R1}{US-071}
+\req{FR-TKT-03}{A ticket SHOULD carry a category, comments and a due date.}{S}{R1}{M11}
+\req{FR-TKT-04}{A ticket MAY be linked to several conversations (a conversation is an interaction; a ticket is work to resolve).}{C}{R1}{M11}
+\end{reqtable}
+\accept{A created ticket can be found from the conversation; the status history is timestamped; a filter never reveals another tenant's tickets.}

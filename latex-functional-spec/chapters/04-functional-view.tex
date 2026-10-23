@@ -1,0 +1,81 @@
+\chapter{Functional overview}
+
+\section{System context}
+The platform sits between customers, support teams and external systems (models, speech, channels, business systems).
+
+\figpdf[0.62]{contexte-systeme.pdf}{System context}{fig:context}
+
+\section{Logical layers}
+\figpdf[0.62]{couches.pdf}{Logical layers of the platform}{fig:layers}
+
+Seven layers organize the system: (1) edge and channel adapters; (2) application API (authentication, tenant resolution, validation, rate limiting); (3) conversation domain; (4) AI orchestration; (5) capability modules (knowledge, business tools, workflow, tickets, human inbox); (6) infrastructure adapters (SQL, object storage, vector index, queue, providers); (7) cross-cutting controls (security, audit, observability, evaluation, usage metering).
+
+\section{Functional module catalog}
+Module names describe logical ownership; they do not imply one deployable service per module.
+
+\begin{longtable}{@{}>{\ttfamily\footnotesize}p{1.1cm}p{3.9cm}p{11cm}@{}}
+\caption{Functional modules M01--M20}\label{tab:modules}\\
+\toprule \textbf{ID} & \textbf{Module} & \textbf{Main responsibilities} \\ \midrule \endfirsthead
+\toprule \textbf{ID} & \textbf{Module} & \textbf{Main responsibilities} \\ \midrule \endhead
+\bottomrule \endlastfoot
+\multicolumn{3}{@{}l}{\textbf{A. Customer interaction and conversation}} \\
+M01 & Conversation Management & Conversation lifecycle, turns, participants, message ordering, status, links to cases, event history. \\
+M02 & Channel Management & Channel connections, provider adapters, webhook intake, outbound delivery, provider identities, retries, delivery state. \\
+M03 & Customer Identity and Profiles & Customer profile, contact points, identity linking, preferences, consent records. \\
+\multicolumn{3}{@{}l}{\textbf{B. AI conversation and voice}} \\
+M04 & AI Conversation Engine & Turn orchestration, intent and context interpretation, policy-aware response planning, model selection, decision trace. \\
+M05 & Knowledge Base and Retrieval & Source registration, ingestion, chunking, embeddings, indexing, retrieval, source versions and metadata, citations. \\
+M06 & AI Tools and Business Actions & Tool registry, schema validation, permission checks, execution, results, idempotency, approvals, action audit. \\
+M07 & Real-Time Voice Sessions & Live audio session lifecycle, streaming transport, turn-taking, interruption handling, timeout, reconnection. \\
+M08 & Speech Processing & Speech-provider abstraction, STT, TTS, speech-to-speech, language and voice settings, speech errors. \\
+M09 & Transcript and Multimodal Synchronization & Transcript alignment, partial/final state, text and voice correlation, event ordering, modality switching. \\
+\multicolumn{3}{@{}l}{\textbf{C. Support operations and automation}} \\
+M10 & Human Inbox and Handoff & Agent queues, assignment, human takeover, AI pause/resume, handoff context, internal notes. \\
+M11 & Ticket and Case Management & Durable work item, status, priority, category, comments, due dates, resolution. \\
+M12 & Workflow Automation & Event-triggered workflows, steps, conditions, schedules, retries, approvals, execution history. \\
+M13 & Routing, Policies and SLAs & Routing rules, queue selection, business hours, response and resolution targets, escalation policy, fallback. \\
+M14 & Notifications and Follow-Ups & Templates, preferences, dispatch, delivery state, retry. \\
+\multicolumn{3}{@{}l}{\textbf{D. Integrations and insights}} \\
+M15 & Integration Hub & Connector definitions, credential references, API and webhook mapping, health checks, rate limits, event normalization. \\
+M16 & Analytics and Reporting & Operational and product metrics, conversation outcomes, channel usage, SLA reporting, voice latency, cost. \\
+M17 & AI Quality, Evaluation and Improvement & Evaluation datasets, test runs, scores, regression comparison, human review, release gates. \\
+\multicolumn{3}{@{}l}{\textbf{E. Platform administration and governance}} \\
+M18 & Organizations, Users and Access Control & Tenant, memberships, roles, permissions, service identities, invitations, tenant context. \\
+M19 & Agent Configuration and Administration & Instructions, persona, model/speech configuration references, knowledge assignment, tool allowlist, versions, publication, rollback. \\
+M20 & Security, Audit, Observability and Usage & Audit records, retention, abuse controls, telemetry conventions, provider usage, quotas, usage metering. \\
+\end{longtable}
+
+\section{Main functional flow (nominal journey)}
+The following journey describes one text conversation turn in the MVP.
+\begin{enumerate}
+  \item The visitor opens the widget: a scoped session is created and the conversation is attached to the right tenant and channel (M02, M01, M18).
+  \item The visitor sends a message: it is received, deduplicated and durably persisted before acknowledgement (M02, M01).
+  \item The AI engine resolves trusted context (tenant, conversation, identity, agent version) and checks the conversation state: open, human-owned, blocked or rate-limited (M04).
+  \item It builds a minimal context, classifies intent and risk, and identifies missing information (M04).
+  \item When useful, it retrieves approved, tenant-filtered knowledge (M05).
+  \item It plans the next step using \emph{only} the agent's allowed tools; any proposed tool call is validated, authorized, then executed (M06).
+  \item It generates a response based on verified results, applies output-safety rules, and persists the reply, sources, tool results, timing, usage and outcome (M04, M01).
+  \item Delivery, evaluation and analytics events are emitted (M02, M16, M20).
+  \item If policy requires it or the customer asks, the conversation is handed to a human with its context (M10).
+\end{enumerate}
+
+\figpdf[0.6]{etats-tour.pdf}{States of an AI conversation turn}{fig:turn-states}
+
+\section{Possible engine decisions}
+At each turn the engine chooses one of the following outcomes:
+\begin{itemize}
+  \item answer from approved knowledge;
+  \item ask a clarifying question;
+  \item invoke an allowed business tool;
+  \item create or update a ticket or workflow request;
+  \item refuse or safely redirect a disallowed request;
+  \item hand off to a human;
+  \item recover from a provider or tool failure.
+\end{itemize}
+
+\figpdf[0.6]{escalade.pdf}{Escalation decision tree}{fig:escalation}
+
+\section{Multimodal conversations}
+A conversation can contain: customer text messages, finalized speech transcripts, assistant text, generated audio references, system events (voice started or ended) and handoff events. The engine consumes normalized text and intent plus trusted state, without depending on whether the text was typed or transcribed.
+
+\figpdf[0.58]{modalites.pdf}{Modality switching within one conversation}{fig:modalities}

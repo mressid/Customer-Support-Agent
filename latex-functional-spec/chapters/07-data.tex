@@ -1,0 +1,81 @@
+\chapter{High-level data model}
+
+\section{Core aggregates}
+\begin{table}[htbp]
+\centering\caption{Core aggregates}\label{tab:aggregates}
+\begin{tabular}{@{}p{4.2cm}p{11.8cm}@{}}
+\toprule \textbf{Aggregate} & \textbf{Content} \\ \midrule
+Organization & Tenant boundary and configuration owner. \\
+Conversation & Durable interaction and message timeline. \\
+Customer & Profile and verified identity links. \\
+Agent configuration / version & Published AI behaviour and allowed capabilities. \\
+Knowledge source / document version & Ingestion and retrieval lifecycle. \\
+Tool execution & Authorization, idempotency, result and audit. \\
+Ticket & Support work item that can span conversations. \\
+Voice session & Live media lifecycle linked to a conversation. \\
+Workflow run & Deterministic multi-step execution. \\
+Audit / usage event & Immutable record for governance and measurement. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\figpdf[0.6]{agregats.pdf}{Aggregate map}{fig:aggregates}
+
+\section{Key entities per module}
+\begin{table}[htbp]
+\centering\caption{Principal records by module}\label{tab:records}
+\begin{tabular}{@{}p{1.2cm}p{3.6cm}p{11.2cm}@{}}
+\toprule \textbf{Mod.} & \textbf{Area} & \textbf{Core records} \\ \midrule
+M01 & Conversation & Conversation, ConversationParticipant, ConversationTurn, Message, ConversationEvent \\
+M02 & Channels & ChannelConnection, ChannelIdentity, InboundEvent, OutboundDelivery \\
+M03 & Customer & Customer, CustomerIdentity, CustomerContact, CustomerConsent \\
+M04 & AI engine & AgentDefinition, AgentVersion, AgentExecution, ModelConfiguration \\
+M05 & Knowledge & KnowledgeSource, Document, DocumentVersion, DocumentChunk, RetrievalRun \\
+M06 & Tools & ToolDefinition, ToolVersion, ToolExecution, ActionApproval \\
+M07 & Voice & VoiceSession, VoiceSessionEvent, AudioSegmentReference \\
+M08 & Speech & SpeechProvider, SpeechConfiguration, TranscriptionSegment, SpeechGeneration \\
+M09 & Transcript & TranscriptSegment, ModalityEvent, MessageMediaReference \\
+M10 & Handoff & SupportAgent, SupportQueue, Assignment, HandoffEvent \\
+M11 & Tickets & Ticket, TicketComment, TicketStatusHistory \\
+M12 & Workflow & WorkflowDefinition, WorkflowVersion, WorkflowRun, WorkflowStepRun \\
+M13 & Routing & RoutingRule, SlaPolicy, BusinessSchedule, EscalationPolicy \\
+M14 & Notifications & Notification, NotificationTemplate, NotificationDelivery \\
+M15 & Integrations & Integration, IntegrationCredentialReference, ConnectorDefinition, IntegrationEvent \\
+M16 & Analytics & MetricEvent, ConversationOutcome, Feedback, UsageAggregate \\
+M17 & Evaluation & EvaluationDataset, EvaluationRun, EvaluationResult, AgentRelease \\
+M18 & Access & Organization, User, Membership, Role, Permission \\
+M19 & Agent admin & AgentConfiguration, AgentVersion, AgentDeployment, AgentPolicy \\
+M20 & Governance & AuditEvent, UsageRecord, ProviderUsage, RetentionPolicy, SecurityEvent \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Data rules}
+\begin{itemize}
+  \item All tenant-owned rows include, or are reachable through, a trusted organization ID.
+  \item Internal identifiers are UUIDs or ULIDs; provider IDs are kept in separate fields with uniqueness scoped to the provider connection.
+  \item Phone number or e-mail is never the primary key of a customer.
+  \item Timestamps are stored in UTC and rendered in local time at the edge.
+  \item Raw provider payloads are kept only when needed for debugging or compliance, with explicit retention and redaction.
+  \item Agent configuration, knowledge documents, workflows and tool schemas use immutable version rows.
+  \item Messages, transcripts, audio references and attachments stay distinct so retention and access policies can differ.
+  \item Large binary payloads are stored as object references, not in the primary relational database.
+  \item Deletion and re-indexing propagation of knowledge sources is recorded.
+  \item Hidden chain-of-thought is not stored; only concise decision metadata, tool calls, sources and outcomes needed for debugging and audit.
+\end{itemize}
+
+\section{Message kinds}
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule \textbf{Kind} & \textbf{Note} \\ \midrule
+\code{text} & Customer or assistant text. \\
+\code{image_reference} & Reference to an approved image. \\
+\code{file_reference} & Reference to an approved file. \\
+\code{audio_reference} & Reference to stored audio (only where retention permits). \\
+\code{system_event} & Lifecycle event (voice started, handoff). \\
+\code{internal_note} & Not customer-visible. \\
+\code{transcript_segment} & When transcripts are part of the timeline. \\
+\bottomrule
+\end{tabular}
+\end{center}
+Explicit visibility and direction fields are used rather than conventions in the message text.
