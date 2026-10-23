@@ -37,7 +37,6 @@
   .count { text-align:right; font-size:12px; color:var(--muted); margin-top:4px; }
   button.send { justify-self:start; font:700 15px/1 "Inter","Segoe UI",system-ui,sans-serif; color:#fff; background:linear-gradient(135deg,#256bb0,#1b9a68); border:0; border-radius:999px; padding:14px 28px; cursor:pointer; }
   button.send:hover { filter:brightness(1.08); } button.send:disabled { opacity:.6; cursor:progress; }
-  .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
   .note a { color:#4a9be3; font-weight:600; }
   .note { font-size:13px; color:var(--muted); line-height:1.5; }
   .status { display:none; border-radius:14px; padding:14px 16px; font-size:15px; line-height:1.5; }
@@ -58,7 +57,7 @@
   <button id="theme-toggle" type="button"></button>
   <a class="back" href="index.html">&larr; All presentations</a>
   <h1>Send feedback</h1>
-  <p class="lead">Spotted a mistake, have a question or an idea? Tell us what you think about the decks, the functional specification or the video. Your message goes straight to the project owner by e-mail.</p>
+  <p class="lead">Spotted a mistake, have a question or an idea? Tell us what you think about the decks, the functional specification or the video. Press the button and your e-mail app opens with the message ready to send to the project owner.</p>
 
   <form id="fb" novalidate>
     <div class="row">
@@ -81,16 +80,15 @@
         <input type="radio" id="r1" name="rating" value="1"><label for="r1" title="1 - poor">&#9733;</label>
       </div>
     </fieldset>
-    <div><label for="message">Your message</label><textarea id="message" name="message" maxlength="2000" required></textarea><div class="count"><span id="cnt">0</span> / 2000</div></div>
-    <div class="hp" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
+    <div><label for="message">Your message</label><textarea id="message" name="message" maxlength="1500" required></textarea><div class="count"><span id="cnt">0</span> / 1500</div></div>
     <div id="status" class="status" role="status" aria-live="polite"></div>
-    <button class="send" id="send" type="submit">Send feedback</button>
-    <p class="note">Messages are delivered by e-mail through the form service FormSubmit (formsubmit.co) to the site owner. Do not include passwords or personal data you would not put in an e-mail. If the form does not work, write to <a id="mailto" href="mailto:mr.essid@mail.com">mr.essid@mail.com</a>.</p>
+    <button class="send" id="send" type="submit">Open e-mail to send</button>
+    <p class="note">This opens your own e-mail app (Gmail, Outlook, Mail...) with the message already written and addressed to <a id="mailto" href="mailto:mr.essid@mail.com">mr.essid@mail.com</a>. Nothing is sent until you press Send there, and nothing is stored on this site. If nothing opens, copy the text and write to that address.</p>
   </form>
 </main>
 <script>
 (function () {
-  var TO = 'mr.essid@mail.com', ENDPOINT = 'https://formsubmit.co/ajax/' + TO;
+  var TO = 'mr.essid@mail.com';
   var form = document.getElementById('fb'), btn = document.getElementById('send'), box = document.getElementById('status');
   var msg = document.getElementById('message'), cnt = document.getElementById('cnt');
   msg.addEventListener('input', function () { cnt.textContent = msg.value.length; });
@@ -99,28 +97,21 @@
 
   function show(kind, html) { box.className = 'status ' + kind; box.innerHTML = html; }
   function mailtoHref(d) {
-    var body = 'Type: ' + d.type + '\nAbout: ' + d.about + '\nRating: ' + (d.rating || '-') + '\nName: ' + (d.name || '-') + '\nE-mail: ' + (d.email || '-') + '\n\n' + d.message;
-    return 'mailto:' + TO + '?subject=' + encodeURIComponent('Feedback: ' + d.about) + '&body=' + encodeURIComponent(body);
+    var body = d.message + '\n\n---\nType: ' + d.type + '\nAbout: ' + d.about + '\nRating: ' + (d.rating ? d.rating + '/5' : 'not given') +
+      '\nName: ' + (d.name || 'not given') + '\nReply to: ' + (d.email || 'not given');
+    return 'mailto:' + TO + '?subject=' + encodeURIComponent('Feedback (' + d.type + '): ' + d.about) + '&body=' + encodeURIComponent(body);
   }
-  function lastSent() { try { return +localStorage.getItem('fb-last') || 0; } catch (e) { return 0; } }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var f = new FormData(form);
-    if (f.get('_honey')) return;                               // spam bot: silently ignore
     var d = { name: (f.get('name') || '').trim(), email: (f.get('email') || '').trim(), type: f.get('type'), about: f.get('about'), rating: f.get('rating') || '', message: (f.get('message') || '').trim() };
     if (d.message.length < 5) { show('err', 'Please write a short message first.'); msg.focus(); return; }
     if (d.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) { show('err', 'That e-mail address does not look right. Fix it or leave the field empty.'); return; }
-    if (Date.now() - lastSent() < 30000) { show('err', 'Please wait a few seconds before sending another message.'); return; }
-    btn.disabled = true; btn.textContent = 'Sending...';
-    var payload = { _subject: 'Feedback (' + d.type + '): ' + d.about, _template: 'table', _captcha: 'false',
-      type: d.type, about: d.about, rating: d.rating || 'not given', name: d.name || 'not given', message: d.message, page: document.referrer || location.href };
-    if (d.email) { payload.email = d.email; payload._replyto = d.email; }
-    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || j.success === 'false' || j.success === false) throw new Error(j.message || r.status); return j; }); })
-      .then(function () { try { localStorage.setItem('fb-last', Date.now()); } catch (e) {} form.reset(); cnt.textContent = '0'; show('ok', 'Thank you! Your feedback was sent.'); })
-      .catch(function () { show('err', 'Sorry, the message could not be sent from here. <a href="' + mailtoHref(d) + '">Send it with your e-mail app instead</a>.'); })
-      .then(function () { btn.disabled = false; btn.textContent = 'Send feedback'; });
+    var href = mailtoHref(d);
+    var a = document.createElement('a');
+    a.href = href; a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    show('ok', 'Your e-mail app should open now with the message ready: just press <b>Send</b>. Nothing opened? <a href="' + href + '">Click here to try again</a>.');
   });
 
   // light / dark theme, same behaviour as the other pages
