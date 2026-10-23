@@ -33,11 +33,14 @@ Flat design, no drop shadows. Light and dark themes: the toggle button (or `D`) 
 python3 docs/tools/copy_assets.py     # refresh assets/*.svg from rendered diagrams
 python3 docs/tools/build_technologies.py   # regenerate technologies.html from its data
 python3 docs/tools/apply_icons.py     # icons, chips, backgrounds (safe to re-run)
+python3 docs/tools/bump_assets.py       # after editing css/theme.css or js/deck.js: new ?v= so Pages visitors get the new files
 ```
 
 To export PDFs, open a deck with `?print-pdf` appended (for example `scrum.html?print-pdf`) and print to PDF with background graphics on, margins none, paper 1280x720.
 
 Add a card icon: put the title in `TITLE_ICON` in `tools/apply_icons.py` and copy the Lucide SVG into `assets/icons/`.
+
+GitHub Pages caches CSS and JS for hours. `bump_assets.py` adds a content hash to their URLs so a change is picked up immediately; run it before every push that touches those files.
 
 ## Licenses
 
